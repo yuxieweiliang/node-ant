@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot --color --watch",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --color --watch",
     "create:page": "set NODE_ENV=development&& nodemon entry.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,9 +21,17 @@
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
+    "html-loader": "^0.5.0",
     "html-webpack-plugin": "^2.30.1",
+    "koa-jade": "^2.1.0",
+    "koa-pug": "^3.0.0-2",
+    "koa-views": "^6.0.2",
+    "markdown": "^0.5.0",
+    "markdown-loader": "^2.0.1",
+    "marked": "^0.3.6",
     "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
+    "open-browser-webpack-plugin": "0.0.5",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9",
@@ -32,7 +40,10 @@
   },
   "dependencies": {
     "koa": "^2.3.0",
+    "koa-router": "^7.2.1",
     "lodash": "^4.17.4",
-    "moment": "^2.18.1"
+    "moment": "^2.18.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   }
 }

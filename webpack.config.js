@@ -1,7 +1,10 @@
 const webpack = require('webpack');
 const path = require('path');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin'); // 打开指定浏览器
 const CleanWebpackPlugin = require('clean-webpack-plugin'); // 清理
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const marked = require("marked");
+const renderer = new marked.Renderer();
 
 // 项目根目录,请确保命令在根目录执行 sails-webpack2
 const ROOTS = process.cwd();
@@ -15,7 +18,6 @@ module.exports = {
   },
   output: {
     path: publicPath, // 也可以使用 publicPath
-    publicPath,
     filename: 'build.js',
     chunkFilename: '[name].[chunkhash:5].chunk.js'
   },
@@ -84,6 +86,22 @@ module.exports = {
       {
         test: /\.(mpeg|mp4|webm|ogv|wav|mp3|flv)$/,
         use: 'file-loader'
+      },
+      // markdown
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: "html-loader"
+          },
+          {
+            loader: "markdown-loader",
+            options: {
+              pedantic: true,
+              renderer
+            }
+          }
+        ]
       }
     ]
   },
@@ -124,7 +142,6 @@ module.exports = {
       filename: 'vendors.js',
       minChunks: Infinity,
     }),
-
     /**
      * 输出的根目录已经在output下设置了，
      * 所以filename只需要写入名字，不需要再添加路径名称，否则找不到，
@@ -133,12 +150,25 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Output Management',
       filename: 'index.html',
-      template: 'index.html',
+      template: './src/index.html',
       inject: 'body',
     }),
+    // 启动之后用指定浏览器自动打开
+    new OpenBrowserPlugin({
+      url: 'http://localhost:8088/',
+      delay: 500,
+      browser: 'Chrome'
+    }),
   ],
+  // 如果命令行中配置了--port 则会优先命令行
   devServer: {
+    hot: true, // 告诉 dev-server 我们在使用 HMR
+    contentBase: publicPath, // 公用路径root
+    port: 8088,
+    host: 'localhost',
     historyApiFallback: true,
-    noInfo: true
+    noInfo: false,
+    stats: 'minimal',
+    publicPath: '/'
   }
 };
