@@ -6,8 +6,11 @@ let style = {
 };
 
 class MyComponent extends React.Component {
+  _input() {
+    console.log('aaaa')
+  }
   render() {
-    return (<h2 style={style}>{this.props.number}</h2>);
+    return (<input style={style} value={this.props.number} onInput={() => this._input()}/>);
   }
 }
 

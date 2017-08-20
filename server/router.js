@@ -10,7 +10,7 @@ const json = {
 
 // 获取首页
 router.get('/', async function(ctx, next) {
-  const domRender = ReactServer.renderToString(<Input/>);
+  const domRender = ReactServer.renderToString(<Input number="fsdafsa"/>);
   ctx.render('index', {
     name: 'name',
     json: JSON.stringify(json),

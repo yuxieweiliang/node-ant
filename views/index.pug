@@ -8,7 +8,8 @@ html(lang="en")
     div= title
     div= name
     div(id="list")
+    div!=JSON.parse(domRender)
     script var raw = !{json};
-    script document.querySelector('#list').innerHTML = !{domRender}
+    script document.querySelector('#list').innerHTML = !{domRender}; console.log(!{domRender})
 
 
