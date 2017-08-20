@@ -2,8 +2,8 @@ let path = require('path');
 let fs = require('fs')
   , stdin = process.stdin
   , stdout = process.stdout;
-let createFile = require('./tool/createPage/createFile');
-let config = require('./tool/createPage/config');
+let createFile = require('./createFile');
+let config = require('./config');
 
 /**
  * 当前目录绝对路径
@@ -60,6 +60,8 @@ if(!temp) {
     let temp = item.templet;
     createFile(url, temp)
   });
+
+  process.exit(1);
 }
 
 

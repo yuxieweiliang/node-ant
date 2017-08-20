@@ -44,10 +44,9 @@ let createFiles = function(dirPath, filesText = '') {
        * parse.ext  -> 后缀名
        */
       let parseDir = path.parse(theDir);
-      console.log('bbbbbbbbbbbbbbbbbbb',theDir)
+
       // 如果后缀名不存在，则是文件
       if(parseDir.ext === '') {
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',parseDir)
 
         fs.mkdirSync(theDir);
       } else {
@@ -55,7 +54,6 @@ let createFiles = function(dirPath, filesText = '') {
       }
     }
 
-    // console.log('parseDir', parseDir)
   }
 };
 
@@ -75,11 +73,11 @@ module.exports = function(dirPath, filesText = '') {
 
   // 是否是一个字符串
   if(type === 'string') {
-    createFiles(...arguments)
+    createFiles(...arguments);
   }
   // 数组
   else if(type === 'array') {
-    dirPath.map(item => createFiles(item.path, item.text))
+    dirPath.map(item => createFiles(item.path, item.text));
   }
   // 其他
   else {

@@ -7,7 +7,8 @@ html(lang="en")
     div(id="root")
     div= title
     div= name
+    div(id="list")
     script var raw = !{json};
-    script document.querySelector('#list').innerHTML =script;
+    script document.querySelector('#list').innerHTML = !{domRender}
 
 

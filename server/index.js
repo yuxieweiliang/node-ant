@@ -1,20 +1,12 @@
 const  Koa = require('koa');
+require('node-jsx').install();
+// Javascript required hook
 //const router = require('./router');
 let app = new Koa();
-const router = require('koa-router')();
+const router = require('./router');
 const Pug = require('koa-pug');
-const React = require('react');
-const ReactServer = require('react-dom/server');
 
-class Input extends React.Component {
-  render() {
-    return (
-      <div>fdsafdsafdsa</div>
-    )
-  }
-}
-
-var pug = new Pug({
+let pug = new Pug({
   locals: {
     title: 'Koa Demo'
   },
@@ -22,26 +14,6 @@ var pug = new Pug({
 });
 
 pug.use(app);
-
-const json = {
-  a: 'a',
-  b: 'b'
-};
-
-// 获取首页
-router.get('/', async function(ctx, next) {
-  console.log(Input);
-  ctx.render('index', {
-    name: 'name',
-    json: JSON.stringify(json),
-    script: ReactServer.renderToString(<Input/>)
-  })
-});
-
-// 获取其他页面
-router.get('/other', async function(ctx, next) {
-  ctx.render('other')
-});
 
 // logger
 /*app.use(async  (ctx, next) => {
