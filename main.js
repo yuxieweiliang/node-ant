@@ -1,9 +1,7 @@
 import moment from 'moment';
 import readme from './README.md' // 解析markdown
 
-require([
-  './src/chunk1',
-], function(aaa) {
+require(['./src/chunk1',], function(aaa) {
   console.log(aaa);
 
 function thisis() {
