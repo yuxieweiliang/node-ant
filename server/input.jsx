@@ -1,13 +1,11 @@
-import React from 'react'
-
-
+const React = require('react');
 let style = {
   width: '100px',
   height: '40px',
   border: '1px solid #ccc;'
 };
 
-export default class extends React.Component {
+class MyComponent extends React.Component {
   _input() {
     console.log('aaaa')
   }
@@ -16,3 +14,5 @@ export default class extends React.Component {
   }
 }
 
+
+module.exports = MyComponent;

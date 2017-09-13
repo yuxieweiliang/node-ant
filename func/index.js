@@ -1,5 +1,11 @@
 const fs = require('fs');
 const path = require('path');
+
+/**
+ * 获取当前值的类型
+ * @param obj
+ * @returns {string}
+ */
 let typeOf = function(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
 };
@@ -32,7 +38,7 @@ let readDir = function (pathName) {
   })
 };
 /**
- * 一次后去多个文件夹
+ * 一次获取多个文件夹
  * @param pathName
  * @returns {Promise.<*>}
  */

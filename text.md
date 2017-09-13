@@ -1,5 +1,9 @@
 git 使用
 
+
+打开git bash
+ssh-keygen -t rsa -C "yunruofengsheng@126.com" // 三个回车  C:/user/xueyufei/.ssh
+
 #先删除，再添加
 git remote rm origin
 git remote add origin [url]

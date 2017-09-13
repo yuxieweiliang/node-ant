@@ -1,24 +1,24 @@
 
 // 书
-import { Book } from 'book'
+import { Book } from './book'
 
 // 阵营
-import { Camp } from 'camp'
+import { Camp } from './camp'
 
 // 地理
-import { Geography } from 'geography'
+import { Geography } from './geography'
 
 // 妖兽
-import { Monster } from 'monster'
+import { Monster } from './monster'
 
 // 角色
-import { Role } from 'role'
+import { Role } from './role'
 
 // 阵营
-import { Rule } from 'rule'
+import { Rule } from './rule'
 
 // 用户
-import { User } from 'user'
+import { User } from './user'
 
 const statics = {
   fetch: function (cd) {

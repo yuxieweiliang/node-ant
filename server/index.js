@@ -1,12 +1,18 @@
-const  Koa = require('koa');
-require('node-jsx').install();
-// Javascript required hook
-//const router = require('./router');
-let app = new Koa();
-const router = require('./router');
-const Pug = require('koa-pug');
+import Koa from 'koa';
+import React from 'react';
+import Pug from 'koa-pug';
+import 'babel-polyfill';
+import readMarked from '../docs'
+// 路由
+import router from './router'
 
-let pug = new Pug({
+import '../mongodb';
+
+
+const app = new Koa();
+
+// 使用模板
+const pug = new Pug({
   locals: {
     title: 'Koa Demo'
   },
@@ -14,9 +20,17 @@ let pug = new Pug({
 });
 
 pug.use(app);
+app.use(readMarked);
 
-// logger
-/*app.use(async  (ctx, next) => {
+// logger 当前路由信息
+app.use(async  (ctx, next) => {
+  console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
+  await next()
+});
+
+
+// logger 这里进入又给中间件函数
+app.use(async  (ctx, next) => {
   // (2) 进入 logger 中间件
   let start = new Date;
   await next();
@@ -24,11 +38,8 @@ pug.use(app);
   let ms = new Date - start;
   console.log('%s %s - %s', ctx.method, ctx.url, ms);
   // console.log(ctx.request);
-});*/
+});
 
-/*app.use(ctx => {
-  ctx.body = 'Hello word';
-});*/
 app.use(router.routes());
 
 app.listen(3000);

@@ -1,14 +1,19 @@
-const router = require('koa-router')();
-const Input = require('./input');
-const React = require('react');
-const ReactServer = require('react-dom/server');
+import React from 'react'
+import Router from 'koa-router'
+import ReactServer from 'react-dom/server'
+import Input from './input'
+
+const router = new Router();
+
 
 const json = {
   a: 'a',
   b: 'b'
 };
 
-// 获取首页
+/**
+ * 首页
+ */
 router.get('/', async function(ctx, next) {
   const domRender = ReactServer.renderToString(<Input number="fsdafsa"/>);
   ctx.render('index', {
@@ -18,16 +23,16 @@ router.get('/', async function(ctx, next) {
   })
 });
 
-// 获取其他页面
+/**
+ * 文档
+ */
 router.get('/docs', async function(ctx, next) {
-  ctx.render('docs', {
-    title: 'docs',
-    data: 'json',
-    render: 'reactDom'
-  })
+  ctx.body = ctx.macked;
 });
 
-// 获取其他页面
+/**
+ * 书籍
+ */
 router.get('/book', async function(ctx, next) {
   ctx.render('book', {
     title: 'book',
@@ -35,5 +40,19 @@ router.get('/book', async function(ctx, next) {
     render: 'reactDom'
   })
 });
+
+router.get('/hello/:name', async (ctx, next) => {
+  let name = ctx.params.name;
+  ctx.body = `<h1>Hello, ${name}!</h1>`;
+});
+
+router.get('/docs', async (ctx, next) => {
+  ctx.body = '<h1>docs</h1>';
+});
+
+router.get('/example', async (ctx, next) => {
+  ctx.body = '<h1>example</h1>';
+});
+
 
 module.exports = router;

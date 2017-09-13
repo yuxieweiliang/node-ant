@@ -21,7 +21,7 @@ const RoleSchema = new Schema({
   weight: Number,
   // 关系
   relationship: [{
-    role: {id: Schema.Types.ObjectId, ref: 'role'},
+    role: {type: Schema.ObjectId, ref: 'Role'},
     relation: String
   }],
   // 出场时间

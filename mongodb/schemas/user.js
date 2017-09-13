@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 const UserSchema = new Schema({
-  id: {user: Schema.Types.ObjectId, ref: 'user'},
+  id: {type: Schema.Types.ObjectId, ref: 'User'},
   dates: {created: Date},
   account: {
     username: String,
@@ -23,7 +23,7 @@ const UserSchema = new Schema({
   // 网站管理员
   site_admin: String,
   // 类型
-  type: "User",
+  type: String,// "User"
   // 个人的连接
   urls: {
     // 作者
