@@ -19,9 +19,18 @@ router.get('/', async function(ctx, next) {
 });
 
 // 获取其他页面
-router.get('/other', async function(ctx, next) {
-  ctx.render('other', {
-    title: 'other',
+router.get('/docs', async function(ctx, next) {
+  ctx.render('docs', {
+    title: 'docs',
+    data: 'json',
+    render: 'reactDom'
+  })
+});
+
+// 获取其他页面
+router.get('/book', async function(ctx, next) {
+  ctx.render('book', {
+    title: 'book',
     data: 'json',
     render: 'reactDom'
   })
