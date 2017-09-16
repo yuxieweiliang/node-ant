@@ -1,0 +1,68 @@
+/**
+ * global
+ */
+/**
+ * list page
+ */
+.icon-return {
+  position: relative;
+  font-size: 6px;
+  display: block;
+  width: 1.8em !important;
+  height: 1.8em !important;
+  padding: 0 !important;
+  cursor: pointer;
+  transition: .5s ease;
+  overflow: visible !important;
+}
+.icon-return:before,
+.icon-return:after {
+  position: absolute;
+  content: '一';
+  display: table;
+  left: .5em;
+}
+.icon-return:before {
+  transform: rotate(-45deg);
+  top: -1.1em;
+}
+.icon-return:after {
+  transform: rotate(45deg);
+  top: -0.48em;
+  left: .4em;
+}
+.icon-return.icon-to-sm {
+  font-size: 6px;
+}
+.icon-two-dimension {
+  position: relative;
+  font-size: 12px;
+  width: 2em;
+  height: 2em;
+  border: 1px solid #666;
+  border-radius: 4px;
+}
+.icon-two-dimension:before {
+  position: absolute;
+  display: table;
+  color: #666;
+  content: '一';
+  width: 100%;
+  height: 100%;
+  line-height: 2em;
+  text-align: center;
+  z-index: 2;
+}
+.icon-two-dimension:after {
+  position: absolute;
+  top: 15%;
+  left: -1px;
+  content: '';
+  display: table;
+  width: calc(100% + 2px);
+  height: 70%;
+  line-height: 2em;
+  text-align: center;
+  background: #fff;
+  z-index: 1;
+}

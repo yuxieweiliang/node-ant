@@ -1,0 +1,42 @@
+// 配置文件
+@import "setting";
+@import "func";
+@import "color";
+
+.input() {
+  font-size: @from-font;
+  height: @from-height;
+  line-height: @from-height;
+  padding: 0 .6em;
+  transition: ease 1s;
+  border: 1px solid #ccc;
+  border-radius: .4em;
+  width: 100%;
+  &:focus {
+    background: #fafafa;
+    border: 1px solid #2777d1;
+    box-shadow: 0 0 3px #4794ec;
+    transition: ease .4s;
+  }
+}
+
+.form {
+  &-container {
+    background: #fff;
+    margin-top: 10px;
+  }
+  &-list {
+    padding: 0 15px;
+    height: 40px;
+    margin-bottom: 10px;
+  }
+  &-ctrl {
+    width: 100%;
+    .input();
+  }
+}
+textarea {
+  &.form-ctrl {
+    height: inherit;
+  };
+}

@@ -1,0 +1,83 @@
+// 配置文件
+@import "setting";
+@import "func";
+@import "color";
+
+.flex,
+.row,
+.column,
+.flex-top,
+.flex-bottom,
+.flex-left,
+.flex-right,
+.flex-right-center,
+.flex-center,
+.justify-center,
+.align-center {
+  display: flex;
+}
+.row {
+  flex-direction: row;
+}
+.column {
+  flex-direction: column;
+}
+
+.flex-left {
+  justify-content: flex-start;
+}
+.flex-right {
+  justify-content: flex-end;
+}
+.justify-center {
+  justify-content: center;
+}
+
+.flex-top {
+  align-items: flex-start;
+}
+.flex-bottom {
+  align-items: flex-end;
+}
+.align-center {
+  align-items: center;
+}
+
+.left-center {
+  &:extend(.flex-left);
+  align-items: center;
+}
+.right-center {
+  &:extend(.flex-right);
+  align-items: center;
+}
+.top-center {
+  &:extend(.flex-top);
+  justify-content: center;
+}
+.bottom-center {
+  &:extend(.flex-bottom);
+  justify-content: center;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+
+.generate-flex(12);

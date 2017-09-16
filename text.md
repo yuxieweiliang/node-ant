@@ -22,7 +22,7 @@ mongodb 使用
 
 
 
-cd mong\bin                                      // 切换到mongod.exe目录
+cd mongo\bin                                      // 切换到mongod.exe目录
 mongod --dbpath E:\00_project\01_node\mong\db    // 用来创建并运行数据库
 
 
@@ -100,7 +100,7 @@ _movie.save(function(error, movie) {
 
 2017-08-23T13:19:31.349+0800 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=4G,session_max=20000,eviction=(threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),checkpoint=(wait=60,log_size=2GB),statistics_log=(wait=0),2017-08-23T13:19:32.023+0800 I NETWORK  [HostnameCanonicalizationWorker] Starting hostname canonicalization worker
 
-2017-08-23T13:19:32.023+0800 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory 'E:/00_project/01_node/mong/ab/diagnostic.data'
+2017-08-23T13:19:32.023+0800 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory 'E:/00_project/01_node/mongo/ab/diagnostic.data'
 
 2017-08-23T13:19:32.227+0800 I NETWORK  [initandlisten] waiting for connec
 tions on port 27017

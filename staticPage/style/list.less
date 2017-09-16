@@ -1,0 +1,71 @@
+// 配置文件
+@import "setting";
+@import "func";
+@import "color";
+
+
+.inline {
+  display: inline-flex;
+}
+
+.list {
+  background: @listBgColor;
+  &-title {
+    border-bottom: 1px solid @borderBmColor;
+  }
+}
+.card {
+  margin-top: @interval;
+  background: @listBgColor;
+  border-bottom: 1px solid @borderBmColor;
+}
+.title {
+  font-size: @font-md;
+  height: @height;
+  line-height: @height;
+  padding: 0 @between;
+  background: @listHeaderBgColor;
+  border-bottom: 1px solid @listHeaderBmBgColor;
+}
+// .height-@{num} {height: @num}
+.generate-height(40);
+.generate-width(20);
+
+
+
+@listNum: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
+@listWidth: 8.33, 16.66, 25, 33.33, 41.66, 50, 58.33, 66.66, 75, 83.33, 91.66, 100;
+
+.createRatio(@num, @listWidth, @i) {
+  .ratio-@{num} {
+    width: extract(@listWidth, @i)+0% ;
+  }
+  @media (min-width: 992px) {
+    .ratio-sm-@{num} {
+      width: extract(@listWidth, @i)+0% ;
+    }
+  }
+  @media (min-width: 1200px) {
+    .ratio-md-@{num} {
+      width: extract(@listWidth, @i)+0% ;
+    }
+  }
+  @media (min-width: 1680px) {
+    .ratio-lg-@{num} {
+      width: extract(@listWidth, @i)+0% ;
+    }
+  }
+
+}
+
+// .width-@{num} {width: @num} -> .width-100{ width: 100px }      768  992  1200
+.generate-ratio(@i: 1) when (@i > 0) {
+  @num: extract(@listNum, @i);
+  .createRatio(@num, @listWidth, @i);
+  .generate-ratio(@i - 1);
+}
+
+.generate-ratio(length(@listNum));
+
+
+

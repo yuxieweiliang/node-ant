@@ -1,0 +1,30 @@
+.list-control {
+  display: flex;
+}
+.list-inner {
+  font-size: 14px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  background: #eee;
+  border: 1px solid #ddd;
+  padding: 10px 20px 10px 70px;
+  border-radius: 4px;
+}
+.list-inner dt,
+.list-inner dd {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  border-bottom: 1px solid #fff;
+}
+.list-inner dt {
+  font-weight: bold;
+  text-align: right;
+}
+.list-title {
+  align-items: center;
+}
+.list-text {
+  align-items: center;
+}

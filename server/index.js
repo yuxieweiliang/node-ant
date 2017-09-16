@@ -3,8 +3,8 @@ import React from 'react';
 import Pug from 'koa-pug';
 import 'babel-polyfill';
 import readMarked from '../docs'
-// 路由
-import router from './router'
+import router from './router'// 路由
+
 
 import '../mongodb';
 
@@ -20,6 +20,9 @@ const pug = new Pug({
 });
 
 pug.use(app);
+/**
+ * markdown获取 readme文件
+ */
 app.use(readMarked);
 
 // logger 当前路由信息

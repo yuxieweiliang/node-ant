@@ -1,0 +1,115 @@
+/**
+ * global
+ */
+/**
+ * list page
+ */
+.flex,
+.row,
+.column,
+.flex-top,
+.flex-bottom,
+.flex-left,
+.flex-right,
+.flex-right-center,
+.flex-center,
+.justify-center,
+.align-center,
+.left-center,
+.right-center,
+.top-center,
+.bottom-center {
+  display: flex;
+}
+.row {
+  flex-direction: row;
+}
+.column {
+  flex-direction: column;
+}
+.flex-left,
+.left-center {
+  justify-content: flex-start;
+}
+.flex-right,
+.right-center {
+  justify-content: flex-end;
+}
+.justify-center {
+  justify-content: center;
+}
+.flex-top,
+.top-center {
+  align-items: flex-start;
+}
+.flex-bottom,
+.bottom-center {
+  align-items: flex-end;
+}
+.align-center {
+  align-items: center;
+}
+.left-center {
+  align-items: center;
+}
+.right-center {
+  align-items: center;
+}
+.top-center {
+  justify-content: center;
+}
+.bottom-center {
+  justify-content: center;
+}
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.flex-12 {
+  flex: 12;
+}
+.flex-11 {
+  flex: 11;
+}
+.flex-10 {
+  flex: 10;
+}
+.flex-9 {
+  flex: 9;
+}
+.flex-8 {
+  flex: 8;
+}
+.flex-7 {
+  flex: 7;
+}
+.flex-6 {
+  flex: 6;
+}
+.flex-5 {
+  flex: 5;
+}
+.flex-4 {
+  flex: 4;
+}
+.flex-3 {
+  flex: 3;
+}
+.flex-2 {
+  flex: 2;
+}
+.flex-1 {
+  flex: 1;
+}
