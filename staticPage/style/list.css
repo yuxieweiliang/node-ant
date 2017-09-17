@@ -10,7 +10,7 @@
 .list {
   background: #fafafa;
 }
-.list-title {
+.list-title:not(:last-child) {
   border-bottom: 1px solid #fff;
 }
 .card {
@@ -23,8 +23,31 @@
   height: 40px;
   line-height: 40px;
   padding: 0 10px;
-  background: #fff;
   border-bottom: 1px solid #eee;
+}
+.title-white {
+  font-size: 14px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+}
+.title-light-gray {
+  font-size: 14px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+  border-bottom: 1px solid #eee;
+  background: #fafafa;
+}
+.title-gray {
+  font-size: 14px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+  border-bottom: 1px solid #eee;
+  background: #f2f2f2;
 }
 .height-400 {
   height: 400px;
@@ -205,6 +228,15 @@
 }
 .width-10 {
   width: 10px;
+}
+.content {
+  font-size: 14px;
+}
+.dashed-top {
+  border-top: 1px dashed #ddd;
+}
+.dashed-bottom {
+  border-bottom: 1px dashed #ddd;
 }
 .ratio-12 {
   width: 100%;

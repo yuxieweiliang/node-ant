@@ -10,8 +10,9 @@
 
 .list {
   background: @listBgColor;
-  &-title {
+  &-title:not(:last-child) {
     border-bottom: 1px solid @borderBmColor;
+
   }
 }
 .card {
@@ -20,18 +21,36 @@
   border-bottom: 1px solid @borderBmColor;
 }
 .title {
-  font-size: @font-md;
-  height: @height;
-  line-height: @height;
-  padding: 0 @between;
-  background: @listHeaderBgColor;
-  border-bottom: 1px solid @listHeaderBmBgColor;
+  .title() {
+    font-size: @font-md;
+    height: @height;
+    line-height: @height;
+    padding: 0 @between;
+    border-bottom: 1px solid @listHeaderBmBgColor;
+  }
+  & {
+    .title;
+  }
+  &-white {
+    .title;
+    background: @listHeaderBgColor;
+  }
+  &-light-gray {
+    .title;
+    background: @gray-fa;
+  }
+  &-gray {
+    .title;
+    background: @gray-f2;
+  }
 }
 // .height-@{num} {height: @num}
 .generate-height(40);
 .generate-width(20);
 
-
+.content {
+  font-size: 14px;
+}
 
 @listNum: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 @listWidth: 8.33, 16.66, 25, 33.33, 41.66, 50, 58.33, 66.66, 75, 83.33, 91.66, 100;
@@ -56,6 +75,15 @@
     }
   }
 
+}
+
+.dashed {
+  &-top {
+    border-top: 1px dashed #ddd;
+  }
+  &-bottom {
+    border-bottom: 1px dashed #ddd;
+  }
 }
 
 // .width-@{num} {width: @num} -> .width-100{ width: 100px }      768  992  1200

@@ -168,3 +168,6 @@ body {
 .active {
   background: #eee;
 }
+.hidden {
+  display: none;
+}
