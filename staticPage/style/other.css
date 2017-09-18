@@ -1,6 +1,6 @@
-/**
- * global
- */
-/**
- * list page
- */
+.list-item {
+  color: #ccc;
+}
+.list-item-font {
+  font-size: 10px;
+}
