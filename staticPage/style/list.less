@@ -8,49 +8,102 @@
   display: inline-flex;
 }
 
-.list {
-  background: @listBgColor;
-  &-title:not(:last-child) {
-    border-bottom: 1px solid @borderBmColor;
-
-  }
-}
 .card {
   margin-top: @interval;
   background: @listBgColor;
   border-bottom: 1px solid @borderBmColor;
 }
-.title {
-  .title() {
-    font-size: @font-md;
-    height: @height;
-    line-height: @height;
-    padding: 0 @between;
-    border-bottom: 1px solid @listHeaderBmBgColor;
-  }
-  & {
-    .title;
-  }
-  &-white {
-    .title;
-    background: @listHeaderBgColor;
-  }
-  &-light-gray {
-    .title;
-    background: @gray-fa;
-  }
-  &-gray {
-    .title;
-    background: @gray-f2;
+
+
+
+
+.title(@color: #fff, @bgColor: #000, @r: 10%) {
+  .title {
+    .title(@color: #fff, @bgColor: #000, @r: 10%) {
+      font-size: @font-md;
+      color: @color;
+      height: @height;
+      line-height: @height;
+      padding: 0 @between;
+      border-bottom: 1px solid mix(@color, @bgColor, 10%);
+      .bgColor(@color, @bgColor, @r);
+    }
+    & {
+      .title(@bgColor, @color);
+    }
+    &-white {
+      .title(@bgColor, @color, 0%);
+      //background: @listHeaderBgColor;
+    }
+    &-light-gray {
+      .title(@bgColor, @color);
+      // background: @gray-fa;
+    }
+    &-gray {
+      .title(@bgColor, @color, 20%);
+      // background: @gray-f2;
+    }
+    &-black {
+      .title;
+    }
+    &-shallow-black {
+      .title;
+    }
   }
 }
+
+.title(#fff, #000);
+
+.list(@color: #fff, @bgColor: #000, @r: 10%) {
+  .list {
+    &-title:not(:last-child) {
+      border-bottom: 1px solid @borderBmColor;
+    }
+    &-ctrl {
+      display: flex;
+    }
+    &-content {
+      font-size: 14px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      .bgColor(#fff, #000, 15%);
+      padding: 10px 20px 10px 70px;
+      dt, dd {
+        display: flex;
+        height: 30px;
+        align-items: center;
+        border-bottom: 1px solid mix(@color, @bgColor, 10%);
+      }
+      dt {
+        font-weight: bold;
+        text-align: right;
+      }
+    }
+    &-title {
+      justify-content: flex-start;
+      align-items: center;
+    }
+    &-text {
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .dashed {
+      &-top {
+        border-top: 1px dashed mix(@color, @bgColor, 20%);
+      }
+      &-bottom {
+        border-bottom: 1px dashed mix(@color, @bgColor, 20%);
+      }
+    }
+  }
+}
+.list(#fff, #000);
+
+
 // .height-@{num} {height: @num}
 .generate-height(40);
 .generate-width(20);
-
-.content {
-  font-size: 14px;
-}
 
 @listNum: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 @listWidth: 8.33, 16.66, 25, 33.33, 41.66, 50, 58.33, 66.66, 75, 83.33, 91.66, 100;
@@ -77,14 +130,6 @@
 
 }
 
-.dashed {
-  &-top {
-    border-top: 1px dashed #ddd;
-  }
-  &-bottom {
-    border-bottom: 1px dashed #ddd;
-  }
-}
 
 // .width-@{num} {width: @num} -> .width-100{ width: 100px }      768  992  1200
 .generate-ratio(@i: 1) when (@i > 0) {

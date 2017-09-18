@@ -7,12 +7,6 @@
 .inline {
   display: inline-flex;
 }
-.list {
-  background: #fafafa;
-}
-.list-title:not(:last-child) {
-  border-bottom: 1px solid #fff;
-}
 .card {
   margin-top: 10px;
   background: #fafafa;
@@ -23,31 +17,94 @@
   height: 40px;
   line-height: 40px;
   padding: 0 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e6e6e6;
+  color: #000;
+  background: #e6e6e6;
 }
 .title-white {
   font-size: 14px;
   height: 40px;
   line-height: 40px;
   padding: 0 10px;
-  border-bottom: 1px solid #eee;
-  background: #fff;
+  border-bottom: 1px solid #e6e6e6;
+  color: #000;
+  background: #ffffff;
 }
 .title-light-gray {
   font-size: 14px;
   height: 40px;
   line-height: 40px;
   padding: 0 10px;
-  border-bottom: 1px solid #eee;
-  background: #fafafa;
+  border-bottom: 1px solid #e6e6e6;
+  color: #000;
+  background: #e6e6e6;
 }
 .title-gray {
   font-size: 14px;
   height: 40px;
   line-height: 40px;
   padding: 0 10px;
-  border-bottom: 1px solid #eee;
-  background: #f2f2f2;
+  border-bottom: 1px solid #e6e6e6;
+  color: #000;
+  background: #cccccc;
+}
+.title-black {
+  font-size: 14px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+  border-bottom: 1px solid #191919;
+  color: #fff;
+  background: #191919;
+}
+.title-shallow-black {
+  font-size: 14px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+  border-bottom: 1px solid #191919;
+  color: #fff;
+  background: #191919;
+}
+.list-title:not(:last-child) {
+  border-bottom: 1px solid #fff;
+}
+.list-ctrl {
+  display: flex;
+}
+.list-content {
+  font-size: 14px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  color: #fff;
+  background: #262626;
+  padding: 10px 20px 10px 70px;
+}
+.list-content dt,
+.list-content dd {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  border-bottom: 1px solid #191919;
+}
+.list-content dt {
+  font-weight: bold;
+  text-align: right;
+}
+.list-title {
+  justify-content: flex-start;
+  align-items: center;
+}
+.list-text {
+  align-items: center;
+  justify-content: flex-start;
+}
+.list .dashed-top {
+  border-top: 1px dashed #333333;
+}
+.list .dashed-bottom {
+  border-bottom: 1px dashed #333333;
 }
 .height-400 {
   height: 400px;
@@ -228,15 +285,6 @@
 }
 .width-10 {
   width: 10px;
-}
-.content {
-  font-size: 14px;
-}
-.dashed-top {
-  border-top: 1px dashed #ddd;
-}
-.dashed-bottom {
-  border-bottom: 1px dashed #ddd;
 }
 .ratio-12 {
   width: 100%;

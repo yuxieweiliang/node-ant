@@ -26,6 +26,18 @@
 }
 
 
+.color(@color1: #000, @color2: #fff, @alpha: 10%) {
+  & {
+    color: mix(@color1, @color2, @alpha);
+  }
+}
+.bgColor(@color: #000, @bgColor: #fff, @alpha: 10%) {
+  & {
+    color: @color;
+    background: mix(@color, @bgColor, @alpha);
+  }
+}
+
 // 透明度
 .opacity(@opacity: 50) {
   filter: alpha(opacity=@opacity);

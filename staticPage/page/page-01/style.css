@@ -1,32 +1,11 @@
-.list-control {
-  display: flex;
-}
-.list-inner {
+/**
+ * global
+ */
+/**
+ * list page
+ */
+.content {
   font-size: 14px;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  background: #f2f2f2;
-  padding: 10px 20px 10px 70px;
-}
-.list-inner dt,
-.list-inner dd {
-  display: flex;
-  height: 30px;
-  align-items: center;
-  border-bottom: 1px solid #fff;
-}
-.list-inner dt {
-  font-weight: bold;
-  text-align: right;
-}
-.list-title {
-  justify-content: flex-start;
-  align-items: center;
-}
-.list-text {
-  align-items: center;
-  justify-content: flex-start;
 }
 .nav-item {
   font-size: 14px;
@@ -36,14 +15,15 @@
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
-  background: #fff;
+  background: inherit;
   cursor: pointer;
 }
 .nav-item:first-child {
   border-top: 1px solid #ccc;
 }
 .nav-item:hover {
-  background: #fafafa;
+  filter: alpha(opacity=80);
+  opacity: 0.8;
 }
 .nav-item-blue {
   font-size: 14px;
@@ -53,7 +33,7 @@
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
-  background: #fff;
+  background: inherit;
   cursor: pointer;
   color: #fff;
   border-color: #428bca;
@@ -66,6 +46,63 @@
 .nav-item-blue:hover {
   background: #4592d4;
 }
-.user-information {
-  background: #f2f2f2;
+.time-sheet {
+  width: 100%;
+  padding-top: 40px;
+  position: relative;
+  background: #333;
+}
+.time-scale {
+  padding-left: 200px;
+  position: absolute;
+  top: 0;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.time-scale .time-axis,
+.time-scale .time-scale-item {
+  display: flex;
+  flex-direction: row;
+}
+.time-scale .time-axis section,
+.time-scale .time-scale-item section {
+  display: flex;
+  font-size: 12px;
+  color: #fff;
+  flex: 1;
+  height: 100%;
+  border-left: 1px dashed #aaa;
+}
+.time-scale .time-axis {
+  height: 20px;
+  border-bottom: 1px solid #ccc;
+}
+.time-scale .time-axis .axis-item {
+  flex: 1;
+  height: 30%;
+  width: 20%;
+  border-right: 1px solid #ccc;
+}
+.time-scale .time-scale-item {
+  flex: 1;
+}
+.time-content {
+  width: 100%;
+}
+.time-content .time-axis-x {
+  display: flex;
+  flex-direction: row;
+  height: 8px;
+  width: 100%;
+  border-radius: 10px;
+}
+.time-content .time-axis-x span {
+  display: inline-block;
+  width: 200px;
+  height: inherit;
+  border-radius: inherit;
+  background: #00aaff;
 }
