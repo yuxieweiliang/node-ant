@@ -8,10 +8,10 @@
   height: @from-height;
   line-height: @from-height;
   padding: 0 .6em;
-  transition: ease 1s;
   border: 1px solid #ccc;
   border-radius: .4em;
   width: 100%;
+  transition: ease 1s;
   &:focus {
     background: #fafafa;
     border: 1px solid #2777d1;
@@ -21,8 +21,13 @@
 }
 
 .form {
-  &-container {
-    background: #fff;
+  &-inline {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  &-group {
+    width: 100%;
     margin-top: 10px;
   }
   &-list {
@@ -30,13 +35,24 @@
     height: 40px;
     margin-bottom: 10px;
   }
-  &-ctrl {
-    width: 100%;
+  &-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    .form-control {
+      flex: 1;
+    }
+  }
+  &-control {
     .input();
   }
 }
-textarea {
-  &.form-ctrl {
-    height: inherit;
-  };
+
+.input-sm {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
 }

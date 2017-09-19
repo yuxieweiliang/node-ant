@@ -4,8 +4,13 @@
 /**
  * list page
  */
-.form-container {
-  background: #fff;
+.form-inline {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.form-group {
+  width: 100%;
   margin-top: 10px;
 }
 .form-list {
@@ -13,22 +18,35 @@
   height: 40px;
   margin-bottom: 10px;
 }
-.form-ctrl {
+.form-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.form-item .form-control {
+  flex: 1;
+}
+.form-control {
   font-size: 14px;
   height: 2em;
   line-height: 2em;
   padding: 0 .6em;
-  transition: ease 1s;
   border: 1px solid #ccc;
   border-radius: .4em;
   width: 100%;
+  transition: ease 1s;
 }
-.form-ctrl:focus {
+.form-control:focus {
   background: #fafafa;
   border: 1px solid #2777d1;
   box-shadow: 0 0 3px #4794ec;
   transition: ease .4s;
 }
-textarea.form-ctrl {
-  height: inherit;
+.input-sm {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
 }
