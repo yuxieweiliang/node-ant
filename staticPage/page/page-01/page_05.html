@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="../../style/btn.css">
+  <link rel="stylesheet" href="../../style/container.css">
+  <link rel="stylesheet" href="../../style/flex.css">
+  <link rel="stylesheet" href="../../style/form.css">
+  <link rel="stylesheet" href="../../style/list.css">
+  <link rel="stylesheet" href="../../style/main.css">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css">
+
+  <style>
+    #box {
+      border: 1px solid #ccc;
+    }
+    #div {
+      border: 1px solid red;
+    }
+  </style>
+</head>
+<body>
+<div class="container column">
+  <header class="header flex">
+    <nav class="row flex-1 right-center">
+      <a class="width-100 text-right">book</a>
+      <a class="width-100 text-right">docs</a>
+      <a class="width-100 text-right">messsage</a>
+      <a class="width-100 text-right">user</a>
+    </nav>
+  </header>
+  <div class="row flex-1">
+    <div class="ratio-1 flex-center">
+      <ul class="width-80 nav-control">
+        <li class="height-30 nav-item-blue">格雷斯</li>
+        <li class="height-30 nav-item">埃尔维斯卡</li>
+        <li class="height-30 nav-item">圣蒂安格儿</li>
+        <li class="height-30 nav-item">克鲁斯</li>
+        <li class="height-30 nav-item">梅希迪维亚</li>
+        <li class="height-30 nav-item">卡提奈</li>
+      </ul>
+    </div>
+    <article class="width-200 height-200"  id="box">
+
+    </article>
+    <div id="div"></div>
+
+  </div>
+
+  <footer></footer>
+</div>
+<script>
+  var $div = document.getElementById('div');
+  var $box = document.getElementById('box');
+</script>
+</body>
+</html>
