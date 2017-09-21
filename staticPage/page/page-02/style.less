@@ -10,6 +10,11 @@
     margin: 0 auto;
   }
 }
+
+nav {
+
+}
+
 .nav-tabs {
   width: 100%;
   .nav-title,
@@ -35,6 +40,13 @@
       &:hover {
         background: #eee;
       }
+    }
+  }
+  &-column {
+    .nav-title,
+    nav {
+      &:extend(.page-title);
+      flex-direction: column;
     }
   }
 }

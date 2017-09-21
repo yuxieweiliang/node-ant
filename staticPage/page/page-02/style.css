@@ -4,7 +4,9 @@
 /**
  * list page
  */
-.page-title {
+.page-title,
+.nav-tabs-column .nav-title,
+.nav-tabs-column nav {
   background: #fff;
   text-align: center;
 }
@@ -52,6 +54,10 @@
 .nav-tabs .nav-title a[role=menuitem]:hover,
 .nav-tabs nav a[role=menuitem]:hover {
   background: #eee;
+}
+.nav-tabs-column .nav-title,
+.nav-tabs-column nav {
+  flex-direction: column;
 }
 .nav-pills .nav-title,
 .nav-pills nav {
