@@ -142,20 +142,17 @@ inner.addEventListener('dragleave', function(ev) {
   console.log('dragleave', ev.target.className);
 });
 
-// 结束
-inner.addEventListener('dragover', function(ev) {
+
+var dragover = function(ev) {
   ev.preventDefault();
   $id('show').innerText = getMousePos(ev).x + ',' + getMousePos(ev).y;
-});
+}
+// 结束
+inner.addEventListener('dragover', dragover);
 
 function move() {
   console.log('ffffffffffffffffffff')
 }
-$(window).scroll( _.throttle( move, 250 ) );
-
-$('body').on('mousemove', function() {
-  _.throttle(move, 1000);
-});
 document.body.addEventListener('mousemove', _.debounce(move, 1000));
 //  _.throttle(move, 1000);   节流
 //  _.debounce(move, 1000);   空闲执行
