@@ -22,6 +22,13 @@ router.get('/', async function(ctx, next) {
     domRender: JSON.stringify(domRender)
   })
 });
+/**
+ * 首页
+ */
+router.get('/save', async function(ctx, next) {
+  const domRender = ReactServer.renderToString(<Input number="fsdafsa"/>);
+  ctx.body = JSON.stringify(json).toString();
+});
 
 /**
  * 文档

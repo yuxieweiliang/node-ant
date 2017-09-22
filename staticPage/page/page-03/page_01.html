@@ -291,24 +291,23 @@
         </div>
         <form class="form">
           <div class="form-list">
-            <div class="form-title">名字：</div>
+            <div class="form-title" id="username">名字：</div>
             <input class="form-control" type="text">
           </div>
           <div class="form-list">
-            <div class="form-title">名字：</div>
+            <div class="form-title" id="sex">性别：</div>
+            <input class="form-control" type="text">
+          </div>
+          <div class="form-list" id="age">
+            <div class="form-title">年龄：</div>
             <input class="form-control" type="text">
           </div>
           <div class="form-list">
-            <div class="form-title">名字：</div>
+            <div class="form-title" id="race">种族：</div>
             <input class="form-control" type="text">
           </div>
           <div class="form-list">
-            <div class="form-title">名字：</div>
-            <input class="form-control" type="text">
-          </div>
-          <div class="form-item">
-            <div>名fdsa字：</div>
-            <input class="form-control" type="text">
+            <button type="button" class="btn btn-primary" id="save">提交</button>
           </div>
         </form>
       </div>
@@ -346,4 +345,7 @@
   <footer></footer>
 </div>
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
+<script src="./script.js"></script>
 </html>
