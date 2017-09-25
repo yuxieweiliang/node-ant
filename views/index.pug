@@ -4,12 +4,12 @@ html(lang="en")
     meta(charset="utf-8")
     title= title
   body
-    div(id="root")
+    div(id="root")!=JSON.parse(domRender)
     div= title
-    div= name
     div(id="list")
-    div!=JSON.parse(domRender)
     script var raw = !{json};
-    script document.querySelector('#list').innerHTML = !{domRender}; //console.log(!{domRender})
+    // script document.querySelector('#list').innerHTML = !{domRender}; //console.log(!{domRender})
+    script(src= script)
+    script(src= script1)
 
 

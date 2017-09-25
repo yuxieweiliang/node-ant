@@ -46,12 +46,12 @@ const ROOTS = process.cwd();
 const publicPath = path.resolve(path.normalize(`${ROOTS}/dist/`));
 const config = {
   entry: {
-    'home/index': path.join(__dirname,'./src/page/input.jsx'),
+    'home/index': ["webpack-hot-middleware/client?noInfo=true&reload=true", path.join(__dirname,'./src/page/input.jsx')],
     // 将所有公用的东西都放在一个文件里
     vendors: ['lodash']
   },
   output: {
-    path: publicPath, // 也可以使用 publicPath
+    //path: publicPath, // 也可以使用 publicPath
     filename: '[name].build.js',
     chunkFilename: '[name].[chunkhash:5].chunk.js'
   },
@@ -157,10 +157,10 @@ const config = {
     window: 'window'
   },
   plugins: [
-    new CleanWebpackPlugin(['./dist/'], {
+    /*new CleanWebpackPlugin(['./dist/'], {
       verbose: true,
       dry: false,
-    }),
+    }),*/
     // 使用checkhash
     //new WebpackMd5Hash(),
     //new ExtractTextPlugin('[name].css'),
