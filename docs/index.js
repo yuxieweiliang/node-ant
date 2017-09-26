@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'fs'
 import markdown from 'marked'
-import func from '../func/index'
+import func from '../assets/func/index'
 
 export default async  (ctx, next) => {
   // 获取存放组建的目录
@@ -14,11 +14,14 @@ export default async  (ctx, next) => {
   // 获取所有组件中的文件 -> 二维数组
   const fileData = await func.getFilesPath(fileList);
   fileData.map(items => {
-
-    items.map(item => {
-      const url = fileList + '/' + item;
-      const data = fs.readFileSync(url,'utf8');
-      ctx.macked = markdown(data)
+    items.map((item, i) => {
+      if(item.indexOf('md') < 0) {
+        return
+      } else {
+        const url = fileList[1] + '/' + item;
+        const data = fs.readFileSync(url,'utf8');
+        ctx.macked = markdown(data)
+      }
     })
   });
   await  next();

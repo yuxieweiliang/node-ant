@@ -4,12 +4,6 @@
 /**
  * list page
  */
-.container {
-  background: #333;
-}
-.content {
-  font-size: 14px;
-}
 .nav-item {
   font-size: 14px;
   display: flex;

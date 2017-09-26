@@ -17,10 +17,10 @@ const json = {
 router.get('/', async function(ctx, next) {
   const domRender = ReactServer.renderToString(<Input/>);
   ctx.render('index', {
-    script: '/vendors.js',
-    script1: '/home/index.build.js',
+    script: '/home/index.build.js',
     name: 'name',
     json: JSON.stringify(json),
+    table: JSON.stringify(ctx.macked),
     domRender: JSON.stringify(domRender)
   })
 });
