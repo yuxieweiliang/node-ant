@@ -4,6 +4,40 @@
 /**
  * list page
  */
+/**
+ * 创建高度
+ * .height-@{num} { height: @num }
+ * -> .height-100 { height: 100px }
+ */
+/**
+ * 创建宽度
+ * .width-@{num} { width: @num }
+ * -> .width-100 { width: 100px }
+ */
+/**
+ * flex 布局
+ * .flex-@{num} {flex: @num} -> .flex-1{ flex: 1 }
+ */
+/**
+ * 透明度
+ * 需要传入 透明度多少
+ */
+/**
+ * 边框
+ * 需要传入 方向，颜色，大小
+ */
+/**
+ * 投影效果
+ * 需要传入 影子颜色，大小
+ */
+/**
+ * hover效果
+ * 需要传入 没有hover的颜色值，与hover时的颜色值
+ */
+/**
+ * 创建按钮
+ * 需要传入一个二维数组
+ */
 .flex,
 .row,
 .column,
@@ -23,9 +57,91 @@
 }
 .row {
   flex-direction: row;
+  flex-wrap: wrap;
+}
+.row[align=top] {
+  align-items: flex-start;
+}
+.row[align=center] {
+  align-items: center;
+}
+.row[align=bottom] {
+  align-items: flex-end;
+}
+.row[justify=left] {
+  justify-content: flex-start;
+}
+.row[justify=center] {
+  justify-content: center;
+}
+.row[justify=right] {
+  justify-content: flex-end;
+}
+.row[align-flex=center] {
+  align-items: center;
+  justify-content: center;
+}
+.row[data-content=start] {
+  align-content: flex-start;
+}
+.row[data-content=end] {
+  align-content: flex-end;
+}
+.row[data-content=center] {
+  align-content: center;
+}
+.row[data-content=around] {
+  align-content: space-around;
+}
+.row[data-content=between] {
+  align-content: space-between;
+}
+.row[data-content=stretch] {
+  align-content: stretch;
 }
 .column {
   flex-direction: column;
+  flex-wrap: wrap;
+}
+.column[align=top] {
+  align-items: flex-start;
+}
+.column[align=center] {
+  align-items: center;
+}
+.column[align=bottom] {
+  align-items: flex-end;
+}
+.column[justify=left] {
+  justify-content: flex-start;
+}
+.column[justify=center] {
+  justify-content: center;
+}
+.column[justify=right] {
+  justify-content: flex-end;
+}
+.column[align-flex=center] {
+  align-items: center;
+  justify-content: center;
+}
+.column[data-content=start] {
+  align-content: flex-start;
+}
+.column[data-content=end] {
+  align-content: flex-end;
+}
+.column[data-content=center] {
+  align-content: center;
+}
+.column[data-content=around] {
+  align-content: space-around;
+}
+.column[data-content=between] {
+  align-content: space-between;
+}
+.column[data-content=stretch] {
+  align-content: stretch;
 }
 .flex-left,
 .left-center {
@@ -67,15 +183,6 @@
 }
 .flex-wrap {
   flex-wrap: wrap;
-}
-.text-left {
-  text-align: left;
-}
-.text-right {
-  text-align: right;
-}
-.text-center {
-  text-align: center;
 }
 .flex-12 {
   flex: 12;
