@@ -1,4 +1,5 @@
 /*eslint no-console:0, no-empty:0, no-unused-vars:0*/
+import fetch from 'isomorphic-fetch';
 
 function getType(option) {
   return Object.prototype.toString.call(option).slice(8, -1).toLowerCase();
@@ -24,7 +25,7 @@ class InitFetch {
 
     return this;
   }
-  get(url) {
+  get(url, option) {
     this.method = 'GET';
     return this._fetch(url);
   }
@@ -76,7 +77,6 @@ class InitFetch {
             reject(response);
           }
         });
-
     })
       .then(response => {
         _this.body = null;
@@ -90,7 +90,6 @@ class InitFetch {
       });
   }
 }
-
 export default new InitFetch();
 
 //   console.log("Key: %s, Value: %s", key, value);

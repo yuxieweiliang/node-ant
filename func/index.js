@@ -1,6 +1,6 @@
+import fetch from './fetch';
 const fs = require('fs');
 const path = require('path');
-
 /**
  * 获取当前值的类型
  * @param obj
@@ -48,6 +48,7 @@ let getFilesPath = function(pathName) {
 };
 
 module.exports = {
+  fetch,
   typeOf,
   readFile,
   readDir,

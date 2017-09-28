@@ -1,6 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
 
 const BookSchema = new Schema({
+  // 模板
+  template: String,// 'base'
   // 标题
   title:  String,
   // author: {id: Schema.Types.ObjectId, ref: 'user'},
@@ -39,8 +41,6 @@ const BookSchema = new Schema({
   public: Boolean,
   // 状态
   status: String,// 'published'
-  // 模板
-  template: String,// 'base'
   // 时间
   dates:   {
     // 创建

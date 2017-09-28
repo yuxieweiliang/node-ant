@@ -27,7 +27,7 @@ router.get('/', async function(ctx, next) {
  */
 router.get('/save', async function(ctx, next) {
   const domRender = ReactServer.renderToString(<Input number="fsdafsa"/>);
-  ctx.body = JSON.stringify(json).toString();
+  ctx.body = json;
 });
 
 /**
