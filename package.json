@@ -52,6 +52,7 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "font-awesome": "^4.7.0",
     "koa": "^2.3.0",
     "koa-router": "^7.2.1",
