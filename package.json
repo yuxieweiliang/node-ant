@@ -52,6 +52,7 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "font-awesome": "^4.7.0",
     "isomorphic-fetch": "^2.2.1",
     "koa": "^2.3.0",

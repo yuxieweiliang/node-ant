@@ -194,9 +194,6 @@ body {
 .img-height-inner img {
   height: 100%;
 }
-.active {
-  background: #eee;
-}
 .hidden {
   display: none;
 }
