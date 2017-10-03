@@ -1,7 +1,7 @@
 import React from 'react'
 import Router from 'koa-router'
 import ReactServer from 'react-dom/server'
-import Input from './input'
+import Input from '../src/page/index'
 
 const router = new Router();
 
@@ -15,10 +15,12 @@ const json = {
  * 首页
  */
 router.get('/', async function(ctx, next) {
-  const domRender = ReactServer.renderToString(<Input number="fsdafsa"/>);
+  const domRender = ReactServer.renderToString(<Input/>);
   ctx.render('index', {
+    script: '/home/index.build.js',
     name: 'name',
     json: JSON.stringify(json),
+    table: JSON.stringify(ctx.macked),
     domRender: JSON.stringify(domRender)
   })
 });
