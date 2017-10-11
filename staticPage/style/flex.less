@@ -1,7 +1,5 @@
 // 配置文件
 @import "setting";
-@import "func";
-@import "color";
 
 .flex,
 .row,
@@ -10,13 +8,12 @@
 .flex-bottom,
 .flex-left,
 .flex-right,
-.flex-right-center,
 .flex-center,
 .justify-center,
 .align-center {
   display: flex;
 }
-
+// 指定上下对齐方式
 .align() {
   &[align=top] {
     align-items: flex-start;
@@ -41,6 +38,7 @@
     justify-content: center;
   }
 }
+// 指定左右对齐方式
 .content() {
   &[data-content=start] {
     align-content: flex-start;
@@ -75,6 +73,7 @@
   .content();
 }
 
+// 对齐方式
 .flex-left {
   justify-content: flex-start;
 }

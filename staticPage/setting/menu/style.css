@@ -1,0 +1,283 @@
+/**
+ * global
+ */
+/**
+ * list page
+ */
+/**
+ * 创建高度
+ * .height-@{num} { height: @num }
+ * -> .height-100 { height: 100px }
+ */
+/**
+ * 创建宽度
+ * .width-@{num} { width: @num }
+ * -> .width-100 { width: 100px }
+ */
+/**
+ * flex 布局
+ * .flex-@{num} {flex: @num} -> .flex-1{ flex: 1 }
+ */
+/**
+ * 透明度
+ * 需要传入 透明度多少
+ */
+/**
+ * 边框
+ * 需要传入 方向，颜色，大小
+ */
+/**
+ * 投影效果
+ * 需要传入 影子颜色，大小
+ */
+/**
+ * hover效果
+ * 需要传入 没有hover的颜色值，与hover时的颜色值
+ */
+/**
+ * 创建按钮
+ * 需要传入一个二维数组
+ */
+.page-title {
+  background: #fff;
+  text-align: center;
+}
+.page-title .ratio-3 {
+  margin: 0 auto;
+  padding: 10px;
+}
+.menu-root {
+  display: flex;
+}
+.menu-nav {
+  display: flex;
+  flex: 1;
+}
+.menu-nav .menu-item {
+  position: relative;
+  color: #666;
+  cursor: pointer;
+}
+.menu-nav .menu-item .menu-title {
+  display: flex;
+  flex-direction: row;
+  color: inherit;
+  cursor: inherit;
+  margin-right: -1px;
+  transition: ease .4s;
+}
+.menu-nav .menu-item .menu-title > .fa {
+  padding: 1em;
+  cursor: inherit;
+}
+.menu-nav .menu-item .menu-title > .fa:first-child {
+  padding-right: 0;
+}
+.menu-nav .menu-item .menu-title a {
+  display: flex;
+  padding: 1em;
+  padding-left: .5em;
+  border-right: 2px solid transparent;
+  white-space: nowrap;
+  color: inherit;
+  cursor: inherit;
+  flex: 1;
+}
+.menu-nav .menu-item .menu-title a > .fa {
+  margin: 0 .5em;
+}
+.menu-nav .menu-item .menu-title a + .fa {
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu-nav .menu-item.active .menu-title {
+  color: #368ed2;
+}
+.menu-nav .menu-item.active .menu-title a {
+  color: inherit;
+}
+.menu-nav .menu-item.active .menu-title .fa-angle-down {
+  color: inherit;
+  transform: rotate(180deg);
+  transition: ease .4s;
+}
+.menu-nav .menu-item.active .menu-sub {
+  display: block;
+}
+.menu-nav .menu-item:not(.disabled):hover {
+  color: #368ed2;
+  transition: ease .4s;
+}
+.menu-nav .menu-item.disabled {
+  cursor: default;
+  color: #ccc;
+}
+.menu-horizontal {
+  width: 100%;
+  flex-direction: row;
+  border-bottom: 1px solid #d9d9d9;
+}
+.menu-horizontal .menu-prev,
+.menu-horizontal .menu-next {
+  width: 2em;
+}
+.menu-horizontal .menu-nav {
+  flex-direction: row;
+}
+.menu-horizontal .menu-nav .menu-item {
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.menu-horizontal .menu-nav .menu-item:not(.disabled):hover {
+  border-bottom: 2px solid #368ed2;
+}
+.menu-horizontal .menu-nav .menu-item:not(.disabled):hover .menu-drop {
+  display: block;
+  width: 100%;
+}
+.menu-horizontal .menu-nav .menu-item:not(.disabled):hover .menu-drop dt {
+  padding-left: 1.2em;
+}
+.menu-horizontal .menu-nav .menu-item:not(.disabled):hover .menu-drop dd {
+  padding-left: 2.4em;
+}
+.menu-horizontal .menu-nav .menu-item.active {
+  border-bottom: 2px solid #368ed2;
+}
+.menu-vertical,
+.menu-inline {
+  flex-direction: column;
+  height: 100%;
+  border-right: 1px solid #d9d9d9;
+}
+.menu-vertical .menu-prev,
+.menu-inline .menu-prev,
+.menu-vertical .menu-next,
+.menu-inline .menu-next {
+  height: 2em;
+}
+.menu-vertical .menu-nav,
+.menu-inline .menu-nav {
+  flex-direction: column;
+}
+.menu-vertical .menu-nav .menu-item,
+.menu-inline .menu-nav .menu-item {
+  border-right: 2px solid transparent;
+  margin-right: -1px;
+}
+.menu-vertical .menu-item:not(.disabled):hover > .menu-sub {
+  display: block;
+  min-width: 160px;
+  width: auto;
+}
+.menu-vertical .menu-item:not(.disabled):hover > .menu-sub dt {
+  padding-left: 1.2em;
+}
+.menu-vertical .menu-item:not(.disabled):hover > .menu-sub dd {
+  padding-left: 2.4em;
+}
+.menu-vertical .fa-angle-down {
+  transform: rotate(-90deg);
+}
+.menu-vertical .active .fa-angle-down {
+  transform: rotate(-90deg);
+}
+.menu-vertical .menu-sub {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  font-size: 14px;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  top: 0;
+  left: calc(100% + 4px);
+}
+.menu-vertical .menu-sub .menu-item a,
+.menu-vertical .menu-sub .menu-item .fa-angle-down {
+  padding: 0;
+}
+.menu-vertical.menu-collapsed {
+  width: 3em;
+}
+.menu-vertical.menu-collapsed .menu-title > a {
+  display: none;
+}
+.menu-vertical.menu-collapsed .menu-title > a + .fa {
+  display: none;
+}
+.menu-hidden dt,
+.menu-hidden dd,
+.menu-hidden li {
+  text-align: left;
+}
+.menu-hidden dt {
+  padding: .4em 2.4em;
+  color: #999;
+  cursor: auto;
+}
+.menu-hidden dd,
+.menu-hidden li {
+  color: #666;
+  cursor: pointer;
+}
+.menu-hidden dd.active,
+.menu-hidden li.active {
+  color: #368ed2;
+  border-right: 2px solid #368ed2;
+  background-color: #edf5fb;
+}
+.menu-hidden dd:active,
+.menu-hidden li:active {
+  background-color: #edf5fb;
+}
+.menu-hidden dd:hover,
+.menu-hidden li:hover {
+  color: #368ed2;
+}
+.menu-hidden dd {
+  padding: .8em .8em .8em 3.6em;
+}
+.menu-hidden li {
+  padding: .8em .8em .8em 2.4em;
+}
+.menu-drop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  font-size: 14px;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+}
+.menu-drop .divider {
+  height: 1px;
+  padding: 0;
+  margin: 0;
+  background: #d9d9d9;
+}
+.menu-sub {
+  display: none;
+}
