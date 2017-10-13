@@ -1,0 +1,103 @@
+/**
+ * global
+ */
+/**
+ * list page
+ */
+/**
+ * 创建高度
+ * .height-@{num} { height: @num }
+ * -> .height-100 { height: 100px }
+ */
+/**
+ * 创建宽度
+ * .width-@{num} { width: @num }
+ * -> .width-100 { width: 100px }
+ */
+/**
+ * flex 布局
+ * .flex-@{num} {flex: @num} -> .flex-1{ flex: 1 }
+ */
+/**
+ * 透明度
+ * 需要传入 透明度多少
+ */
+/**
+ * 边框
+ * 需要传入 方向，颜色，大小
+ */
+/**
+ * 投影效果
+ * 需要传入 影子颜色，大小
+ */
+/**
+ * hover效果
+ * 需要传入 没有hover的颜色值，与hover时的颜色值
+ */
+/**
+ * 创建按钮
+ * 需要传入一个二维数组
+ */
+/**
+  layout
+*/
+.layout {
+  position: relative;
+  min-height: 100%;
+  width: 100%;
+  /*  fixed   */
+  /*  -content-scroll   */
+}
+.layout-header {
+  width: 100%;
+  height: 80px;
+  background: #368ed2;
+}
+.layout-content {
+  padding-bottom: 20px;
+}
+.layout-aside {
+  height: 100%;
+  width: 300px;
+  background: #f2f2f2;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.layout-aside:first-child {
+  float: left;
+}
+.layout-subject {
+  float: left;
+  width: calc(100%  -  300px);
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.layout-footer {
+  position: absolute;
+  bottom: 0;
+  margin-top: -20px;
+  width: inherit;
+  height: 20px;
+  background: #368ed2;
+}
+.layout-fixed-header {
+  padding-top: 80px;
+}
+.layout-fixed-header .layout-header {
+  position: fixed;
+  top: 0;
+}
+.layout-fixed-header .layout-content {
+  padding-bottom: 20px;
+}
+.layout-content-scroll {
+  max-height: 100%;
+  height: 100%;
+}
+.layout-content-scroll .layout-content {
+  height: calc(100% - 100px);
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

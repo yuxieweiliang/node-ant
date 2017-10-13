@@ -1,8 +1,8 @@
-import 'babel-polyfill'
+// import 'babel-polyfill'
 import Koa from 'koa'
 import path from 'path'
 import React from 'react'
-import func from '../func'
+// import func from '../func'
 import serve from 'koa-static'
 import router from './router'// 路由
 import '../mongodb';

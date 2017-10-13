@@ -66,3 +66,37 @@
     z-index: 1;
   }
 }
+
+
+
+
+.icon-file {
+  position: relative;
+  width: 10px;
+  height: 14px;
+  border: 1px solid #999;
+  border-radius: 2px;
+  &:before {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    width: 3px;
+    height: 3px;
+    border-left: 1px solid #999;
+    border-bottom: 1px solid #999;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: -1px;
+    right: -1px;
+    width: 3px;
+    height: 3px;
+    border-top: 1px solid #fff;
+    border-right: 1px solid #fff;
+
+  }
+}

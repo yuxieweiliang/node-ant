@@ -10,7 +10,6 @@
   &{
     position: relative;
     display: inline-block;
-    padding-left: 1.2em;
     cursor: pointer;
 
     input[type="radio"],
@@ -18,7 +17,7 @@
       display: none;
     }
     .icon {
-      position: absolute;
+      position: relative;
       display: inline-block;
       cursor: pointer;
       line-height: 1;
@@ -29,16 +28,14 @@
       border: 1px solid #ccc;
     }
     input:not([type="text"]):checked+.icon {
-      position: absolute;
-      display: table;
-      line-height: 1rem;
+      line-height: 1;
       font-weight: bold;
       border: 1px solid #0077b3;
       text-align: center;
       &:before {
         transform: rotate(45deg) scale(1);
         position: absolute;
-        left: 4px;
+        left: .24em;
         top: 0;
         display: table;
         content: " ";
