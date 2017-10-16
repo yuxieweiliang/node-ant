@@ -1,3 +1,9 @@
+/**
+ * global
+ */
+/**
+ * list page
+ */
 @keyframes antSlideUpIn {
   0% {
     opacity: 0;
@@ -112,12 +118,6 @@
     transform: translateX(-10px);
   }
 }
-/**
- * global
- */
-/**
- * list page
- */
 /**
  * 创建高度
  * .height-@{num} { height: @num }

@@ -1,7 +1,7 @@
 // 配置文件
-@import "../../style/setting";
-@import "../../style/func";
-@import "../../style/color";
+@import "../../style/setting.less";
+@import "../../style/func.less";
+@import "../../style/color.less";
 //  popover popover-topLeft
 .box {
   position: relative;
@@ -35,6 +35,10 @@
       display: flex;
       text-align: center;
       padding: 3px 0;
+
+      .fa-caret-right {
+        transition: ease .4s;
+      }
       .tree-icon {
         .create-tree-icon();
         justify-content: center;
@@ -65,7 +69,13 @@
       display: none;
     }
     &.open {
-      .tree-content {
+      >.tree-switcher {
+        .fa-caret-right {
+          transition: ease .4s;
+          transform: rotate(90deg)
+        }
+      }
+      >.tree-content {
         display: block;
       }
     }

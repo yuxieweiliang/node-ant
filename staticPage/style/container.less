@@ -1,4 +1,130 @@
-// 配置文件
-@import "setting";
-@import "func";
-@import "color";
+@import "./animation.less";
+@import "./color.less";
+@import "./func.less";
+
+
+html,body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  background: @bgBodyColor;
+  overflow: hidden;
+}
+
+.header {
+  background: @bgHeaderColor;
+  height: @heightHeader;
+  border-bottom: 1px solid #eee;
+}
+.main {
+  flex: 1;
+
+  overflow: hidden;
+  overflow-y: auto;
+}
+.footer {
+  display: flex;
+  flex-direction: row;
+  background: @footerColor;
+  height: @heightFooter;
+}
+.menu-list {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+// padding: left & right
+.between {
+  padding: 0 @between;
+}
+.between-sm {
+  padding: 0 @between - 5;
+}
+.between-lg {
+  padding: 0 @between + 5;
+}
+
+// margin-top
+.mt {
+  margin-top: @interval;
+}
+.mt-sm {
+  margin-top: @interval - 5;
+}
+.mt-lg {
+  margin-top: @interval + 5;
+}
+.pb {
+  padding-bottom: @interval;
+}
+.pb-sm {
+  padding-bottom: @interval - 5;;
+}
+.pb-lg {
+  padding-bottom: @interval + 5;;
+}
+
+.inner {
+  width: 100%;
+  height: 100%;
+  > * {
+    width: 100%;
+    height: 100%;
+  }
+}
+.width-inner {
+  width: 100%;
+  > * {
+    width: 100%;
+  }
+}
+.height-inner {
+  height: 100%;
+  > * {
+    height: 100%;
+  }
+}
+
+.img-width-inner {
+  width: 100%;
+  img {
+    width: 100%;
+  }
+}
+
+.img-height-inner {
+  height: 100%;
+  img {
+    height: 100%;
+  }
+}
+
+
+
+.hidden {
+  display: none;
+}
+
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+.text-between {
+  text-align: -webkit-center;
+  text-align-last: left;
+  text-align: justify;
+}
+

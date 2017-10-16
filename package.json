@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "cross-env NODE_ENV=dev webpack-dev-server --inline --hot --color --watch --open --config ./config/webpack",
     "start": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --color --watch",
     "create:page": "set NODE_ENV=development&& nodemon tool/createPage",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^7.1.5",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -32,12 +34,16 @@
     "koa-static": "^4.0.1",
     "koa-views": "^6.0.2",
     "koa-webpack-middleware": "^1.0.7",
+    "less": "^3.0.0-alpha.3",
+    "less-loader": "^4.0.5",
     "markdown": "^0.5.0",
     "markdown-loader": "^2.0.1",
     "marked": "^0.3.6",
     "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
     "open-browser-webpack-plugin": "0.0.5",
+    "postcss-cssnext": "^3.0.2",
+    "postcss-loader": "^2.0.8",
     "prop-types": "^15.5.10",
     "sass-loader": "^6.0.6",
     "stream": "0.0.2",
@@ -53,6 +59,7 @@
   },
   "dependencies": {
     "animate.css": "^3.5.2",
+    "core-decorators": "^0.20.0",
     "font-awesome": "^4.7.0",
     "koa": "^2.3.0",
     "koa-router": "^7.2.1",
