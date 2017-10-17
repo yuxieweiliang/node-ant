@@ -1,6 +1,7 @@
 @import "./animation.less";
 @import "./color.less";
 @import "./func.less";
+@import "./extend.less";
 
 .input-group {
   width: 100%;
@@ -51,6 +52,35 @@
   .input-group-addon + .form-control {
     border-left: 0;
   }
+  .open {
+    .fa-angle-down {
+      transform: rotate(180deg);
+      transition: ease .4s;
+    }
+    .dropdown-menu {
+      display: block;
+      animation: antSlideUpIn .4s;
+    }
+    .dropdown-menu-right {
+      right: 0;
+      left: auto;
+      animation: antSlideUpIn .4s;
+    }
+    .dropdown-menu-down {
+      top: auto;
+      bottom: 100%;
+      box-shadow: 0 -6px 12px rgba(0,0,0,.175);
+      animation: antSlideDownIn .4s;
+    }
+    .dropdown-menu-down-right {
+      top: auto;
+      left: auto;
+      right: 0;
+      bottom: 100%;
+      box-shadow: 0 -6px 12px rgba(0,0,0,.175);
+      animation: antSlideDownIn .4s;
+    }
+  }
 }
 
 .form-control {
@@ -90,12 +120,21 @@
   }
 }
 
+.input {
+  &-sm {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+  }
+}
 
 .dropdown-menu {
   .create-drop();
   > li {
     // divider: 分割器
     &.divider {
+      &:extend(.div-line);
       height: 1px;
       margin: 9px 0;
       overflow: hidden;
@@ -117,38 +156,4 @@
       }
     }
   }
-}
-
-.open {
-  .fa-angle-down {
-    transform: rotate(180deg);
-    transition: ease .4s;
-  }
-  .dropdown-menu {
-    display: block;
-    animation: antSlideUpIn .4s;
-  }
-  .dropdown-menu-right {
-    right: 0;
-    left: auto;
-    animation: antSlideUpIn .4s;
-  }
-  .dropdown-menu-down {
-    top: auto;
-    bottom: 100%;
-    box-shadow: 0 -6px 12px rgba(0,0,0,.175);
-    animation: antSlideDownIn .4s;
-  }
-  .dropdown-menu-down-right {
-    top: auto;
-    left: auto;
-    right: 0;
-    bottom: 100%;
-    box-shadow: 0 -6px 12px rgba(0,0,0,.175);
-    animation: antSlideDownIn .4s;
-  }
-}
-//  infinite 循环播放
-.div {
-  animation: antSwingIn 1s infinite;
 }

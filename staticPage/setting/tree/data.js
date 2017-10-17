@@ -1,5 +1,5 @@
 export default {
-  class: 'horizontal',
+  rootClass: 'horizontal',
   list: [{
     id: 0,
     icon: 'caret-down',

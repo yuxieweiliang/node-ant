@@ -154,4 +154,4 @@ class MyComponent extends Component {
 }
 
 
-render(<MyComponent />, document.getElementById('root'));
+render(<MyComponent root="inline" />, document.getElementById('root'));

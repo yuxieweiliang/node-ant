@@ -10,12 +10,12 @@ class MyComponent extends Component {
   constructor() {
     super();
     this.state = {
-      active: 0,
+      active: null,
     }
   }
   static defaultProps = data
 
-  _renderSub(subList) {
+  _horizontalSub(subList) {
     let array = []
     subList.subset.map((list, i) => {
 
@@ -40,96 +40,199 @@ class MyComponent extends Component {
     })
     return array
   }
+  _inlineSub(subList) {
+    return subList.subset.map((item, i) => {
+      const hasSub = ((item.subset && item.subset.length > 0))
+      return (
+        <li key={item.id + '-' + i} ref={item.id} onClick={(e) => this._subClick(e, item)}>
+          <div className="menu-title">
+            <a href="javascript:void(0)">
+              Navigation Two
+            </a>
+            {
+              hasSub && <span className="fa fa-angle-down"/>
+            }
 
-  _navClick(i) {
-    this.setState({active: i})
+          </div>
+          {
+            hasSub && this._renderSub(item)
+          }
+        </li>
+      )
+    })
   }
 
+  _parent(node, target) {
+    if(node && node.parentNode && node.parentNode.className.split(' ').indexOf(target) > -1) {
+      console.log(node.parentNode.className.split(' ').indexOf(target)> -1)
+      return true
+    } else if(node.parentNode){
+      return this._parent(node.parentNode, target)
+    }
+  }
+
+  _subClick(e, item) {
+    e.stopPropagation()
+    let oldNode = this.state.old
+    let oldActive = this.state.oldActive
+    let thisNode = this.refs[item.id]
+    let className = thisNode.className.split(' ')
+    if(className.indexOf('disabled') > -1) {
+      return
+    }
+
+    // 关闭旧节点
+    if(thisNode.parentNode.querySelector('.open')) {
+      oldNode.className = 'menu-item'
+    }
+    if(oldActive) {
+      oldActive.className = 'menu-item'
+    }
+
+    if(className.indexOf('open') > -1 || className.indexOf('active') > -1) {
+      this.refs[item.id].className = 'menu-item'
+    } else if(item.subset) {
+      this.refs[item.id].className = 'menu-item open'
+      this.setState({old: thisNode})
+    } else {
+
+      this.refs[item.id].className = 'menu-item active'
+      this.setState({oldActive: thisNode})
+    }
+
+  }
+  _renderSub(subList) {
+    const {rootClass} = this.props
+    let subDom = null;
+
+    // 水平导航条
+    if(rootClass === 'horizontal' ) {
+      subDom = this._horizontalSub(subList)
+
+      // 垂直可展开
+    } else if(rootClass === 'inline' ) {
+      subDom = this._inlineSub(subList)
+    }
+
+
+    return (
+
+      <ul className={this._navSubClass()}>{subDom}</ul>
+    )
+  }
+
+  /**
+   * 一级菜单
+   * @param i
+   * @private
+   */
+  _navClick(i) {
+    let oldNode = this.state.active
+    let thisNode = this.refs[i]
+    let className = thisNode.className.split(' ')
+
+    // 关闭旧节点
+    if(oldNode) {
+      oldNode.className = 'menu-item'
+    }
+
+    if(className.indexOf('open') > -1) {
+      this.refs[i].className = 'menu-item'
+    } else {
+      this.refs[i].className = 'menu-item open'
+    }
+    this.setState({active: thisNode})
+
+  }
+
+  /**
+   * 根节点样式
+   * @returns {string}
+   * @private
+   */
+  _rootClass() {
+    let className = 'menu-root menu-'
+    const {rootClass} = this.props
+
+    // 水平导航条
+    if(rootClass === 'horizontal' ) {
+      className += rootClass
+
+      // 垂直可展开
+    } else if(rootClass === 'inline' ) {
+      className += rootClass
+    }
+
+    return className
+  }
+
+  /**
+   *
+   * @param item
+   * @param i
+   * @returns {string}
+   * @private
+   */
   _navClass(item, i) {
     let className = 'menu-item '
     if(this.state.active === i) {
-      className +='active'
+      className +='open'
     } else if(item.disabled) {
       className +='disabled'
     }
     return  className
   }
+
+  /**
+   * 子节点样式
+   * @returns {string}
+   * @private
+   */
+  _navSubClass() {
+    let className = 'menu-hidden '
+    const {rootClass} = this.props
+
+    // 水平导航条
+    if(rootClass === 'horizontal' ) {
+      className += 'menu-drop'
+
+      // 垂直可展开
+    } else if(rootClass === 'inline' ) {
+      className += 'menu-sub'
+    }
+    return className
+  }
   render() {
-    return (<div className={'menu-root menu-' + this.props.class}>
-      <span className="menu-prev"></span>
+    return (<div className={this._rootClass()}>
+      <span className="menu-prev"/>
       <div className="menu-nav">
         {
           this.props.list.map((item, i) => {
             return (
               <div
-                key={i}
+                key={item.id}
+                ref={item.id}
                 className={this._navClass(item, i)}
-                onClick={() => this._navClick(i)}>
+                onClick={() => this._navClick(item.id)}>
                 <div className="menu-title">
                   <a href="javascript:void(0)">
                     <i className={'fa fa-' + item.icon}/>
                     {item.title}
                   </a>
+                  <span className="fa fa-sort-down"/>
                 </div>
-                <ul key={i} className="menu-hidden menu-drop">
-                  {
-                    this._renderSub(item)
-                  }
-                </ul>
-
+                {
+                  item.subset && this._renderSub(item)
+                }
               </div>
             )
           })
         }
-
-        <div className="menu-item">
-          <div className="menu-title">
-            <a href="javascript:void(0)">
-              <i className="fa fa-address-book"></i>
-              Navigation Two
-            </a>
-          </div>
-          <ul className="menu-hidden menu-drop">
-            <li>fdsfdsa</li>
-            <li>fdsfdsa</li>
-
-            <li>fdsafdafdsaf</li>
-            <li>fdsafdafdsaf</li>
-            <li className="divider"></li>
-            <li>fdsafdafdsaf</li>
-            <li>fdsafdafdsaf</li>
-            <li>fdsfdsa</li>
-          </ul>
-        </div>
-        <div className="menu-item disabled">
-          <div className="menu-title">
-            <a href="javascript:void(0)">
-              <i className="fa fa-address-book"></i>
-              Navigation Three
-            </a>
-          </div>
-        </div>
-        <div className="menu-item">
-          <div className="menu-title">
-            <a href="javascript:void(0)">
-              <i className="fa fa-address-book"></i>
-              Navigation Four
-            </a>
-          </div>
-          <dl className="menu-hidden menu-drop">
-            <dt>fdsa</dt>
-            <dd>fdsa</dd>
-            <dd>fdsa</dd>
-            <dt>fdsa</dt>
-            <dd>fdsa</dd>
-            <dd>fdsa</dd>
-          </dl>
-        </div>
       </div>
-      <span className="menu-next"></span>
+      <span className="menu-next"/>
     </div>);
   }
 }
 
 
-render(<MyComponent />, document.getElementById('root'));
+render(<MyComponent rootClass="inline" />, document.getElementById('root'));

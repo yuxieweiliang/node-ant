@@ -1,0 +1,98 @@
+// 配置文件
+@import "./animation.less";
+@import "./color.less";
+@import "./func.less";
+
+/**
+  layout
+*/
+
+@header: 80px, @Blue;
+@footer: 20px, @Blue;
+@aside: 300px, @Gray-f2;
+
+.layout {
+  position: relative;
+  min-height: 100%;
+  width: 100%;
+  &-header {
+    width: 100%;
+    height: extract(@header, 1);
+    background: extract(@header, 2);
+  }
+  &-content {
+    padding-bottom: extract(@footer, 1);
+  }
+  &-aside {
+    height: 100%;
+    width: extract(@aside, 1);
+    background: extract(@aside, 2);
+    overflow-x: hidden;
+    overflow-y: auto;
+    &:first-child {
+      float: left;
+    }
+  }
+  &-subject {
+    float: left;
+    @width: extract(@aside, 1);
+    width: calc(~'100%  - ' @width);
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  &-footer {
+    @top: extract(@footer, 1);
+    position: absolute;
+    bottom: 0;
+    margin-top: -@top;
+    width: inherit;
+    height: extract(@footer, 1);
+    background: extract(@header, 2);
+  }
+
+  /*  fixed   */
+  &-fixed-header {
+    padding-top: extract(@header, 1);
+    .layout-header {
+      position: fixed;
+      top: 0;
+    }
+    .layout-content {
+      padding-bottom: extract(@footer, 1);
+    }
+  }
+
+  /*  -content-scroll   */
+  &-content-scroll {
+    max-height: 100%;
+    height: 100%;
+    .layout-content {
+      @height: extract(@header, 1) + extract(@footer, 1);
+      height: calc(~'100% -' @height);
+      padding: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

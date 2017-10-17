@@ -17,7 +17,7 @@ module.exports = {
 
   // 全局 公用 libs
   entry: {
-    // menu: `${ROOTS}/staticPage/setting/menu/index.jsx`,
+    menu: `${ROOTS}/staticPage/setting/menu/index.jsx`,
     tree: `${ROOTS}/staticPage/setting/tree/index.jsx`,
     vendors: ['react', 'react-dom', 'prop-types', 'moment']
   },

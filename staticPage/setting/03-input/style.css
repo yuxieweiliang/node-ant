@@ -41,3 +41,6 @@
 div.row {
   background: #fff;
 }
+.div {
+  animation: antSwingIn 1s infinite;
+}

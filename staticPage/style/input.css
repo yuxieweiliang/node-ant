@@ -152,6 +152,13 @@
  * 创建按钮
  * 需要传入一个二维数组
  */
+.div-line,
+.dropdown-menu > li.divider {
+  height: 1px;
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
 .input-group {
   width: 100%;
   position: relative;
@@ -199,6 +206,33 @@
 .input-group .input-group-addon + .form-control {
   border-left: 0;
 }
+.input-group .open .fa-angle-down {
+  transform: rotate(180deg);
+  transition: ease .4s;
+}
+.input-group .open .dropdown-menu {
+  display: block;
+  animation: antSlideUpIn .4s;
+}
+.input-group .open .dropdown-menu-right {
+  right: 0;
+  left: auto;
+  animation: antSlideUpIn .4s;
+}
+.input-group .open .dropdown-menu-down {
+  top: auto;
+  bottom: 100%;
+  box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.175);
+  animation: antSlideDownIn .4s;
+}
+.input-group .open .dropdown-menu-down-right {
+  top: auto;
+  left: auto;
+  right: 0;
+  bottom: 100%;
+  box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.175);
+  animation: antSlideDownIn .4s;
+}
 .form-control:first-child {
   border-right: 0;
   border-top-right-radius: 0;
@@ -245,6 +279,12 @@
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
+.input-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -284,34 +324,4 @@
   text-decoration: none;
   color: #333;
   background-color: #f2f2f2;
-}
-.open .fa-angle-down {
-  transform: rotate(180deg);
-  transition: ease .4s;
-}
-.open .dropdown-menu {
-  display: block;
-  animation: antSlideUpIn .4s;
-}
-.open .dropdown-menu-right {
-  right: 0;
-  left: auto;
-  animation: antSlideUpIn .4s;
-}
-.open .dropdown-menu-down {
-  top: auto;
-  bottom: 100%;
-  box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.175);
-  animation: antSlideDownIn .4s;
-}
-.open .dropdown-menu-down-right {
-  top: auto;
-  left: auto;
-  right: 0;
-  bottom: 100%;
-  box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.175);
-  animation: antSlideDownIn .4s;
-}
-.div {
-  animation: antSwingIn 1s infinite;
 }

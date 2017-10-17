@@ -152,49 +152,10 @@
  * 创建按钮
  * 需要传入一个二维数组
  */
-.form-inline {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.form-group {
-  width: 100%;
-  margin-top: 10px;
-}
-.form-list {
-  display: flex;
-  flex-direction: row;
-  padding: 0 15px;
-  height: 40px;
-  align-items: center;
-}
-.form-title {
-  white-space: nowrap;
-  margin-right: 10px;
-}
-.form-item {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: 0 15px;
-}
-.form-item .form-control {
-  flex: 1;
-}
-.form-control {
-  font-size: 14px;
-  height: 2em;
-  line-height: 2em;
-  padding: 0 .6em;
-  border: 1px solid #d9d9d9;
-  border-radius: .4em;
-  width: 100%;
-  transition: ease 1s;
-}
-.form-control:focus {
-  background: #fafafa;
-  border: 1px solid #2777d1;
-  box-shadow: 0 0 3px #4794ec;
-  transition: ease .4s;
+.alert-danger {
+  padding: .8em;
+  color: #d85867;
+  background: #ffe3e7;
+  border: 1px solid #ffcad0;
+  border-radius: 4px;
 }

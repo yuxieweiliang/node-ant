@@ -152,49 +152,66 @@
  * 创建按钮
  * 需要传入一个二维数组
  */
-.form-inline {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.form-group {
+/**
+  layout
+*/
+.layout {
+  position: relative;
+  min-height: 100%;
   width: 100%;
-  margin-top: 10px;
+  /*  fixed   */
+  /*  -content-scroll   */
 }
-.form-list {
-  display: flex;
-  flex-direction: row;
-  padding: 0 15px;
-  height: 40px;
-  align-items: center;
-}
-.form-title {
-  white-space: nowrap;
-  margin-right: 10px;
-}
-.form-item {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: 0 15px;
-}
-.form-item .form-control {
-  flex: 1;
-}
-.form-control {
-  font-size: 14px;
-  height: 2em;
-  line-height: 2em;
-  padding: 0 .6em;
-  border: 1px solid #d9d9d9;
-  border-radius: .4em;
+.layout-header {
   width: 100%;
-  transition: ease 1s;
+  height: 80px;
+  background: #368ed2;
 }
-.form-control:focus {
-  background: #fafafa;
-  border: 1px solid #2777d1;
-  box-shadow: 0 0 3px #4794ec;
-  transition: ease .4s;
+.layout-content {
+  padding-bottom: 20px;
+}
+.layout-aside {
+  height: 100%;
+  width: 300px;
+  background: #f2f2f2;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.layout-aside:first-child {
+  float: left;
+}
+.layout-subject {
+  float: left;
+  width: calc(100%  -  300px);
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.layout-footer {
+  position: absolute;
+  bottom: 0;
+  margin-top: -20px;
+  width: inherit;
+  height: 20px;
+  background: #368ed2;
+}
+.layout-fixed-header {
+  padding-top: 80px;
+}
+.layout-fixed-header .layout-header {
+  position: fixed;
+  top: 0;
+}
+.layout-fixed-header .layout-content {
+  padding-bottom: 20px;
+}
+.layout-content-scroll {
+  max-height: 100%;
+  height: 100%;
+}
+.layout-content-scroll .layout-content {
+  height: calc(100% - 100px);
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
 }

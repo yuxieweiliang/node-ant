@@ -152,49 +152,83 @@
  * 创建按钮
  * 需要传入一个二维数组
  */
-.form-inline {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+/**
+  checkbox & radio
+*/
+.checkbox-radio,
+.checkbox,
+.radio {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
 }
-.form-group {
-  width: 100%;
-  margin-top: 10px;
+.checkbox-radio input[type="radio"],
+.checkbox-radio input[type="checkbox"],
+.checkbox input[type="radio"],
+.checkbox input[type="checkbox"],
+.radio input[type="radio"],
+.radio input[type="checkbox"] {
+  display: none;
 }
-.form-list {
-  display: flex;
-  flex-direction: row;
-  padding: 0 15px;
-  height: 40px;
-  align-items: center;
+.checkbox-radio .icon,
+.checkbox .icon,
+.radio .icon {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  line-height: 1;
+  left: 0;
+  width: 1em;
+  height: 1em;
+  background: #eee;
+  border: 1px solid #ccc;
 }
-.form-title {
-  white-space: nowrap;
-  margin-right: 10px;
+.checkbox-radio input:not([type="text"]):checked + .icon,
+.checkbox input:not([type="text"]):checked + .icon,
+.radio input:not([type="text"]):checked + .icon {
+  line-height: 1;
+  font-weight: bold;
+  border: 1px solid #0077b3;
+  text-align: center;
 }
-.form-item {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: 0 15px;
+.checkbox-radio input:not([type="text"]):checked + .icon:before,
+.checkbox input:not([type="text"]):checked + .icon:before,
+.radio input:not([type="text"]):checked + .icon:before {
+  transform: rotate(45deg) scale(1);
+  position: absolute;
+  left: .24em;
+  top: 0;
+  display: table;
+  content: " ";
+  transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6);
 }
-.form-item .form-control {
-  flex: 1;
-}
-.form-control {
-  font-size: 14px;
-  height: 2em;
-  line-height: 2em;
-  padding: 0 .6em;
-  border: 1px solid #d9d9d9;
-  border-radius: .4em;
-  width: 100%;
-  transition: ease 1s;
-}
-.form-control:focus {
-  background: #fafafa;
-  border: 1px solid #2777d1;
-  box-shadow: 0 0 3px #4794ec;
+.checkbox-radio:hover .icon,
+.checkbox:hover .icon,
+.radio:hover .icon {
+  border: 1px solid #0077b3;
   transition: ease .4s;
+}
+.checkbox .icon {
+  border-radius: 2px;
+}
+.checkbox input[type="checkbox"]:checked + .icon {
+  background: #0077b3;
+}
+.checkbox input[type="checkbox"]:checked + .icon:before {
+  width: .3em;
+  height: .6em;
+  border: 2px solid #fff;
+  border-top: 0;
+  border-left: 0;
+}
+.radio .icon {
+  border-radius: 1em;
+}
+.radio input[type="radio"]:checked + .icon:before {
+  left: 3px;
+  top: 3px;
+  width: .5em;
+  height: .5em;
+  background: #0077b3;
+  border-radius: 1em;
 }
