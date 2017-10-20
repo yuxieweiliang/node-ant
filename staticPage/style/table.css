@@ -177,40 +177,63 @@
   max-height: 240px;
   overflow-y: scroll;
 }
+.table.table-position-left .table-content .table-scroll,
+.table.table-position-right .table-content .table-scroll,
 .table.table-position-middle .table-content .table-scroll {
   width: 100%;
   overflow: hidden;
   overflow-x: auto;
 }
+.table.table-position-left .table-content .table-fixed-left,
+.table.table-position-right .table-content .table-fixed-left,
 .table.table-position-middle .table-content .table-fixed-left,
+.table.table-position-left .table-content .table-fixed-right,
+.table.table-position-right .table-content .table-fixed-right,
 .table.table-position-middle .table-content .table-fixed-right {
   position: absolute;
+  overflow: hidden;
   top: 0;
   border-radius: 4px 0 0 0;
 }
+.table.table-position-left .table-content .table-fixed-left > .table-body,
+.table.table-position-right .table-content .table-fixed-left > .table-body,
 .table.table-position-middle .table-content .table-fixed-left > .table-body,
+.table.table-position-left .table-content .table-fixed-right > .table-body,
+.table.table-position-right .table-content .table-fixed-right > .table-body,
 .table.table-position-middle .table-content .table-fixed-right > .table-body {
   height: 223px;
-  overflow: hidden;
+  overflow-y: auto;
+  margin-right: -17px;
 }
+.table.table-position-left .table-content .table-fixed-left > .table-body > .table-inner,
+.table.table-position-right .table-content .table-fixed-left > .table-body > .table-inner,
 .table.table-position-middle .table-content .table-fixed-left > .table-body > .table-inner,
+.table.table-position-left .table-content .table-fixed-right > .table-body > .table-inner,
+.table.table-position-right .table-content .table-fixed-right > .table-body > .table-inner,
 .table.table-position-middle .table-content .table-fixed-right > .table-body > .table-inner {
   height: 100%;
   overflow: hidden;
   overflow-y: auto;
   margin-right: -17px;
 }
-.table.table-position-middle .table-content .table-fixed-left {
+.table.table-position-left .table-fixed-left,
+.table.table-position-right .table-fixed-left,
+.table.table-position-middle .table-fixed-left {
   left: 0;
   box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.2);
+  transition: ease .4s;
 }
-.table.table-position-middle .table-content .table-fixed-right {
+.table.table-position-left .table-fixed-right,
+.table.table-position-right .table-fixed-right,
+.table.table-position-middle .table-fixed-right {
   right: 17px;
   box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.2);
+  transition: ease .4s;
 }
-.table.table-scroll-position-left .table-fixed-left,
-.table.table-scroll-position-right .table-fixed-right {
+.table.table-position-left .table-fixed-left,
+.table.table-position-right .table-fixed-right {
   box-shadow: none;
+  transition: ease .4s;
 }
 .table .table-scroll .table-header {
   padding-bottom: 0;
@@ -264,7 +287,7 @@
   word-break: break-all;
 }
 .table .table-header table[data-ref=head] .t-head > tr:not(:last-child) > th {
-  border-bottom: 1px solid #fefdfc;
+  border-bottom: 1px solid #f2f2f2;
 }
 .table .table-header table[data-ref=head] .t-head > tr > th {
   color: #333;

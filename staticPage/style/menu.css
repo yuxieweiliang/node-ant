@@ -152,10 +152,6 @@
  * 创建按钮
  * 需要传入一个二维数组
  */
-.page-title {
-  background: #fff;
-  text-align: center;
-}
 .menu-root {
   display: flex;
 }
@@ -207,9 +203,9 @@
 .menu-item .menu-title a {
   display: flex;
   flex: 1;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  padding-right: 1em;
+  padding-top: .6em;
+  padding-bottom: .6em;
+  padding-right: .6em;
   white-space: nowrap;
   color: inherit;
   cursor: inherit;
@@ -218,7 +214,7 @@
   margin: 0 .5em;
 }
 .menu-item .menu-title a + .fa {
-  padding: 1em;
+  padding: .6em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -291,18 +287,18 @@
 .menu-inline .menu-nav {
   flex-direction: column;
 }
+.menu-vertical .menu-nav .menu-item > .menu-title,
+.menu-inline .menu-nav .menu-item > .menu-title {
+  border-right: 2px solid transparent;
+  margin-right: -1px;
+}
 .menu-vertical .menu-nav .menu-item.open > .menu-hidden,
 .menu-inline .menu-nav .menu-item.open > .menu-hidden {
   padding-left: 2em;
 }
-.menu-vertical .menu-nav > .menu-item,
-.menu-inline .menu-nav > .menu-item {
-  border-right: 2px solid transparent;
-  margin-right: -1px;
-}
 .menu-vertical .menu-nav > .menu-item > .menu-title a,
 .menu-inline .menu-nav > .menu-item > .menu-title a {
-  padding-left: 2.4em;
+  padding-left: 1em;
 }
 .menu-vertical .menu-nav > .menu-item > .menu-title .fa + a,
 .menu-inline .menu-nav > .menu-item > .menu-title .fa + a {
@@ -310,7 +306,7 @@
 }
 .menu-vertical .menu-nav > .menu-item.open > .menu-hidden,
 .menu-inline .menu-nav > .menu-item.open > .menu-hidden {
-  padding-left: 4em;
+  padding-left: 2em;
 }
 .menu-vertical .menu-nav > .menu-item.open:hover > .menu-title,
 .menu-inline .menu-nav > .menu-item.open:hover > .menu-title {

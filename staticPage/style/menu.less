@@ -5,12 +5,6 @@
 
 // ant-menu-root ant-menu ant-menu-inline ant-menu-dark
 // ant-menu-root ant-menu ant-menu-vertical ant-menu-dark ant-menu-inline-collapsed
-.page-title {
-  background: #fff;
-  text-align: center;
-
-}
-
 
 // 公共节点
 .menu {
@@ -71,9 +65,9 @@
     a {
       display: flex;
       flex: 1;
-      padding-top: 1em;
-      padding-bottom: 1em;
-      padding-right: 1em;
+      padding-top: .6em;
+      padding-bottom: .6em;
+      padding-right: .6em;
       white-space: nowrap;
       color: inherit;
       cursor: inherit;
@@ -82,7 +76,7 @@
       }
     }
     a+.fa {
-      padding: 1em;
+      padding: .6em;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -184,18 +178,21 @@
     .menu-nav {
       flex-direction: column;
       .menu-item {
+        >.menu-title {
+          border-right: 2px solid transparent;
+          margin-right: -1px;
+        }
         &.open {
           >.menu-hidden {
             padding-left: 2em;
           }
         }
       }
+      // 仅第一层样式
       >.menu-item {
-        border-right: 2px solid transparent;
-        margin-right: -1px;
         > .menu-title {
           a {
-            padding-left: 2.4em;
+            padding-left: 1em;
           }
           .fa+a {
             padding-left: .5em;
@@ -203,7 +200,7 @@
         }
         &.open {
           >.menu-hidden {
-            padding-left: 4em;
+            padding-left: 2em;
           }
           &:hover {
             > .menu-title {

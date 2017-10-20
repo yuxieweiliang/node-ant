@@ -17,8 +17,9 @@ module.exports = {
 
   // 全局 公用 libs
   entry: {
-    menu: `${ROOTS}/staticPage/setting/menu/index.jsx`,
-    tree: `${ROOTS}/staticPage/setting/tree/index.jsx`,
+    // menu: `${ROOTS}/staticPage/setting/menu/index.jsx`,
+    // tree: `${ROOTS}/staticPage/setting/tree/index.jsx`,
+    table: `${ROOTS}/staticPage/setting/table/index.jsx`,
     vendors: ['react', 'react-dom', 'prop-types', 'moment']
   },
 
@@ -35,7 +36,7 @@ module.exports = {
     /*new webpack.LoaderOptionsPlugin({
       debug: true
     }),*/
-    new HtmlWebpackPlugin({
+    /*new HtmlWebpackPlugin({
       filename: `menu.html`,
       template: `${ROOTS}/staticPage/setting/menu/main.html`,
       showErrors: true,
@@ -45,6 +46,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: `tree.html`,
       template: `${ROOTS}/staticPage/setting/tree/main.html`,
+      showErrors: true,
+      // chunks: 'vendors',
+      inject: true
+    }),*/
+    new HtmlWebpackPlugin({
+      filename: `table.html`,
+      template: `${ROOTS}/staticPage/setting/table/main.html`,
       showErrors: true,
       // chunks: 'vendors',
       inject: true

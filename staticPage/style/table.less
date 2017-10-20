@@ -71,9 +71,13 @@
     }
   }
   &.scroll-position-middle {}
+  &.scroll-position-middle {}
+  &.scroll-position-middle {}
 
 
   //  固定两侧的表格
+  &.table-position-left,
+  &.table-position-right,
   &.table-position-middle {
     .table-content {
       .table-scroll {
@@ -88,11 +92,13 @@
       .table-fixed-left,
       .table-fixed-right {
         position:absolute;
+        overflow: hidden;
         top: 0;
         border-radius: 4px 0 0 0;
         > .table-body {
           height: 223px;
-          overflow: hidden;
+          overflow-y: auto;
+          margin-right: -17px;
           >.table-inner {
             height: 100%;
             overflow: hidden;
@@ -102,20 +108,23 @@
           }
         }
       }
-      .table-fixed-left {
-        left: 0;
-        box-shadow: 6px 0 6px -4px rgba(0,0,0,.2);
-      }
-      .table-fixed-right {
-        right: 17px;
-        box-shadow: -6px 0 6px -4px rgba(0,0,0,.2);
-      }
+    }
+    .table-fixed-left {
+      left: 0;
+      box-shadow: 6px 0 6px -4px rgba(0,0,0,.2);
+      transition: ease .4s;
+    }
+    .table-fixed-right {
+      right: 17px;
+      box-shadow: -6px 0 6px -4px rgba(0,0,0,.2);
+      transition: ease .4s;
     }
 
   }
-  &.table-scroll-position-left .table-fixed-left,
-  &.table-scroll-position-right .table-fixed-right {
-    box-shadow: none
+  &.table-position-left .table-fixed-left,
+  &.table-position-right .table-fixed-right {
+    box-shadow: none;
+    transition: ease .4s;
   }
 
   .table-scroll {
@@ -167,7 +176,7 @@
   .table-header table[data-ref=head] {
     .t-head {
       .table-head(th);
-      .col-table(th, @Gray-3, @Gray-f2, @White);
+      .col-table(th, @Gray-3, @Gray-f2, @Gray-f2);
       .table-title-inner {
         display: flex;
         align-items: center;
@@ -219,14 +228,5 @@
       .col-table(td, @Gray-6, @White, @Gray-ea);
     }
   }
-
-
-
-
-
-
-
-
-
 
 }

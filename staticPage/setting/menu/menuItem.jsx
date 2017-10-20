@@ -7,12 +7,8 @@ import { typeOf } from '../../../assets/func'
 import '../../style/main.less'
 import warning from 'warning'
 
-let menuId = (function() {
-  let id = 0
-  return () => id++
-})()
 
-class MyComponent extends Component {
+class MenuItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,12 +45,8 @@ class MyComponent extends Component {
   _inlineSub(subList) {
     return subList.subset.map((item, i) => {
       const hasSub = (item.subset && item.subset.length > 0)
-      let ref = 'id-' + menuId() + '-' + i
       return (
-        <li key={item.id + '-' + i}
-            className="menu-item"
-            ref={ ref }
-            onClick={(e) => this._subClick(e, ref, item)}>
+        <li key={item.id + '-' + i} ref={item.id} onClick={(e) => this._subClick(e, item)}>
           <div className="menu-title">
             <a href="javascript:void(0)">{item.name}</a>
             {
@@ -74,16 +66,16 @@ class MyComponent extends Component {
     if(node && node.parentNode && node.parentNode.className.split(' ').indexOf(target) > -1) {
       // console.log(node.parentNode.className.split(' ').indexOf(target)> -1)
       return true
-    } else if(node.parentNode) {
+    } else if(node.parentNode){
       return this._parent(node.parentNode, target)
     }
   }
 
-  _subClick(e, ref, item) {
+  _subClick(e, item) {
     e.stopPropagation()
     let oldNode = this.state.old
     let oldActive = this.state.oldActive
-    let thisNode = this.refs[ref]
+    let thisNode = this.refs[item.id]
     let className = thisNode.className.split(' ')
     if(className.indexOf('disabled') > -1) {
       return
@@ -98,13 +90,13 @@ class MyComponent extends Component {
     }
 
     if(className.indexOf('open') > -1 || className.indexOf('active') > -1) {
-      this.refs[ref].className = 'menu-item'
+      this.refs[item.id].className = 'menu-item'
     } else if(item.subset) {
-      this.refs[ref].className = 'menu-item open'
+      this.refs[item.id].className = 'menu-item open'
       this.setState({old: thisNode})
     } else {
 
-      this.refs[ref].className = 'menu-item active'
+      this.refs[item.id].className = 'menu-item active'
       this.setState({oldActive: thisNode})
     }
 
@@ -211,75 +203,27 @@ class MyComponent extends Component {
     return className
   }
   render() {
-    return (<div className={this._rootClass()}>
-      <span className="menu-prev"/>
-      <div className="menu-nav">
-        {
-          this.props.list.map((item, i) => {
-            let ref = 'id-' + menuId()  + '-' + i
-            return (
-              <div
-                key={item.id}
-                ref={ref}
-                className={this._navClass(item, i)}
-                onClick={() => this._navClick(ref)}>
-                <div className="menu-title">
-                  <a href="javascript:void(0)">
-                    {
-                      item.icon && <i className={'fa fa-' + item.icon}/>
-                    }
-                    {item.title}
-                  </a>
-                  <span className="fa fa-sort-down"/>
-                </div>
-                {
-                  item.subset && this._renderSub(item)
-                }
-              </div>
-            )
-          })
-        }
-      </div>
-      <span className="menu-next"/>
-    </div>);
+    const { subList } = this.props
+    let subDom = null;
+
+    // 水平导航条
+    if(rootClass === 'horizontal' ) {
+      subDom = this._horizontalSub(subList)
+
+      // 垂直可展开
+    } else if(rootClass === 'inline' ) {
+      subDom = this._inlineSub(subList)
+    }
+
+
+    return (
+
+      <ul className={this._navSubClass()}>{subDom}</ul>
+    )
   }
 }
 
-// http://10.0.0.35:804/Quality/GetUserGroupInfoByid?token=523B516F4843EBFF0DF295611FE8F5D9BABE9CD0490E197782CCC560D2D1E42C&UserId=NANYP
 
-const token = '523B516F4843EBFF0DF295611FE8F5D9BABE9CD0490E197782CCC560D2D1E42C'
-kn.fetch({url: 'http://10.0.0.35:804/Documents/GetAllUserInfo',token})
-  .then(response => kn.fetch({url: 'http://10.0.0.35:804/Documents/GetAllWards',token})
-    .then(res => {
-      const length = response.data.length
-      const arrayList = res.data.map((list, i) => {
-        let items = {
-          id: list.dept_code,
-          icon: null,
-          title: list.dept_name,
-          active: list.active,
-          open: false,
-          subset: [],
-          parentId: list.parentid
-        }
+MenuItem.isMenuItem = 1;
 
-        response.data.map(item => {
-
-          if(list.dept_code === item.dept_code) {
-            items.subset.push({
-              id: item.dept_code,
-              deptCode: item.dept_code,
-              deptName: item.dept_name,
-              name: item.user_name,
-            })
-          }
-          if(i === length -1 && items.subset.length < 1) {
-            items.subset = null
-          }
-        })
-        return items
-
-      })
-      render(<MyComponent rootClass="inline" list={arrayList}/>, document.getElementById('root'));
-    }))
-
+export default MenuItem

@@ -1841,40 +1841,63 @@ body {
   max-height: 240px;
   overflow-y: scroll;
 }
+.table.table-position-left .table-content .table-scroll,
+.table.table-position-right .table-content .table-scroll,
 .table.table-position-middle .table-content .table-scroll {
   width: 100%;
   overflow: hidden;
   overflow-x: auto;
 }
+.table.table-position-left .table-content .table-fixed-left,
+.table.table-position-right .table-content .table-fixed-left,
 .table.table-position-middle .table-content .table-fixed-left,
+.table.table-position-left .table-content .table-fixed-right,
+.table.table-position-right .table-content .table-fixed-right,
 .table.table-position-middle .table-content .table-fixed-right {
   position: absolute;
+  overflow: hidden;
   top: 0;
   border-radius: 4px 0 0 0;
 }
+.table.table-position-left .table-content .table-fixed-left > .table-body,
+.table.table-position-right .table-content .table-fixed-left > .table-body,
 .table.table-position-middle .table-content .table-fixed-left > .table-body,
+.table.table-position-left .table-content .table-fixed-right > .table-body,
+.table.table-position-right .table-content .table-fixed-right > .table-body,
 .table.table-position-middle .table-content .table-fixed-right > .table-body {
   height: 223px;
-  overflow: hidden;
+  overflow-y: auto;
+  margin-right: -17px;
 }
+.table.table-position-left .table-content .table-fixed-left > .table-body > .table-inner,
+.table.table-position-right .table-content .table-fixed-left > .table-body > .table-inner,
 .table.table-position-middle .table-content .table-fixed-left > .table-body > .table-inner,
+.table.table-position-left .table-content .table-fixed-right > .table-body > .table-inner,
+.table.table-position-right .table-content .table-fixed-right > .table-body > .table-inner,
 .table.table-position-middle .table-content .table-fixed-right > .table-body > .table-inner {
   height: 100%;
   overflow: hidden;
   overflow-y: auto;
   margin-right: -17px;
 }
-.table.table-position-middle .table-content .table-fixed-left {
+.table.table-position-left .table-fixed-left,
+.table.table-position-right .table-fixed-left,
+.table.table-position-middle .table-fixed-left {
   left: 0;
   box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.2);
+  transition: ease .4s;
 }
-.table.table-position-middle .table-content .table-fixed-right {
+.table.table-position-left .table-fixed-right,
+.table.table-position-right .table-fixed-right,
+.table.table-position-middle .table-fixed-right {
   right: 17px;
   box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.2);
+  transition: ease .4s;
 }
-.table.table-scroll-position-left .table-fixed-left,
-.table.table-scroll-position-right .table-fixed-right {
+.table.table-position-left .table-fixed-left,
+.table.table-position-right .table-fixed-right {
   box-shadow: none;
+  transition: ease .4s;
 }
 .table .table-scroll .table-header {
   padding-bottom: 0;
@@ -1928,7 +1951,7 @@ body {
   word-break: break-all;
 }
 .table .table-header table[data-ref=head] .t-head > tr:not(:last-child) > th {
-  border-bottom: 1px solid #fefdfc;
+  border-bottom: 1px solid #f2f2f2;
 }
 .table .table-header table[data-ref=head] .t-head > tr > th {
   color: #333;
@@ -1990,14 +2013,6 @@ body {
 .table .table-body table[data-ref=body] .t-body > tr > td {
   color: #666;
   background: #fefdfc;
-}
-.page-title {
-  background: #fff;
-  text-align: center;
-}
-.page-title .ratio-3 {
-  margin: 0 auto;
-  padding: 10px;
 }
 .tab-nav-ctrl {
   display: flex;
@@ -2605,10 +2620,6 @@ body {
   background: #0077b3;
   border-radius: 1em;
 }
-.page-title {
-  background: #fff;
-  text-align: center;
-}
 .menu-root {
   display: flex;
 }
@@ -2660,9 +2671,9 @@ body {
 .menu-item .menu-title a {
   display: flex;
   flex: 1;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  padding-right: 1em;
+  padding-top: .6em;
+  padding-bottom: .6em;
+  padding-right: .6em;
   white-space: nowrap;
   color: inherit;
   cursor: inherit;
@@ -2671,7 +2682,7 @@ body {
   margin: 0 .5em;
 }
 .menu-item .menu-title a + .fa {
-  padding: 1em;
+  padding: .6em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2749,18 +2760,18 @@ body {
 .menu-inline .menu-nav {
   flex-direction: column;
 }
+.menu-vertical .menu-nav .menu-item > .menu-title,
+.menu-inline .menu-nav .menu-item > .menu-title {
+  border-right: 2px solid transparent;
+  margin-right: -1px;
+}
 .menu-vertical .menu-nav .menu-item.open > .menu-hidden,
 .menu-inline .menu-nav .menu-item.open > .menu-hidden {
   padding-left: 2em;
 }
-.menu-vertical .menu-nav > .menu-item,
-.menu-inline .menu-nav > .menu-item {
-  border-right: 2px solid transparent;
-  margin-right: -1px;
-}
 .menu-vertical .menu-nav > .menu-item > .menu-title a,
 .menu-inline .menu-nav > .menu-item > .menu-title a {
-  padding-left: 2.4em;
+  padding-left: 1em;
 }
 .menu-vertical .menu-nav > .menu-item > .menu-title .fa + a,
 .menu-inline .menu-nav > .menu-item > .menu-title .fa + a {
@@ -2768,7 +2779,7 @@ body {
 }
 .menu-vertical .menu-nav > .menu-item.open > .menu-hidden,
 .menu-inline .menu-nav > .menu-item.open > .menu-hidden {
-  padding-left: 4em;
+  padding-left: 2em;
 }
 .menu-vertical .menu-nav > .menu-item.open:hover > .menu-title,
 .menu-inline .menu-nav > .menu-item.open:hover > .menu-title {
@@ -2861,14 +2872,6 @@ body {
   padding: 0;
   margin: 0;
   background: #d9d9d9;
-}
-.page-title {
-  background: #fff;
-  text-align: center;
-}
-.page-title .ratio-3 {
-  margin: 0 auto;
-  padding: 10px;
 }
 .nav-tabs {
   width: 100%;
@@ -3168,4 +3171,8 @@ body {
 }
 .list-item-font {
   font-size: 10px;
+}
+.page-title {
+  background: #fff;
+  text-align: center;
 }
