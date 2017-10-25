@@ -1827,9 +1827,11 @@ body {
 */
 .table {
   width: 100%;
+  height: 100%;
 }
 .table.table-fixed-header .table-content {
   position: relative;
+  height: 100%;
 }
 .table.table-fixed-header .table-content .table-scroll .table-header {
   overflow: scroll;
@@ -1838,7 +1840,7 @@ body {
 .table.table-fixed-header .table-content .table-scroll .table-body {
   position: relative;
   overflow-x: auto;
-  max-height: 240px;
+  max-height: 100%;
   overflow-y: scroll;
 }
 .table.table-position-left .table-content .table-scroll,
@@ -1858,6 +1860,7 @@ body {
   overflow: hidden;
   top: 0;
   border-radius: 4px 0 0 0;
+  height: calc(100% - 17px);
 }
 .table.table-position-left .table-content .table-fixed-left > .table-body,
 .table.table-position-right .table-content .table-fixed-left > .table-body,
@@ -1865,7 +1868,7 @@ body {
 .table.table-position-left .table-content .table-fixed-right > .table-body,
 .table.table-position-right .table-content .table-fixed-right > .table-body,
 .table.table-position-middle .table-content .table-fixed-right > .table-body {
-  height: 223px;
+  height: 100%;
   overflow-y: auto;
   margin-right: -17px;
 }
@@ -1898,6 +1901,9 @@ body {
 .table.table-position-right .table-fixed-right {
   box-shadow: none;
   transition: ease .4s;
+}
+.table .table-scroll {
+  height: 100%;
 }
 .table .table-scroll .table-header {
   padding-bottom: 0;
@@ -1943,6 +1949,9 @@ body {
   border-radius: 4px 4px 0 0;
   overflow: hidden;
 }
+.table .table-header table[data-ref=head] {
+  border-right: 1px solid #e7e7e7;
+}
 .table .table-header table[data-ref=head] .t-head > tr {
   transition: all .3s;
 }
@@ -1950,12 +1959,17 @@ body {
   padding: 16px 8px;
   word-break: break-all;
 }
-.table .table-header table[data-ref=head] .t-head > tr:not(:last-child) > th {
-  border-bottom: 1px solid #f2f2f2;
-}
 .table .table-header table[data-ref=head] .t-head > tr > th {
   color: #333;
-  background: #f2f2f2;
+  background: #fafafa;
+  border-bottom: 1px solid #e7e7e7;
+}
+.table .table-header table[data-ref=head] .t-head tr > th {
+  border-left: 1px solid #eaeaea;
+}
+.table .table-header table[data-ref=head] .t-head tr > th:first-child,
+.table .table-header table[data-ref=head] .t-head tr > th + th {
+  border-right: none;
 }
 .table .table-header table[data-ref=head] .t-head .table-title-inner {
   display: flex;
@@ -2000,6 +2014,9 @@ body {
 .table .table-header table[data-ref=head] .t-head .table-title-inner .table-column-sorter .caret-down {
   top: -3px;
 }
+.table .table-body table[data-ref=body] {
+  border-right: 1px solid #e7e7e7;
+}
 .table .table-body table[data-ref=body] .t-body > tr {
   transition: all .3s;
 }
@@ -2007,12 +2024,10 @@ body {
   padding: 16px 8px;
   word-break: break-all;
 }
-.table .table-body table[data-ref=body] .t-body > tr:not(:last-child) > td {
-  border-bottom: 1px solid #eaeaea;
-}
 .table .table-body table[data-ref=body] .t-body > tr > td {
   color: #666;
   background: #fefdfc;
+  border-bottom: 1px solid #eaeaea;
 }
 .tab-nav-ctrl {
   display: flex;
@@ -2764,6 +2779,25 @@ body {
 .menu-inline .menu-nav .menu-item > .menu-title {
   border-right: 2px solid transparent;
   margin-right: -1px;
+}
+.menu-vertical .menu-nav .menu-item > .menu-title > .fa-angle-down,
+.menu-inline .menu-nav .menu-item > .menu-title > .fa-angle-down,
+.menu-vertical .menu-nav .menu-item > .menu-title > .fa-sort-down,
+.menu-inline .menu-nav .menu-item > .menu-title > .fa-sort-down {
+  transform: rotate(0deg);
+  transition: ease .4s;
+}
+.menu-vertical .menu-nav .menu-item.open > .menu-title,
+.menu-inline .menu-nav .menu-item.open > .menu-title {
+  border-right: 2px solid transparent;
+  margin-right: -1px;
+}
+.menu-vertical .menu-nav .menu-item.open > .menu-title > .fa-angle-down,
+.menu-inline .menu-nav .menu-item.open > .menu-title > .fa-angle-down,
+.menu-vertical .menu-nav .menu-item.open > .menu-title > .fa-sort-down,
+.menu-inline .menu-nav .menu-item.open > .menu-title > .fa-sort-down {
+  transform: rotate(180deg);
+  transition: ease .4s;
 }
 .menu-vertical .menu-nav .menu-item.open > .menu-hidden,
 .menu-inline .menu-nav .menu-item.open > .menu-hidden {

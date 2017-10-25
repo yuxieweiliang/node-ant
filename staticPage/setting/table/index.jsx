@@ -112,9 +112,6 @@ function _getLength(option) {
 
   func(0)
 
-
-
-
   return m
 }
 
@@ -172,7 +169,7 @@ class TableRight extends Component {
 
 
 
-class ColumnGroup extends Component {
+class   ColumnGroup extends Component {
   constructor(props) {
     super(props);
   }
@@ -287,32 +284,40 @@ class TableBody extends Component {
   constructor(props) {
     super(props);
   }
+
+  componentDidMount() {
+  }
+
   render() {
-    const { list, allkey,  col, leftCol, rightCol, width, minWidth } = this.props
+    const { dataSource, allkey,  col, leftCol, rightCol, width, minWidth } = this.props
+    const styleHeight = {height: 'calc(100% - '+ (this.props.header.height - 17) +'px)'}
+    const listH = this.props.body && this.props.body.listH
+
+    // console.log(this)
+
     return (
-      <div className="table-body" ref="tableBody">
+      <div className="table-body" ref="tableBody" style={styleHeight}>
         <table data-ref="body" style={{minWidth}}>
           <Group {...this.props}/>
           <tbody className="t-body">
           {
-            list.map((items, i) => {
+            dataSource.map((items, i) => {
               return (
-                <ColumnGroup key={i}>
-                  {allkey.map((item, j) => {
-
+                <ColumnGroup key={i} height={listH}>
+                  {allkey.map((key, j) => {
                     if(leftCol) {
                       if(j < leftCol) {
-                        return (<td key={j}>John Brown</td>)
+                        return (<td  key={j}>{items[key]}</td>)
                       }else return
                     }
 
                     if(rightCol) {
                       if(allkey.length - j-1 < rightCol) {
-                        return (<td key={j}>John Brown</td>)
+                        return (<td  key={j}>{items[key]}</td>)
                       }else return
                     }
 
-                    return (<td key={j}>John Brown</td>)
+                    return (<td  key={j}>{items[key]}</td>)
 
 
                   })}
@@ -332,7 +337,9 @@ class Table extends Component {
     super(props);
     this.state={
       width: 0,
-      style: 'table-position-left'
+      style: 'table-position-left',
+      header: {},
+      body: {}
     }
     this.scroll = this.scroll.bind(this)
     this.bodyScroll = this.bodyScroll.bind(this)
@@ -345,24 +352,46 @@ class Table extends Component {
     const childrens = _getRow(children)
     let child = _getLength(childrens)
 
-    const col = ['100px', '100px', '100px', '100px', '100px', '100px', '100px', '100px', '100px', '100px', '100px']
-
     return (<div className={'table table-fixed-header '+ this.state.style} >
       <div className="table-content">
 
+
         <div className="table-scroll">
-          <TableHeader ref="header" col={col} width={width + 'px'} minWidth={width + 'px'} child={child} {...this.props}/>
-          <TableBody ref="body" allkey={childrens.key} col={col} width={width + 'px'} minWidth={width + 'px'} {...this.props}/>
+
+          <TableHeader ref="header"
+                       width={width + 'px'}
+                       minWidth={width + 'px'}
+                       child={child}
+                       {...this.props}/>
+
+          <TableBody ref="body"
+                     allkey={childrens.key}
+                     width={width + 'px'}
+                     minWidth={width + 'px'}
+                     {...this.state}
+                     {...this.props}/>
         </div>
+
+
+
 
         {
           (this.state.width < width) && (
-            <TableLeft ref="left" col={col} leftCol="1" {...this.props}/>
+            <TableLeft ref="left"
+                       leftCol="1"
+                       {...this.state}
+                       {...this.props}/>
           )
         }
+
+
+
         {
           (this.state.width < width) && (
-            <TableRight ref="right" col={col} rightCol="1" {...this.props}/>
+            <TableRight ref="right"
+                        rightCol="1"
+                        {...this.state}
+                        {...this.props}/>
           )
         }
 
@@ -373,18 +402,35 @@ class Table extends Component {
   componentDidUpdate() {
     let { width } = this.state,
       _this = this,
+      header = this.refs.header.refs.tableHeader,
       body = this.refs.body.refs.tableBody
       //leftT = this.refs.left.refs.tableLeft.refs.tableBody,
       //rightT = this.refs.right.refs.tableRight.refs.tableBody
+    if(!this.state.body.height) {
+
+      this.setState({
+        header: {
+          height: header.offsetHeight,
+          width: header.offsetWidth,
+          listH: header.querySelector('tr').offsetHeight,
+          listW: header.querySelector('tr').offsetWidth,
+        },
+        body: {
+          height: body.offsetHeight,
+          width: body.offsetWidth,
+          listH: body.querySelector('tr').offsetHeight,
+          listW: body.querySelector('tr').offsetWidth,
+        }
+      })
+    }
 
   }
   componentWillMount() {
 
   }
   componentWillReceiveProps() {
-    console.log(this)
-  }
 
+  }
 
 
   bodyScroll() {
@@ -418,8 +464,12 @@ class Table extends Component {
   }
   scroll(e) {
     let body = this.refs.body.refs.tableBody,
-      leftT = this.refs.left.refs.tableLeft.refs.tableBody,
-      rightT = this.refs.right.refs.tableRight.refs.tableBody
+
+
+      leftT = this.refs.left.refs.tableLeft.refs.tableBody || null,
+      rightT = this.refs.right.refs.tableRight.refs.tableBody || null
+
+
     let top = e.target.scrollTop,
       arr = [body, leftT, rightT],
       i = 0
@@ -445,7 +495,6 @@ class Table extends Component {
       body = this.refs.body.refs.tableBody,
       leftT = this.refs.left.refs.tableLeft.refs.tableBody,
       rightT = this.refs.right.refs.tableRight.refs.tableBody
-
 
     body.addEventListener('mouseover', function() {
       body.addEventListener('scroll', _this.scroll, false);
@@ -475,12 +524,18 @@ class Table extends Component {
 
     // 初始化
     this.bodyScroll()
-    this.renderAgain()
+
+
+    if(this.props.width > window.innerWidth) {
+      this.renderAgain()
+    }
 
     // 当屏幕大小改变时
     window.addEventListener('resize', function() {
       _this.setState({width: window.innerWidth})
-      _this.renderAgain()
+      if(_this.props.width > window.innerWidth) {
+        _this.renderAgain()
+      }
     }, false);
   }
 
@@ -488,36 +543,43 @@ class Table extends Component {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class TableList extends Component {
   render() {
     return (
-      <Table rootclassName="inline" width="1100" {...data}>
-        <Column context="a1" dataIndex="a1" key="a1"/>
+      <Table {...this.props} col={['100px', '100px', '100px', '100px', '100px', '100px', '100px', '100px', '100px', '100px', '100px']}>
+        <Column context="a1" dataIndex="a1" key="a1" fixed="left"/>
         <ColumnGroup context="a0">
           <Column context="b1" dataIndex="b1" key="b1"/>
-          <ColumnGroup context="b2">
-            <Column context="c1" dataIndex="c1" key="c1"/>
-            <ColumnGroup context="b2">
-              <Column context="c1" dataIndex="c1" key="c1"/>
-              <Column context="c2" dataIndex="c2" key="c2"/>
-            </ColumnGroup>
-            <Column context="c2" dataIndex="c2" key="c3"/>
-          </ColumnGroup>
-          <ColumnGroup context="b2">
-            <Column context="c1" dataIndex="c1" key="c4"/>
-            <ColumnGroup context="b2">
-              <Column context="c1" dataIndex="c1" key="c5"/>
-            </ColumnGroup>
-          </ColumnGroup>
+          <Column context="c1" dataIndex="c1" key="c1"/>
+          <Column context="c1" dataIndex="c1" key="c2"/>
+          <Column context="c2" dataIndex="c2" key="c3"/>
+          <Column context="c2" dataIndex="c2" key="c4"/>
+          <Column context="c1" dataIndex="c1" key="c5"/>
+          <Column context="c1" dataIndex="c1" key="c6"/>
         </ColumnGroup>
         <Column context="a2" dataIndex="a2" key="a2"/>
         <Column context="a3" dataIndex="a3" key="a3"/>
-        <Column context="a4" dataIndex="a4" key="a4"/>
+        <Column context="a4" dataIndex="a4" key="a4"  fixed="right"/>
         {/*<TableLeft/>*/}
       </Table>
     )
   }
 }
+
 /*
 * Array.prototype.max = function() {
  return Math.max.apply({},this)
@@ -528,8 +590,20 @@ class TableList extends Component {
 
 // http://10.0.0.35:804/Quality/GetUserGroupInfoByid?token=523B516F4843EBFF0DF295611FE8F5D9BABE9CD0490E197782CCC560D2D1E42C&UserId=NANYP
 
-render(<TableList/>,
+
+const datas = {
+  ...data,
+  dataSource: data.dataSource.map(item => ({
+    ...item,
+    a4: <button className="btn-primary btn-sm" onClick={() => console.log(item)}>aaaa</button>
+  }))
+}
+
+
+render(<TableList {...datas} />,
   document.getElementById('table'));
+
+
 const token = '523B516F4843EBFF0DF295611FE8F5D9BABE9CD0490E197782CCC560D2D1E42C'
 kn.fetch({url: 'http://10.0.0.35:804/Documents/GetAllUserInfo',token})
   .then(res => {

@@ -42,8 +42,8 @@ module.exports = {
       showErrors: true,
       // chunks: 'vendors',
       inject: true
-    }),
-    new HtmlWebpackPlugin({
+    }),*/
+    /*new HtmlWebpackPlugin({
       filename: `tree.html`,
       template: `${ROOTS}/staticPage/setting/tree/main.html`,
       showErrors: true,
@@ -51,7 +51,7 @@ module.exports = {
       inject: true
     }),*/
     new HtmlWebpackPlugin({
-      filename: `table.html`,
+      filename: `index.html`,
       template: `${ROOTS}/staticPage/setting/table/main.html`,
       showErrors: true,
       // chunks: 'vendors',

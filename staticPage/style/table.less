@@ -26,14 +26,10 @@
 }
 .col-table(@target, @color, @bgColor, @bdColor) {
   > tr {
-    &:not(:last-child) {
-      > @{target} {
-        border-bottom: 1px solid @bdColor;
-      }
-    }
     > @{target} {
       color: @color;
       background: @bgColor;
+      border-bottom: 1px solid @bdColor;
     }
   }
 }
@@ -45,6 +41,8 @@
 //  class="table table-middle table-bordered table-fixed-header scroll-position-middle"
 .table {
   width: 100%;
+  height: 100%;
+
   &.table-middle {
 
   }
@@ -56,6 +54,7 @@
   &.table-fixed-header {
     .table-content {
       position: relative;
+      height: 100%;
       .table-scroll {
         .table-header {
           overflow: scroll;
@@ -64,7 +63,7 @@
         .table-body {
           position: relative;
           overflow-x: auto;
-          max-height: 240px;
+          max-height: 100%;
           overflow-y: scroll;
         }
       }
@@ -95,8 +94,9 @@
         overflow: hidden;
         top: 0;
         border-radius: 4px 0 0 0;
+        height: calc(~'100% - 17px');
         > .table-body {
-          height: 223px;
+          height: 100%;
           overflow-y: auto;
           margin-right: -17px;
           >.table-inner {
@@ -128,6 +128,7 @@
   }
 
   .table-scroll {
+    height: 100%;
     .table-header {
       padding-bottom: 0;
     }
@@ -174,9 +175,20 @@
     overflow: hidden;
   }
   .table-header table[data-ref=head] {
+    border-right: 1px solid @Gray-e7;
     .t-head {
       .table-head(th);
-      .col-table(th, @Gray-3, @Gray-f2, @Gray-f2);
+      .col-table(th, @Gray-3, @Gray-fa, @Gray-e7);
+      tr {
+        > th {
+          border-left: 1px solid @Gray-ea;
+        }
+        > th:first-child,
+        >th + th {
+          border-right: none;
+        }
+      }
+
       .table-title-inner {
         display: flex;
         align-items: center;
@@ -223,6 +235,7 @@
     }
   }
   .table-body table[data-ref=body] {
+    border-right: 1px solid @Gray-e7;
     .t-body {
       .table-head(td);
       .col-table(td, @Gray-6, @White, @Gray-ea);

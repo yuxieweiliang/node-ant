@@ -181,8 +181,23 @@
         >.menu-title {
           border-right: 2px solid transparent;
           margin-right: -1px;
+          >.fa-angle-down,
+          >.fa-sort-down {
+            transform: rotate(0deg);
+            transition: ease .4s;
+          }
         }
         &.open {
+
+          >.menu-title {
+            border-right: 2px solid transparent;
+            margin-right: -1px;
+            >.fa-angle-down,
+            >.fa-sort-down {
+              transform: rotate(180deg);
+              transition: ease .4s;
+            }
+          }
           >.menu-hidden {
             padding-left: 2em;
           }

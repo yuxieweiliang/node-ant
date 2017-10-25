@@ -39,7 +39,55 @@ class KN {
     .then((response) => response.json())
     .then((response) => lowerKeyCase(response))
   }
+
+  cookie(name, value, options) {
+    if (typeof value != 'undefined') {
+      options = options || {};
+      //如果值为null, 删除cookie
+      if (value === null) {
+        value = '';
+        options = {
+          expires: -1
+        };
+      }
+      //设置有效期
+      let expires = '';
+      if (options.expires && (typeof options.expires == 'number' || options.expires.toGMTString)) {
+        let date;
+        if (typeof options.expires == 'number') {
+          date = new Date();
+          date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+        } else {
+          date = options.expires;
+        }
+        expires = ';expires=' + date.toGMTString();
+      }
+      const path = options.path ? ';path=' + (options.path) : '';
+      const domain = options.domain ? ';domain=' + (options.domain) : '';
+      const secure = options.secure ? ';secure' : '';
+      //设置cookie     encodeURIComponent :函数可把字符串作为 URI 组件进行编码。
+      document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+    } else {
+      //读取cookie
+      if (document.cookie.length > 0) {
+        let start = document.cookie.indexOf(name + '=')
+        if (start != -1) {
+          start = start + name.length + 1;
+          let end = document.cookie.indexOf(';', start);
+          if (end == -1){
+            end = document.cookie.length;
+          }
+          //设置cookie     encodeURIComponent : 解码
+          return decodeURIComponent(document.cookie.substring(start, end));
+        }
+      }
+      return ''
+    }
+  }
+
+
 }
+
 export default new KN()
 
 

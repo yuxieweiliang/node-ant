@@ -292,6 +292,25 @@
   border-right: 2px solid transparent;
   margin-right: -1px;
 }
+.menu-vertical .menu-nav .menu-item > .menu-title > .fa-angle-down,
+.menu-inline .menu-nav .menu-item > .menu-title > .fa-angle-down,
+.menu-vertical .menu-nav .menu-item > .menu-title > .fa-sort-down,
+.menu-inline .menu-nav .menu-item > .menu-title > .fa-sort-down {
+  transform: rotate(0deg);
+  transition: ease .4s;
+}
+.menu-vertical .menu-nav .menu-item.open > .menu-title,
+.menu-inline .menu-nav .menu-item.open > .menu-title {
+  border-right: 2px solid transparent;
+  margin-right: -1px;
+}
+.menu-vertical .menu-nav .menu-item.open > .menu-title > .fa-angle-down,
+.menu-inline .menu-nav .menu-item.open > .menu-title > .fa-angle-down,
+.menu-vertical .menu-nav .menu-item.open > .menu-title > .fa-sort-down,
+.menu-inline .menu-nav .menu-item.open > .menu-title > .fa-sort-down {
+  transform: rotate(180deg);
+  transition: ease .4s;
+}
 .menu-vertical .menu-nav .menu-item.open > .menu-hidden,
 .menu-inline .menu-nav .menu-item.open > .menu-hidden {
   padding-left: 2em;

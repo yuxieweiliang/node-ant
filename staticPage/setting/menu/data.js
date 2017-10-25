@@ -2,7 +2,7 @@
 
 export default {
   rootClass: 'horizontal',
-  list: [{
+  dataSource: [{
     id: 0,
     icon: 'address-book',
     title: 'Navigation One',

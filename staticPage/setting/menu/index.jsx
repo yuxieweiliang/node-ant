@@ -12,7 +12,7 @@ let menuId = (function() {
   return () => id++
 })()
 
-class MyComponent extends Component {
+class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +28,7 @@ class MyComponent extends Component {
       // 如果只有一段
       if(typeOf(list) === 'object') {
 
-        array.push(<li key={i}>{list.title}</li>)
+        array.push(<li key={i}>{list.context}</li>)
 
         // 如果分多段
       } else if(typeOf(list) === 'array') {
@@ -37,7 +37,7 @@ class MyComponent extends Component {
         }
 
         list.map((item, j) => {
-          array.push(<li key={j + '-' + i}>{item.title}</li>)
+          array.push(<li key={j + '-' + i}>{item.context}</li>)
         })
 
       } else {
@@ -46,17 +46,27 @@ class MyComponent extends Component {
     })
     return array
   }
+
   _inlineSub(subList) {
     return subList.subset.map((item, i) => {
+      let className = 'menu-item '
       const hasSub = (item.subset && item.subset.length > 0)
       let ref = 'id-' + menuId() + '-' + i
+
+      if(hasSub && item.state === 'open') {
+        className += 'open'
+      }
+      if(!hasSub && item.active) {
+        className += 'active'
+      }
+
       return (
         <li key={item.id + '-' + i}
-            className="menu-item"
+            className={className}
             ref={ ref }
             onClick={(e) => this._subClick(e, ref, item)}>
           <div className="menu-title">
-            <a href="javascript:void(0)">{item.name}</a>
+            <a href="javascript:void(0)">{item.context}</a>
             {
               hasSub && <span className="fa fa-angle-down"/>
             }
@@ -85,16 +95,22 @@ class MyComponent extends Component {
     let oldActive = this.state.oldActive
     let thisNode = this.refs[ref]
     let className = thisNode.className.split(' ')
+    let active = thisNode.parentNode.querySelector('.active')
+    let open = thisNode.parentNode.querySelector('.open')
     if(className.indexOf('disabled') > -1) {
       return
     }
 
     // 关闭旧节点
-    if(thisNode.parentNode.querySelector('.open')) {
-      oldNode.className = 'menu-item'
+    if(open) {
+      open.className = 'menu-item'
     }
     if(oldActive) {
       oldActive.className = 'menu-item'
+    }
+
+    if(active) {
+      active.className = 'menu-item'
     }
 
     if(className.indexOf('open') > -1 || className.indexOf('active') > -1) {
@@ -107,8 +123,10 @@ class MyComponent extends Component {
       this.refs[ref].className = 'menu-item active'
       this.setState({oldActive: thisNode})
     }
-
+    this.props.onClick(item)
   }
+
+
   _renderSub(subList) {
     const {rootClass} = this.props
     let subDom = null;
@@ -132,9 +150,10 @@ class MyComponent extends Component {
   /**
    * 一级菜单
    * @param i
+   * @param item
    * @private
    */
-  _navClick(i) {
+  _navClick(i, item) {
     let oldNode = this.state.active
     let thisNode = this.refs[i]
     let className = thisNode.className.split(' ')
@@ -150,6 +169,7 @@ class MyComponent extends Component {
       this.refs[i].className = 'menu-item open'
     }
     this.setState({active: thisNode})
+    this.props.onClick(item)
 
   }
 
@@ -183,6 +203,11 @@ class MyComponent extends Component {
    */
   _navClass(item, i) {
     let className = 'menu-item '
+
+    if(item.state === 'open') {
+      className +='open'
+    }
+
     if(this.state.active === i) {
       className +='open'
     } else if(item.disabled) {
@@ -211,24 +236,27 @@ class MyComponent extends Component {
     return className
   }
   render() {
+    if(!this.props.dataSource) {
+      return <div/>
+    }
     return (<div className={this._rootClass()}>
-      <span className="menu-prev"/>
+      {/*<span className="menu-prev"/>*/}
       <div className="menu-nav">
         {
-          this.props.list.map((item, i) => {
+          this.props.dataSource.map((item, i) => {
             let ref = 'id-' + menuId()  + '-' + i
             return (
               <div
                 key={item.id}
                 ref={ref}
                 className={this._navClass(item, i)}
-                onClick={() => this._navClick(ref)}>
+                onClick={() => this._navClick(ref, item)}>
                 <div className="menu-title">
                   <a href="javascript:void(0)">
                     {
                       item.icon && <i className={'fa fa-' + item.icon}/>
                     }
-                    {item.title}
+                    {item.context}
                   </a>
                   <span className="fa fa-sort-down"/>
                 </div>
@@ -240,7 +268,7 @@ class MyComponent extends Component {
           })
         }
       </div>
-      <span className="menu-next"/>
+      {/*<span className="menu-next"/>*/}
     </div>);
   }
 }
@@ -256,7 +284,7 @@ kn.fetch({url: 'http://10.0.0.35:804/Documents/GetAllUserInfo',token})
         let items = {
           id: list.dept_code,
           icon: null,
-          title: list.dept_name,
+          context: list.dept_name,
           active: list.active,
           open: false,
           subset: [],
@@ -270,7 +298,7 @@ kn.fetch({url: 'http://10.0.0.35:804/Documents/GetAllUserInfo',token})
               id: item.dept_code,
               deptCode: item.dept_code,
               deptName: item.dept_name,
-              name: item.user_name,
+              context: item.user_name,
             })
           }
           if(i === length -1 && items.subset.length < 1) {
@@ -280,6 +308,6 @@ kn.fetch({url: 'http://10.0.0.35:804/Documents/GetAllUserInfo',token})
         return items
 
       })
-      render(<MyComponent rootClass="inline" list={arrayList}/>, document.getElementById('root'));
+      render(<Menu rootClass="inline" dataSource={arrayList} onClick={(item) => console.log(item)}/>, document.getElementById('root'));
     }))
 
