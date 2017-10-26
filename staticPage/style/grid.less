@@ -5,31 +5,31 @@
 @ratio: 24;
 
 // .ratio-@{num} {width: @num} -> .ratio-1{ width: 8.33% }
-.createRatio(@len: 12, @i: 1) when (@i > 0) {
+.createCol(@len: 12, @i: 1) when (@i > 0) {
   &-@{i} {
     width: round(@i/(@len/100), 4)+0% ;
   }
-  .createRatio(@len, @i - 1);
+  .createCol(@len, @i - 1);
 }
 
 .col {
-  .createRatio(@ratio, @ratio);
+  .createCol(@ratio, @ratio);
 }
 
 @media (min-width: 980px) {
   .col-sm {
-    .createRatio(@ratio, @ratio);
+    .createCol(@ratio, @ratio);
   }
 }
 
 @media (min-width: 1200px) {
   .col-md {
-    .createRatio(@ratio, @ratio);
+    .createCol(@ratio, @ratio);
   }
 }
 
 @media (min-width: 1680px) {
   .col-lg {
-    .createRatio(@ratio, @ratio);
+    .createCol(@ratio, @ratio);
   }
 }

@@ -186,8 +186,13 @@
   margin-bottom: 0;
 }
 .input-group .form-control:first-child {
+  border-right: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+.input-group .form-control:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 .input-group .input-group-menu,
 .input-group .input-group-btn,
@@ -232,15 +237,6 @@
   bottom: 100%;
   box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.175);
   animation: antSlideDownIn .4s;
-}
-.form-control:first-child {
-  border-right: 0;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-.form-control:last-child {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
 }
 .input-group-menu,
 .input-group-btn,

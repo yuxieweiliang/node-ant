@@ -6,374 +6,133 @@ import kn from '../../../assets/server'
 import { typeOf } from '../../../assets/func'
 import '../../style/main.less'
 import warning from 'warning'
+import { TableScroll } from './tableScroll'
+import { TableLeft } from './tableLeft'
+import { TableRight } from './tableRight'
+import { THeader } from './tHeader'
+import { TBody } from './tBody'
+import { Group } from './group.jsx'
+import { ColumnGroup } from './columnGroup.jsx'
+import { Column } from './column.jsx'
+import { menuId, _getData, _getRow, _getLength, flatFilter, normalizeColumns, treeMap } from './func'
 
-let menuId = (function() {
-  let id = 0
-  return () => id++
-})()
 
 
-function _getData(arr) {
-  let i = 0
-  arr.map(item => {
-    if(item._length) {
-      i += item._length
-    }
-  })
-  return i
-}
 
-function _getRow(option) {
-  let key = []
-  function _row(opt) {
-    return _.map(opt, (item, i) => {
-      // 首先递归子节点的个数
-      let child = null
 
-      // 计算子节点的个数
-      let length = null
 
-
-      if(item.props.children && item.props.children.length > 0) {
-
-
-        // 首先递归子节点的个数
-        child = _row(item.props.children)
-
-        // 计算子节点的个数
-        length = _getData(child)
-        return {
-          item,
-          _length: length,
-          child
-        }
-      } else if(typeOf(item.props.children) === 'object') {
-
-        // 首先递归子节点的个数
-        child = _row([item.props.children])
-
-        return {
-          item,
-          _length: 1,
-          child
-        }
-      } else {
-        key.push(item.key)
-        return {
-          item,
-          _length: 1,
-        }
-      }
-
-    })
-  }
-
-  let childItem = _row(option)
-
-  // console.log(childItem)
-  return {
-    key,
-    child: childItem
-  }
-}
-
-function _getLength(option) {
-  var m = []
-
-  function _row(opt) {
-    var array = []
-    opt.map(list => {
-      if(list.child) {
-        array = array.concat(list.child)
-      }
-    })
-    return array
-  }
-
-
-  m.push(option.child)
-
-
-  function func(i) {
-    var row = _row(m[i])
-
-    if(row && row.length > 0) {
-
-      m.push(row)
-    }
-
-    i++
-
-    if(m[i] && m[i].length > 0) {
-      func(i)
-    }
-  }
-
-
-  func(0)
-
-  return m
-}
-
-class TableLeft extends Component {
-  constructor(props) {
-    super(props)
-  }
-  static defaultProps = {
-    col: {width: '200px'},
-    item: [{width: '200px'}]
-  }
-  render() {
-    const { children } = this.props
-    const item = _getRow(children)
-    let child = _getLength(item)
-
-
-
-    return (
-      <div className="table-fixed-left">
-
-        <TableHeader  allkey={item.key} width="100px" child={child} {...this.props}/>
-
-        <TableBody ref="tableLeft" allkey={item.key} width='100px' minWidth='100px' {...this.props}/>
-
-      </div>
-    )
-  }
-}
-class TableRight extends Component {
-  constructor(props) {
-    super(props)
-  }
-  static defaultProps = {
-    col: {width: '300px'},
-    item: [{width: '300px'}]
-  }
-  render() {
-    const { children } = this.props
-    const item = _getRow(children)
-    let child = _getLength(item)
-    return (
-      <div className="table-fixed-right">
-
-        <TableHeader  allkey={item.key} child={child}  width="100px" {...this.props}/>
-
-        <TableBody ref="tableRight" allkey={item.key}  width='100px' minWidth='100px' {...this.props}/>
-      </div>
-    )
-  }
-}
-
-
-
-
-
-
-class   ColumnGroup extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (<tr height={this.props.height}>{ this.props.children }</tr>)
-  }
-}
-class Column extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    const { context, colSpan, rowSpan } = this.props
-    return (<th colSpan={colSpan} rowSpan={rowSpan}>{ context }</th>)
-  }
-}
-
-
-
-class Group extends Component {
-  render() {
-    const { col, leftCol, rightCol, allkey } = this.props
-    return(
-      <colgroup>
-        {
-          _.map(col, (item, i) => {
-
-            if(leftCol) {
-              if(i < leftCol) {
-                return (<col key={i} style={{width: item, minWidth: item}}/>)
-              }else return
-            }
-
-            if(rightCol) {
-              if(allkey.length - i-1 < rightCol) {
-                return (<col key={i} style={{width: item, minWidth: item}}/>)
-              }else return
-            }
-
-            return <col key={i} style={{width: item, minWidth: item}}/>
-
-
-          })
-        }
-      </colgroup>
-    )
-  }
-}
-
-
-
-class TableHeader extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  _renderHeader() {
-    let _this = this
-    let { children, child, leftCol, rightCol } = this.props
-    let childs = null
-
-    childs = child.map((list, i) => {
-      return list.map((item, j) => {
-        let rowSpan = child.length - i
-        if(item.child) {
-
-          return (
-            <Column key={i + '' + j} colSpan={item._length} context={item.item.props.context}/>
-          )
-        } else {
-          return <Column key={i + '' + j} rowSpan={rowSpan} {...item.item.props}/>
-        }
-      })
-    })
-
-    if(leftCol > 0) {
-      childs = childs[0].filter((item, i) => (i < leftCol))
-    }
-
-    if(rightCol > 0) {
-      childs = childs[0].filter((item, i) => (children.length - i-1) < rightCol)
-    }
-
-    return childs.map((item, i) => {
-
-      return (
-        <ColumnGroup key={i} height={(leftCol > 0 || rightCol > 0) ? 46*child.length+child.length-1 : ''}>
-          {item}
-        </ColumnGroup>
-      )
-    })
-  }
-  render() {
-    const { col, width, minWidth } = this.props
-    return (
-      <div ref="tableHeader" className="table-header">
-        <table data-ref="head" style={{minWidth}}>
-          <Group {...this.props}/>
-
-          <thead className="t-head">
-          {this._renderHeader()}
-          </thead>
-        </table>
-      </div>
-    )
-  }
-}
-
-
-
-class TableBody extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-  }
-
-  render() {
-    const { dataSource, allkey,  col, leftCol, rightCol, width, minWidth } = this.props
-    const styleHeight = {height: 'calc(100% - '+ (this.props.header.height - 17) +'px)'}
-    const listH = this.props.body && this.props.body.listH
-
-    // console.log(this)
-
-    return (
-      <div className="table-body" ref="tableBody" style={styleHeight}>
-        <table data-ref="body" style={{minWidth}}>
-          <Group {...this.props}/>
-          <tbody className="t-body">
-          {
-            dataSource.map((items, i) => {
-              return (
-                <ColumnGroup key={i} height={listH}>
-                  {allkey.map((key, j) => {
-                    if(leftCol) {
-                      if(j < leftCol) {
-                        return (<td  key={j}>{items[key]}</td>)
-                      }else return
-                    }
-
-                    if(rightCol) {
-                      if(allkey.length - j-1 < rightCol) {
-                        return (<td  key={j}>{items[key]}</td>)
-                      }else return
-                    }
-
-                    return (<td  key={j}>{items[key]}</td>)
-
-
-                  })}
-                </ColumnGroup>
-              )
-            })
-          }
-          </tbody>
-        </table>
-      </div>
-    )
-  }
-}
 
 class Table extends Component {
   constructor(props) {
     super(props);
-    this.state={
-      width: 0,
-      style: 'table-position-left',
-      header: {},
-      body: {}
-    }
     this.scroll = this.scroll.bind(this)
     this.bodyScroll = this.bodyScroll.bind(this)
   }
+  state = {
+    width: 0,
+    style: 'table-position-left',
+    header: {},
+    body: {}
+  }
+  // static defaultProps = data
 
-  static defaultProps = data
+  componentWillMount() {
+    console.log()
+  }
+
+
 
   render() {
-    const { children, width } = this.props
-    const childrens = _getRow(children)
-    let child = _getLength(childrens)
+    const { rootClass, width, dataSource, columns, children } = this.props
+    const columnArray = columns || normalizeColumns(children)
+    // const childrens = _getRow(children)
+    // let child = _getLength(childrens)
+    const tree = treeMap(columnArray, function(node, index) {
+      return {
+        ...node,
+        search: <div key="1">fdsaf</div>
+      }
+    })
+
+    // console.log(_getLength(tree))
+
+
+
+
+
+
+
+
+
+    function reduceArr(arrayTree) {
+      let _arr = []
+
+      _arr.push(arrayTree)
+
+      const reduc = (arr) => {
+
+        const thisArr = arr.reduce((prev, next) => {
+
+          if(next.children && next.children.length > 0) {
+            prev = prev.concat(next.children)
+          }
+          return prev
+        }, [])
+
+        if(thisArr.length > 0) {
+         _arr = _arr.concat([thisArr])
+         }
+      }
+
+      function func(i) {
+        reduc(_arr[i])
+
+        i++
+
+        if(_arr[i] && _arr[i].length > 0) {
+          func(i)
+        }
+      }
+
+      func(0)
+      return _arr
+    }
+
+
+    console.log(reduceArr(tree))
+
+
+
+
+
+
+
+
+
+
+
 
     return (<div className={'table table-fixed-header '+ this.state.style} >
       <div className="table-content">
 
-
         <div className="table-scroll">
 
-          <TableHeader ref="header"
+          {/*<THeader ref="header"
                        width={width + 'px'}
                        minWidth={width + 'px'}
                        child={child}
                        {...this.props}/>
+           <TBody {...this.props}/>
+          */}
 
-          <TableBody ref="body"
-                     allkey={childrens.key}
-                     width={width + 'px'}
-                     minWidth={width + 'px'}
-                     {...this.state}
-                     {...this.props}/>
+
+
+
         </div>
 
 
 
+{/*
 
         {
           (this.state.width < width) && (
@@ -394,12 +153,13 @@ class Table extends Component {
                         {...this.props}/>
           )
         }
+*/}
 
 
       </div>
     </div>);
   }
-  componentDidUpdate() {
+  /*componentDidUpdate() {
     let { width } = this.state,
       _this = this,
       header = this.refs.header.refs.tableHeader,
@@ -424,14 +184,8 @@ class Table extends Component {
       })
     }
 
-  }
-  componentWillMount() {
-
-  }
-  componentWillReceiveProps() {
-
-  }
-
+  }*/
+  componentWillReceiveProps() {}
 
   bodyScroll() {
     const { children, width } = this.props
@@ -488,8 +242,6 @@ class Table extends Component {
     }
   }
 
-
-
   renderAgain() {
     let _this= this,
       body = this.refs.body.refs.tableBody,
@@ -523,39 +275,23 @@ class Table extends Component {
     let _this= this
 
     // 初始化
-    this.bodyScroll()
+    // this.bodyScroll()
 
 
     if(this.props.width > window.innerWidth) {
-      this.renderAgain()
+      //this.renderAgain()
     }
 
     // 当屏幕大小改变时
     window.addEventListener('resize', function() {
       _this.setState({width: window.innerWidth})
       if(_this.props.width > window.innerWidth) {
-        _this.renderAgain()
+        // _this.renderAgain()
       }
     }, false);
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class TableList extends Component {
   render() {
@@ -580,17 +316,6 @@ class TableList extends Component {
   }
 }
 
-/*
-* Array.prototype.max = function() {
- return Math.max.apply({},this)
- }
- Array.prototype.min = function() {
- return Math.min.apply({},this)
- }*/
-
-// http://10.0.0.35:804/Quality/GetUserGroupInfoByid?token=523B516F4843EBFF0DF295611FE8F5D9BABE9CD0490E197782CCC560D2D1E42C&UserId=NANYP
-
-
 const datas = {
   ...data,
   dataSource: data.dataSource.map(item => ({
@@ -600,15 +325,56 @@ const datas = {
 }
 
 
-render(<TableList {...datas} />,
-  document.getElementById('table'));
-
-
-const token = '523B516F4843EBFF0DF295611FE8F5D9BABE9CD0490E197782CCC560D2D1E42C'
-kn.fetch({url: 'http://10.0.0.35:804/Documents/GetAllUserInfo',token})
-  .then(res => {
+render(<TableList {...datas} />, document.getElementById('table'));
 
 
 
-  })
+
+
+
+
+
+
+
+/*class TableList extends Component {
+  render() {
+    return (
+      <Table  {...this.props}>
+        <Column context="a1" dataIndex="a1" key="a1" fixed="left"/>
+        <ColumnGroup context="a0">
+          <Column context="b1" dataIndex="b1" key="b1"/>
+          <Column context="c1" dataIndex="c1" key="c1"/>
+          <Column context="c1" dataIndex="c1" key="c2"/>
+          <Column context="c2" dataIndex="c2" key="c3"/>
+          <Column context="c2" dataIndex="c2" key="c4"/>
+          <Column context="c1" dataIndex="c1" key="c5"/>
+          <Column context="c1" dataIndex="c1" key="c6"/>
+        </ColumnGroup>
+        <Column context="a2" dataIndex="a2" key="a2"/>
+        <Column context="a3" dataIndex="a3" key="a3"/>
+        <Column context="a4" dataIndex="a4" key="a4"  fixed="right"/>
+        {/!*<TableLeft/>*!/}
+      </Table>
+    )
+  }
+}*/
+
+
+
+
+/*
+*/
+
+/*
+* Array.prototype.max = function() {
+ return Math.max.apply({},this)
+ }
+ Array.prototype.min = function() {
+ return Math.min.apply({},this)
+ }*/
+
+
+
+
+
 
