@@ -32,6 +32,12 @@ export function flatArray(data = [], childrenName = 'children') {
   return result
 }
 
+/**
+ * 按照一定的条件过滤数据
+ * @param tree
+ * @param callback
+ * @returns {*}
+ */
 export function flatFilter(tree = [], callback) {
   return tree.reduce((acc, node) => {
     if (callback(node)) {
@@ -45,7 +51,7 @@ export function flatFilter(tree = [], callback) {
   }, []);
 }
 
-
+// 检查是否是复合的react节点
 export function normalizeColumns(elements) {
   const columns = [];
   React.Children.forEach(elements, (element) => {
@@ -67,7 +73,12 @@ export function normalizeColumns(elements) {
   return columns;
 }
 
-
+/**
+ * 给数组中添加新的数据
+ * @param tree
+ * @param mapper
+ * @param childrenName
+ */
 export function treeMap(tree, mapper, childrenName = 'children') {
   return tree.map((node, index) => {
     const extra = {};
@@ -81,10 +92,76 @@ export function treeMap(tree, mapper, childrenName = 'children') {
   });
 }
 
+/**
+ * 计算每个子节点中的个数
+ * @param treeCol
+ */
+export function getTreeCol(treeCol) {
+  const getCol = (array) => {
+    return array.map(item => {
+      let children = item.children
+      if(children) {
+        // 优先计算子节点中的个数
+        let child = getCol(children)
+
+        return {
+          ...item,
+          children: child,
+          col: child.reduce((prev, next) => {
+            if(prev.col && next.col) {
+              return prev.col + next.col
+            } else {
+              console.error('array length must > 1')
+            }
+          })
+        }
+      }
+
+      return {
+        ...item,
+        col: 1
+      }
+    })
+  }
+  return getCol(treeCol)
+}
 
 
+/**
+ * 将嵌套的节点，替换成需要table的格式
+ * @param arrayTree
+ * @returns {Array}
+ */
+export function assemble(arrayTree) {
+  let combination = []
+
+  combination.push(arrayTree);
+
+  (function func(i) {
+    const thisArr = combination[i].reduce((prev, next) => {
+
+      if(next.children && next.children.length > 0) {
+        prev = prev.concat(next.children)
+      }
+
+      return prev
+    }, [])
 
 
+    if(thisArr.length > 0) {
+      combination = combination.concat([thisArr])
+    }
+
+    i++
+
+    if(combination[i] && combination[i].length > 0) {
+      func(i)
+    }
+
+  })(0)
+
+  return combination
+}
 
 
 

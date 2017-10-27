@@ -26,12 +26,14 @@ export default {
    */
 
   dataSource: [
-    {key: '1', colSpan: 0,  name: '胡彦斌', age: 32, address: '西湖区湖底公园1号'},
-    {key: '2', colSpan: 2, name: '胡彦祖', age: 42, address: '西湖区湖底公园1号', render: () => <a href="#">Delete</a> }
+    {key: '1', colSpan: 0, first: '胡', last: '彦斌', sex: '女', name: '胡彦斌', fal:'fdsa', age: 32, address: '西湖区湖底公园1号'},
+    {key: '2', colSpan: 2, name: '胡彦祖', sex: '男', first: '胡', last: '彦祖', age: 42, address: '西湖区湖底公园1号', edit: 'edit_this' },
+    {key: '3', colSpan: 0, first: '胡', last: '彦斌', sex: '女', name: '胡彦斌', fal:'fdsa', age: 32, address: '西湖区湖底公园1号'},
+    {key: '4', colSpan: 2, name: '胡彦祖', sex: '男', first: '胡', last: '彦祖', age: 42, address: '西湖区湖底公园1号', edit: 'edit_this' }
   ],
 
   // 行选择
-  rowSelection: {},
+  // rowSelection: {},
 
   // 滚动
   scroll: undefined,
@@ -52,7 +54,15 @@ export default {
    */
   columns: [
     {
-      title: '姓名', width: 100, fixed: 'left', dataIndex: 'name', key: 'name',
+      title: '姓名', width: 80, fixed: 'left', dataIndex: 'name', key: 'name',
+      sorter: (a, b) => {
+        // console.log(a.age - b.age)
+        return a.age - b.age
+      },
+      sortOrder: true,
+    },
+    {
+      title: '性别', width: 40, fixed: 'left', dataIndex: 'sex', key: 'sex',
       filters: [
         {text: 'Joe', value: 'Joe',},
         {text: 'John', value: 'John',}
@@ -60,28 +70,21 @@ export default {
       onFilter: (value, record) => record.name.indexOf(value) === 0,
     },
     {
-      title: '用户1',
+      title: '用户',
       children: [
-        {title: '年龄1', dataIndex: 'age', key: 'age', width: 200, sorter: (a, b) => a.age - b.age},
-        {title: '姓名1', children: [
-          {title: '名字1', dataIndex: 'first', key: 'first', width: 100, sorter: (a, b) => a.age - b.age},
-          {title: '姓氏1', dataIndex: 'last', key: 'last', width: 100, sorter: (a, b) => a.age - b.age}
+        {title: '年龄', dataIndex: 'age', key: 'age', width: 50, sorter: (a, b) => a.age - b.age},
+        {title: '姓名', children: [
+          {title: '姓', dataIndex: 'first', key: 'first', width: 60, sorter: (a, b) => a.age - b.age},
+          {title: '名', dataIndex: 'last', key: 'last', width: 60, sorter: (a, b) => a.age - b.age}
           ]
         }
         ]
     },
+    {title: '住址', width: 60, fixed: 'right', dataIndex: 'address', key: 'address', },
     {
-      title: '用户2',
-      children: [
-        {title: '年龄2', dataIndex: 'age', key: 'age', width: 200, sorter: (a, b) => a.age - b.age},
-        {title: '姓名2', children: [
-          {title: '名字2', dataIndex: 'first', key: 'first', width: 100, sorter: (a, b) => a.age - b.age},
-          {title: '姓氏2', dataIndex: 'last', key: 'last', width: 100, sorter: (a, b) => a.age - b.age}
-          ]
-        }
-        ]
-    },
-    {title: '住址', width: 60, fixed: 'right', dataIndex: 'address', key: 'address',}
+      title: '编辑', width: 60, fixed: 'right', dataIndex: 'edit', key: 'edit',
+      render: (node) => <a onClick={() => console.log(node)} href="#">{node}</a>,
+    }
   ],
 
 }

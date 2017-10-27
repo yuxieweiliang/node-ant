@@ -14,7 +14,7 @@ import { TBody } from './tBody'
 import { Group } from './group.jsx'
 import { ColumnGroup } from './columnGroup.jsx'
 import { Column } from './column.jsx'
-import { menuId, _getData, _getRow, _getLength, flatFilter, normalizeColumns, treeMap } from './func'
+import { menuId, getTreeCol, flatArray, flatFilter, normalizeColumns, treeMap, assemble } from './func'
 
 
 
@@ -37,95 +37,166 @@ class Table extends Component {
   // static defaultProps = data
 
   componentWillMount() {
-    console.log()
+    const { width, dataSource } = this.props
+    this.setState({
+      initialData: [...dataSource],
+      dataSource
+    })
   }
 
+  _createBodyData(keys) {
+    const { width, dataSource } = this.props
+    const body = {
+      style: {
+        minWidth: width + 'px'
+      },
+      dataSource: this.state.dataSource,
+      keys
+    }
+    return body
+  }
 
+  defaultHeaders = {
+    rowSelection : {
+      selections: {
+        key: '',
+        text: '',
+        onSelect() {}
+      },
+      type: 'checkbox'
+    },
+    sort: {
+      order: () => this._createSorter
+    }
+  }
 
-  render() {
-    const { rootClass, width, dataSource, columns, children } = this.props
-    const columnArray = columns || normalizeColumns(children)
-    // const childrens = _getRow(children)
-    // let child = _getLength(childrens)
-    const tree = treeMap(columnArray, function(node, index) {
+  _createHeaderData(keys, columnArray) {
+    const { width, rowSelection } = this.props
+    let tree = null
+    let  header = null
+    tree = treeMap(columnArray, function(node) {
       return {
         ...node,
         search: <div key="1">fdsaf</div>
       }
     })
 
-    // console.log(_getLength(tree))
 
-
-
-
-
-
-
-
-
-    function reduceArr(arrayTree) {
-      let _arr = []
-
-      _arr.push(arrayTree)
-
-      const reduc = (arr) => {
-
-        const thisArr = arr.reduce((prev, next) => {
-
-          if(next.children && next.children.length > 0) {
-            prev = prev.concat(next.children)
-          }
-          return prev
-        }, [])
-
-        if(thisArr.length > 0) {
-         _arr = _arr.concat([thisArr])
-         }
+    header = {
+      style: {
+        minWidth: width + 'px'
+      },
+      keys,
+      dataSource: assemble(getTreeCol(tree)),
+      sort: {
+        order: this._createSorter.bind(this)
+      },
+      filter: {
+        order: this._createFilter.bind(this)
       }
-
-      function func(i) {
-        reduc(_arr[i])
-
-        i++
-
-        if(_arr[i] && _arr[i].length > 0) {
-          func(i)
-        }
-      }
-
-      func(0)
-      return _arr
     }
 
-
-    console.log(reduceArr(tree))
-
-
+    return header
+  }
 
 
+  _createFilter(callback) {
+    let { dataSource } = this.props
+    dataSource.filter(callback)
+    console.log('filter')
+  }
+
+  // 点击上下排序
+  _createSorter(callBack, order, columnKey) {
+    let { sorter, dataSource, initialData } = this.state
+
+
+    if(!sorter) {
+
+      dataSource = dataSource.sort(callBack)
+    } else if(sorter && order !== sorter.order) {
+
+      dataSource = dataSource.sort(callBack)
+
+    } else {
+
+      dataSource = [...initialData]
+      order = null
+    }
+    this.setState({
+      sorter:{
+        order,
+        columnKey
+      },
+      dataSource
+    })
+  }
+
+  _createSelect(columnArray) {
+    let { rowSelection } = this.props
+    const key = columnArray[0].key
+    const checkboxKey = []
+
+    rowSelection = Object.assign({}, this.defaultHeaders.rowSelection, rowSelection)
+
+    // 如果存在，并且数组中还没有
+    if(rowSelection.selections) {
+      if(key !== rowSelection.type ) {
+        return ({
+          title: <input type={rowSelection.type} onChange={() => rowSelection.onSelectAll()} />,
+          width: 80,
+          dataIndex: 'checkbox', key: 'checkbox', render: (text, item) => {
+            return (<input type={rowSelection.type}  onChange={() => rowSelection.onChange(item.key, item)}/>)
+          }
+        })
+      }
+    }
+  }
+
+  _getColumns() {
+    let { rootClass, style, dataSource, columns, children, rowSelection } = this.props
+    // 检查数据结构
+    const columnArray = columns || normalizeColumns(children)
+    // 是否需要加载选择
+    const checkbox = this._createSelect(columnArray)
+
+
+    // 如果添加checkbox
+    if(checkbox) {
+      columnArray.unshift(checkbox)
+    }
+
+    // 是否需要加载选择
+    // const filter = this._createFilter(columnArray)
+
+
+    // 是否需要排序
+    // const sorter = this._createSorter(columnArray)
 
 
 
 
+    return columnArray
+  }
+
+  render() {
+    const { rootClass, style, dataSource, columns, children, rowSelection } = this.props
+    const columnArray = this._getColumns()
+    const keys = flatArray(columnArray).filter(item => item.key)
+    const body = this._createBodyData(keys)
+    const header = this._createHeaderData(keys, columnArray)
+    // const childrens = _getRow(children)
+    // let child = _getLength(childrens)
 
 
+    console.log('fffffffffffffffff')
 
-
-    return (<div className={'table table-fixed-header '+ this.state.style} >
+    return (<div className={'table table-fixed-header '} >
       <div className="table-content">
-
         <div className="table-scroll">
 
-          {/*<THeader ref="header"
-                       width={width + 'px'}
-                       minWidth={width + 'px'}
-                       child={child}
-                       {...this.props}/>
-           <TBody {...this.props}/>
-          */}
-
-
+          <THeader {...header}/>
+          <TBody {...body}/>
 
 
         </div>
@@ -293,28 +364,6 @@ class Table extends Component {
 
 }
 
-class TableList extends Component {
-  render() {
-    return (
-      <Table {...this.props} col={['100px', '100px', '100px', '100px', '100px', '100px', '100px', '100px', '100px', '100px', '100px']}>
-        <Column context="a1" dataIndex="a1" key="a1" fixed="left"/>
-        <ColumnGroup context="a0">
-          <Column context="b1" dataIndex="b1" key="b1"/>
-          <Column context="c1" dataIndex="c1" key="c1"/>
-          <Column context="c1" dataIndex="c1" key="c2"/>
-          <Column context="c2" dataIndex="c2" key="c3"/>
-          <Column context="c2" dataIndex="c2" key="c4"/>
-          <Column context="c1" dataIndex="c1" key="c5"/>
-          <Column context="c1" dataIndex="c1" key="c6"/>
-        </ColumnGroup>
-        <Column context="a2" dataIndex="a2" key="a2"/>
-        <Column context="a3" dataIndex="a3" key="a3"/>
-        <Column context="a4" dataIndex="a4" key="a4"  fixed="right"/>
-        {/*<TableLeft/>*/}
-      </Table>
-    )
-  }
-}
 
 const datas = {
   ...data,
@@ -323,9 +372,21 @@ const datas = {
     a4: <button className="btn-primary btn-sm" onClick={() => console.log(item)}>aaaa</button>
   }))
 }
+const rowSelection = {
+  onChange: (selectedRowKeys, selectedRows) => {
+    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+  },
+  onSelect: (record, selected, selectedRows) => {
+    console.log(record, selected, selectedRows);
+  },
+  onSelectAll: (selected, selectedRows, changeRows) => {
+    console.log(selected, selectedRows, changeRows);
+  },
+};
 
 
-render(<TableList {...datas} />, document.getElementById('table'));
+//
+render(<Table {...datas} rowSelection={rowSelection} />, document.getElementById('table'));
 
 
 

@@ -9,25 +9,14 @@ import warning from 'warning'
 
 export class Group extends Component {
   render() {
-    const { col, leftCol, rightCol, allkey } = this.props
+    const { keys } = this.props
     return(
       <colgroup>
         {
-          _.map(col, (item, i) => {
+          _.map(keys, (item, i) => {
+            const width = item.width + 'px'
 
-            if(leftCol) {
-              if(i < leftCol) {
-                return (<col key={i} style={{width: item, minWidth: item}}/>)
-              }else return
-            }
-
-            if(rightCol) {
-              if(allkey.length - i-1 < rightCol) {
-                return (<col key={i} style={{width: item, minWidth: item}}/>)
-              }else return
-            }
-
-            return <col key={i} style={{width: item, minWidth: item}}/>
+            return <col key={i} style={{width: width, minWidth: width}}/>
 
 
           })

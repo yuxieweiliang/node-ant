@@ -9,6 +9,7 @@ import warning from 'warning'
 import { Group } from './group.jsx'
 import { ColumnGroup } from './columnGroup.jsx'
 import { Column } from './column.jsx'
+import { menuId, getTreeCol, flatArray, flatFilter, normalizeColumns, treeMap } from './func'
 
 export class TBody extends Component {
   constructor(props) {
@@ -18,25 +19,34 @@ export class TBody extends Component {
   componentDidMount() {}
 
   render() {
-    const { dataSource, allkey, width, minWidth } = this.props
+    const { dataSource, style, keys } = this.props
 
-    // console.log(this)
 
     return (
       <div className="table-body" ref="tableBody">
-        <table data-ref="body" style={{width}}>
-          <Group {...this.props}/>
+        <table data-ref="body" style={style}>
+          <Group keys={keys}/>
           <tbody className="t-body">
           {
             dataSource.map((items, i) => {
+
               return (
-                <ColumnGroup key={i}>
-                  {allkey.map((key, j) => {
+                <tr key={i}>
+                  {
+                    keys.map((column, j) => {
+                      let context = items[column.key]
+                      if(column.render) {
+                        context = column.render(items[column.key], items)
+                      }
 
-                    return (<td  key={j}>{items[key]}</td>)
+                      // console.log(context)
+                        return (
+                          <td  key={j}>{context}</td>
+                        )
 
-                  })}
-                </ColumnGroup>
+                      })
+                  }
+                </tr>
               )
             })
           }
