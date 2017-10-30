@@ -19,18 +19,8 @@ export default {
   // 显示头部
   showHeader: true,
 
-  /**
-   * title: 当前显示的内容
-   * dataIndex: 当前列的名字
-   * key: key
-   */
-
-  dataSource: [
-    {key: '1', colSpan: 0, first: '胡', last: '彦斌', sex: '女', name: '胡彦斌', fal:'fdsa', age: 32, address: '西湖区湖底公园1号'},
-    {key: '2', colSpan: 2, name: '胡彦祖', sex: '男', first: '胡', last: '彦祖', age: 42, address: '西湖区湖底公园1号', edit: 'edit_this' },
-    {key: '3', colSpan: 0, first: '胡', last: '彦斌', sex: '女', name: '胡彦斌', fal:'fdsa', age: 32, address: '西湖区湖底公园1号'},
-    {key: '4', colSpan: 2, name: '胡彦祖', sex: '男', first: '胡', last: '彦祖', age: 42, address: '西湖区湖底公园1号', edit: 'edit_this' }
-  ],
+  // 显示分页
+  pagination: true,
 
   // 行选择
   // rowSelection: {},
@@ -41,8 +31,18 @@ export default {
   // 显示附加信息
   expandedRowRender: record => <p>{record.description}</p>,
 
-  // 显示分页
-  pagination: true,
+  /**
+   * title: 当前显示的内容
+   * dataIndex: 当前列的名字
+   * key: key
+   */
+  dataSource: [
+    {key: '1', colSpan: 0, first: '胡', last: '彦斌', sex: '女', name: '胡彦斌', fal:'fdsa', age: 32, address: '西湖区湖底公园1号'},
+    {key: '2', colSpan: 2, name: '胡彦祖', sex: '男', first: '胡', last: '彦祖', age: 42, address: '西湖区湖底公园1号', edit: 'edit_this' },
+    {key: '3', colSpan: 0, first: '胡', last: '彦斌', sex: '女', name: '胡彦斌', fal:'fdsa', age: 32, address: '西湖区湖底公园1号'},
+    {key: '4', colSpan: 2, name: '胡彦祖', sex: '男', first: '胡', last: '彦祖', age: 42, address: '西湖区湖底公园1号', edit: 'edit_this' }
+  ],
+
 
 
   /**
@@ -64,10 +64,12 @@ export default {
     {
       title: '性别', width: 40, fixed: 'left', dataIndex: 'sex', key: 'sex',
       filters: [
-        {text: 'Joe', value: 'Joe',},
-        {text: 'John', value: 'John',}
+        {text: 'Joe', value: '男',},
+        {text: 'John', value: '女',}
         ],
-      onFilter: (value, record) => record.name.indexOf(value) === 0,
+      onFilter: (value, record) => {
+        return (value.map(item => item.value).indexOf(record.sex) > -1)
+      }//record.sex.indexOf(value.map(item => item.value)) > -1 //console.log(record.sex === '男'),
     },
     {
       title: '用户',

@@ -1,7 +1,7 @@
 
 
 export default {
-  rootClass: 'horizontal',
+  rootClass: 'horizontal', // horizontal
   dataSource: [{
     id: 0,
     icon: 'address-book',
@@ -73,12 +73,17 @@ export default {
       type: 'item',
     }]
   },{
+    id: 5,
+    icon: 'address-book',
+    title: 'Navigation One',
+    active: false
+  },{
     id: 12,
     icon: 'address-book',
     title: 'Navigation Two',
     type: 'item',
     disabled: true,
-    subset: [[{
+    subset: [{
       id: 13,
       title: 'navigation one',
       type: 'item',
@@ -94,7 +99,7 @@ export default {
       id: 16,
       title: 'navigation two',
       type: 'item',
-    }],[{
+    },{
       id: 17,
       title: 'navigation one',
       type: 'item',
@@ -110,6 +115,6 @@ export default {
       id: 20,
       title: 'navigation two',
       type: 'item',
-    }]]
+    }]
   }]
 }

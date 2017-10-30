@@ -28,7 +28,7 @@ class Menu extends Component {
       // 如果只有一段
       if(typeOf(list) === 'object') {
 
-        array.push(<li key={i}>{list.context}</li>)
+        array.push(<li key={i}><a href="">{list.title}</a></li>)
 
         // 如果分多段
       } else if(typeOf(list) === 'array') {
@@ -37,7 +37,7 @@ class Menu extends Component {
         }
 
         list.map((item, j) => {
-          array.push(<li key={j + '-' + i}>{item.context}</li>)
+          array.push(<li key={j + '-' + i}><a href="">{item.title}</a></li>)
         })
 
       } else {
@@ -66,7 +66,7 @@ class Menu extends Component {
             ref={ ref }
             onClick={(e) => this._subClick(e, ref, item)}>
           <div className="menu-title">
-            <a href="javascript:void(0)">{item.context}</a>
+            <a href="javascript:void(0)">{item.title}</a>
             {
               hasSub && <span className="fa fa-angle-down"/>
             }
@@ -157,6 +157,10 @@ class Menu extends Component {
     let oldNode = this.state.active
     let thisNode = this.refs[i]
     let className = thisNode.className.split(' ')
+    const {rootClass} = this.props
+    if(rootClass === 'horizontal' || item.disabled) {
+      return
+    }
 
     // 关闭旧节点
     if(oldNode) {
@@ -256,9 +260,12 @@ class Menu extends Component {
                     {
                       item.icon && <i className={'fa fa-' + item.icon}/>
                     }
-                    {item.context}
+                    {item.title}
                   </a>
-                  <span className="fa fa-sort-down"/>
+                  {
+                    item.subset && <span className="fa fa-sort-down"/>
+                  }
+
                 </div>
                 {
                   item.subset && this._renderSub(item)
@@ -272,7 +279,7 @@ class Menu extends Component {
     </div>);
   }
 }
-
+render(<Menu rootClass="inline" {...data} onClick={(item) => console.log(item)}/>, document.getElementById('root'));
 // http://10.0.0.35:804/Quality/GetUserGroupInfoByid?token=523B516F4843EBFF0DF295611FE8F5D9BABE9CD0490E197782CCC560D2D1E42C&UserId=NANYP
 
 const token = '523B516F4843EBFF0DF295611FE8F5D9BABE9CD0490E197782CCC560D2D1E42C'
@@ -308,6 +315,6 @@ kn.fetch({url: 'http://10.0.0.35:804/Documents/GetAllUserInfo',token})
         return items
 
       })
-      render(<Menu rootClass="inline" dataSource={arrayList} onClick={(item) => console.log(item)}/>, document.getElementById('root'));
+      /*render(<Menu rootClass="inline" dataSource={arrayList} onClick={(item) => console.log(item)}/>, document.getElementById('root'));*/
     }))
 

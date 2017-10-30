@@ -24,6 +24,7 @@ let readFile = function (fileName, format) {
     });
   });
 };
+
 /**
  * 一次获取一个文件夹
  * @param pathName
@@ -37,6 +38,7 @@ let readDir = function (pathName) {
     });
   })
 };
+
 /**
  * 一次获取多个文件夹
  * @param pathName
@@ -47,9 +49,30 @@ let getFilesPath = function(pathName) {
   return Promise.all(read)
 };
 
+/**
+ * 获取元素的绝对位置
+ * @param element
+ * @returns {{left: (number|Number), top: (Number|number)}}
+ */
+let getOffset = function(element) {
+  var actualLeft = element.offsetLeft;
+  var actualTop = element.offsetTop;
+  var current = element.offsetParent;
+  while (current !== null) {
+    actualLeft += current.offsetLeft;
+    actualTop += current.offsetTop;
+    current = current.offsetParent;
+  }
+  return {
+    left: actualLeft,
+    top: actualTop
+  }
+}
+
 module.exports = {
   typeOf,
   readFile,
   readDir,
-  getFilesPath
+  getFilesPath,
+  getOffset,
 };

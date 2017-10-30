@@ -37,23 +37,34 @@ class Table extends Component {
   // static defaultProps = data
 
   componentWillMount() {
-    const { width, dataSource } = this.props
+    const { width, dataSource, rowSelection } = this.props
+    const { selectKeys } = rowSelection
+    let select = selectKeys ? [...selectKeys] : []
     this.setState({
       initialData: [...dataSource],
-      dataSource
+      dataSource,
+      rowSelection: {
+        ...this.defaultHeaders.rowSelection,
+        ...rowSelection,
+        selectKeys: select
+      }
     })
+    // console.log('------------------')
+
   }
 
+  /**
+   * 创建表格主体数据
+   * @param keys
+   */
   _createBodyData(keys) {
-    const { width, dataSource } = this.props
-    const body = {
+    return {
       style: {
-        minWidth: width + 'px'
+        minWidth: this.props.width + 'px'
       },
       dataSource: this.state.dataSource,
       keys
     }
-    return body
   }
 
   defaultHeaders = {
@@ -70,21 +81,22 @@ class Table extends Component {
     }
   }
 
+  /**
+   * 创建表格头部数据
+   * @param keys
+   * @param columnArray
+   */
   _createHeaderData(keys, columnArray) {
-    const { width, rowSelection } = this.props
-    let tree = null
-    let  header = null
-    tree = treeMap(columnArray, function(node) {
+    let tree = treeMap(columnArray, function(node) {
       return {
         ...node,
         search: <div key="1">fdsaf</div>
       }
     })
 
-
-    header = {
+    return {
       style: {
-        minWidth: width + 'px'
+        minWidth: this.props.width + 'px'
       },
       keys,
       dataSource: assemble(getTreeCol(tree)),
@@ -95,18 +107,26 @@ class Table extends Component {
         order: this._createFilter.bind(this)
       }
     }
-
-    return header
   }
 
-
+  /**
+   * 创建过滤
+   * @param callback
+   */
   _createFilter(callback) {
     let { dataSource } = this.props
-    dataSource.filter(callback)
-    console.log('filter')
+    dataSource = dataSource.filter(callback)
+    this.setState({
+      dataSource
+    })
   }
 
-  // 点击上下排序
+  /**
+   * 点击上下排序
+   * @param callBack
+   * @param order
+   * @param columnKey
+   */
   _createSorter(callBack, order, columnKey) {
     let { sorter, dataSource, initialData } = this.state
 
@@ -132,21 +152,80 @@ class Table extends Component {
     })
   }
 
+  /**
+   * 创建筛选checkbox
+   * @param columnArray
+   */
   _createSelect(columnArray) {
-    let { rowSelection } = this.props
+    let { rowSelection, dataSource } = this.state
     const key = columnArray[0].key
-    const checkboxKey = []
+    let selectKeys = this.state.rowSelection.selectKeys // 用来存当前选中项的key
+    const type = rowSelection.type || 'checkbox'
 
-    rowSelection = Object.assign({}, this.defaultHeaders.rowSelection, rowSelection)
-
+    console.log(key)
     // 如果存在，并且数组中还没有
     if(rowSelection.selections) {
-      if(key !== rowSelection.type ) {
+      if(key !== type) {
         return ({
-          title: <input type={rowSelection.type} onChange={() => rowSelection.onSelectAll()} />,
+          selectRender: () => {
+            let checkedAll = selectKeys.length === dataSource.length
+
+            if(type === 'radio') {
+              return '选择'
+            }
+            return <input type={type}
+                          checked={checkedAll}
+                          onClick={(e) => {
+                            // 如果key里面的值，并不是全部，则把没有的再存进去
+                            if(selectKeys.length !== dataSource.length) {
+                              this.state.dataSource.map(item => {
+                                if(selectKeys.indexOf(item.key) < 0) {
+                                  selectKeys.push(item.key)
+                                }
+                              })
+                            } else {
+                              // 如果已经是所有值了，就把选中的清空
+                              selectKeys = []
+                            }
+
+                            this.setState({
+                              rowSelection: {
+                                ...rowSelection,
+                                selectKeys
+                              }
+                            })
+                          }
+                          }
+                          onChange={() => rowSelection.onSelectAll(selectKeys, )} />
+          },
           width: 80,
-          dataIndex: 'checkbox', key: 'checkbox', render: (text, item) => {
-            return (<input type={rowSelection.type}  onChange={() => rowSelection.onChange(item.key, item)}/>)
+          dataIndex: type,
+          key: type,
+          render: (text, item) => {
+            return (<input type={type}
+                           checked={selectKeys.indexOf(item.key) > -1}
+                           onClick={() => {
+                             const other = _.filter(selectKeys,  list => list !== item.key)
+
+                             if(type === 'radio') {
+                               selectKeys = [item.key]
+                             } else {
+                               if(selectKeys.indexOf(item.key) < 0) {
+                                 selectKeys.push(item.key)
+                               } else {
+                                 selectKeys = other
+                               }
+                             }
+
+                             this.setState({
+                               rowSelection: {
+                                 ...rowSelection,
+                                 selectKeys
+                               }
+                             })
+
+                           }}
+                           onChange={(e) => rowSelection.onChange(item.key, item,e.target.checked)}/>)
           }
         })
       }
@@ -189,7 +268,7 @@ class Table extends Component {
     // let child = _getLength(childrens)
 
 
-    console.log('fffffffffffffffff')
+    // console.log('fffffffffffffffff')
 
     return (<div className={'table table-fixed-header '} >
       <div className="table-content">
@@ -203,59 +282,59 @@ class Table extends Component {
 
 
 
-{/*
+        {/*
 
-        {
-          (this.state.width < width) && (
-            <TableLeft ref="left"
-                       leftCol="1"
-                       {...this.state}
-                       {...this.props}/>
-          )
-        }
+         {
+         (this.state.width < width) && (
+         <TableLeft ref="left"
+         leftCol="1"
+         {...this.state}
+         {...this.props}/>
+         )
+         }
 
 
 
-        {
-          (this.state.width < width) && (
-            <TableRight ref="right"
-                        rightCol="1"
-                        {...this.state}
-                        {...this.props}/>
-          )
-        }
-*/}
+         {
+         (this.state.width < width) && (
+         <TableRight ref="right"
+         rightCol="1"
+         {...this.state}
+         {...this.props}/>
+         )
+         }
+         */}
 
 
       </div>
     </div>);
   }
   /*componentDidUpdate() {
-    let { width } = this.state,
-      _this = this,
-      header = this.refs.header.refs.tableHeader,
-      body = this.refs.body.refs.tableBody
-      //leftT = this.refs.left.refs.tableLeft.refs.tableBody,
-      //rightT = this.refs.right.refs.tableRight.refs.tableBody
-    if(!this.state.body.height) {
+   let { width } = this.state,
+   _this = this,
+   header = this.refs.header.refs.tableHeader,
+   body = this.refs.body.refs.tableBody
+   //leftT = this.refs.left.refs.tableLeft.refs.tableBody,
+   //rightT = this.refs.right.refs.tableRight.refs.tableBody
+   if(!this.state.body.height) {
 
-      this.setState({
-        header: {
-          height: header.offsetHeight,
-          width: header.offsetWidth,
-          listH: header.querySelector('tr').offsetHeight,
-          listW: header.querySelector('tr').offsetWidth,
-        },
-        body: {
-          height: body.offsetHeight,
-          width: body.offsetWidth,
-          listH: body.querySelector('tr').offsetHeight,
-          listW: body.querySelector('tr').offsetWidth,
-        }
-      })
-    }
+   this.setState({
+   header: {
+   height: header.offsetHeight,
+   width: header.offsetWidth,
+   listH: header.querySelector('tr').offsetHeight,
+   listW: header.querySelector('tr').offsetWidth,
+   },
+   body: {
+   height: body.offsetHeight,
+   width: body.offsetWidth,
+   listH: body.querySelector('tr').offsetHeight,
+   listW: body.querySelector('tr').offsetWidth,
+   }
+   })
+   }
 
-  }*/
+   }*/
   componentWillReceiveProps() {}
 
   bodyScroll() {
@@ -364,29 +443,21 @@ class Table extends Component {
 
 }
 
-
-const datas = {
-  ...data,
-  dataSource: data.dataSource.map(item => ({
-    ...item,
-    a4: <button className="btn-primary btn-sm" onClick={() => console.log(item)}>aaaa</button>
-  }))
-}
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
   },
   onSelect: (record, selected, selectedRows) => {
-    console.log(record, selected, selectedRows);
+    //console.log(record, selected, selectedRows);
   },
   onSelectAll: (selected, selectedRows, changeRows) => {
-    console.log(selected, selectedRows, changeRows);
+    //console.log(selected, selectedRows, changeRows);
   },
 };
 
 
 //
-render(<Table {...datas} rowSelection={rowSelection} />, document.getElementById('table'));
+render(<Table {...data} rowSelection={rowSelection} />, document.getElementById('table'));
 
 
 
@@ -398,36 +469,36 @@ render(<Table {...datas} rowSelection={rowSelection} />, document.getElementById
 
 
 /*class TableList extends Component {
-  render() {
-    return (
-      <Table  {...this.props}>
-        <Column context="a1" dataIndex="a1" key="a1" fixed="left"/>
-        <ColumnGroup context="a0">
-          <Column context="b1" dataIndex="b1" key="b1"/>
-          <Column context="c1" dataIndex="c1" key="c1"/>
-          <Column context="c1" dataIndex="c1" key="c2"/>
-          <Column context="c2" dataIndex="c2" key="c3"/>
-          <Column context="c2" dataIndex="c2" key="c4"/>
-          <Column context="c1" dataIndex="c1" key="c5"/>
-          <Column context="c1" dataIndex="c1" key="c6"/>
-        </ColumnGroup>
-        <Column context="a2" dataIndex="a2" key="a2"/>
-        <Column context="a3" dataIndex="a3" key="a3"/>
-        <Column context="a4" dataIndex="a4" key="a4"  fixed="right"/>
-        {/!*<TableLeft/>*!/}
-      </Table>
-    )
-  }
-}*/
+ render() {
+ return (
+ <Table  {...this.props}>
+ <Column context="a1" dataIndex="a1" key="a1" fixed="left"/>
+ <ColumnGroup context="a0">
+ <Column context="b1" dataIndex="b1" key="b1"/>
+ <Column context="c1" dataIndex="c1" key="c1"/>
+ <Column context="c1" dataIndex="c1" key="c2"/>
+ <Column context="c2" dataIndex="c2" key="c3"/>
+ <Column context="c2" dataIndex="c2" key="c4"/>
+ <Column context="c1" dataIndex="c1" key="c5"/>
+ <Column context="c1" dataIndex="c1" key="c6"/>
+ </ColumnGroup>
+ <Column context="a2" dataIndex="a2" key="a2"/>
+ <Column context="a3" dataIndex="a3" key="a3"/>
+ <Column context="a4" dataIndex="a4" key="a4"  fixed="right"/>
+ {/!*<TableLeft/>*!/}
+ </Table>
+ )
+ }
+ }*/
 
 
 
 
 /*
-*/
+ */
 
 /*
-* Array.prototype.max = function() {
+ * Array.prototype.max = function() {
  return Math.max.apply({},this)
  }
  Array.prototype.min = function() {

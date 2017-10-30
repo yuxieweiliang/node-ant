@@ -240,6 +240,10 @@
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
 }
+.menu-horizontal .menu-nav > .menu-item .menu-title a {
+  padding-left: 1em;
+  padding-right: 1em;
+}
 .menu-horizontal .menu-nav > .menu-item.open {
   margin-bottom: 1px;
 }
