@@ -6,7 +6,7 @@ import _ from 'lodash'
 import { typeOf } from '../../../assets/func'
 import '../../style/main.less'
 import './style.less'
-import '../radio/style.less'
+import '../checkbox/style.less'
 let id = 0;
 class MyComponent extends Component {
   constructor() {

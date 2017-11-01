@@ -41,6 +41,10 @@
 div.row {
   background: #fff;
 }
-.div {
-  animation: antSwingIn 1s infinite;
+.alert-danger {
+  padding: .8em;
+  color: #d85867;
+  background: #ffe3e7;
+  border: 1px solid #ffcad0;
+  border-radius: 4px;
 }

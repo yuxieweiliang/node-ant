@@ -7,8 +7,8 @@
   layout
 */
 
-@header: 80px, @Blue;
-@footer: 20px, @Blue;
+@header: 70px, @Blue;
+@footer: 0, @Blue;
 @aside: 300px, @Gray-f2;
 
 .layout {
@@ -74,10 +74,44 @@
       overflow-x: hidden;
       overflow-y: auto;
     }
+    &.hidden-aside {
+      > .layout-subject {
+        width: 100%;
+      }
+      > .layout-aside {
+        display: none;
+      }
+    }
   }
-
 }
 
+
+.pie {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.pie {
+  &-row {
+    &:extend(.pie);
+    flex-direction: row;
+  }
+  &-column {
+    &:extend(.pie);
+    flex-direction: column;
+  }
+  &-content {
+    flex: 1;
+  }
+  &-top {
+  }
+  &-bottom {
+  }
+  &-left {
+  }
+  &-right {
+  }
+}
 
 
 
