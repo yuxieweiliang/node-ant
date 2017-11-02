@@ -152,23 +152,7 @@
  * 创建按钮
  * 需要传入一个二维数组
  */
-.btn,
-.btn-default,
-.btn-warning,
-.btn-warning-line,
-.btn-warning-dashed,
-.btn-danger,
-.btn-danger-line,
-.btn-danger-dashed,
-.btn-success,
-.btn-success-line,
-.btn-success-dashed,
-.btn-info,
-.btn-info-line,
-.btn-info-dashed,
-.btn-primary,
-.btn-primary-line,
-.btn-primary-dashed {
+.btn {
   position: relative;
   font-size: 14px;
   display: inline-block;
@@ -185,6 +169,9 @@
   touch-action: manipulation;
   transition: .5s ease;
   border: 1px solid transparent;
+}
+.btn + .btn {
+  margin-left: 5px;
 }
 .btn-xs {
   font-size: 12px;
@@ -207,34 +194,34 @@
   color: #368ed2;
   border-color: #368ed2;
 }
-.disabled[disabled],
-.btn-warning[disabled],
-.btn-danger[disabled],
-.btn-success[disabled],
-.btn-info[disabled],
-.btn-primary[disabled] {
+.btn .disabled[disabled],
+.btn .btn-warning[disabled],
+.btn .btn-danger[disabled],
+.btn .btn-success[disabled],
+.btn .btn-info[disabled],
+.btn .btn-primary[disabled] {
   color: #999;
   background-color: #ddd;
   border: 1px solid transparent;
   cursor: not-allowed;
 }
-.disabled-line[disabled],
-.btn-warning-line[disabled],
-.btn-danger-line[disabled],
-.btn-success-line[disabled],
-.btn-info-line[disabled],
-.btn-primary-line[disabled] {
+.btn .disabled-line[disabled],
+.btn .btn-warning-line[disabled],
+.btn .btn-danger-line[disabled],
+.btn .btn-success-line[disabled],
+.btn .btn-info-line[disabled],
+.btn .btn-primary-line[disabled] {
   color: #ccc;
   background-color: #fff;
   border: 1px solid #ccc;
   cursor: not-allowed;
 }
-.disabled-dashed[disabled],
-.btn-warning-dashed[disabled],
-.btn-danger-dashed[disabled],
-.btn-success-dashed[disabled],
-.btn-info-dashed[disabled],
-.btn-primary-dashed[disabled] {
+.btn .disabled-dashed[disabled],
+.btn .btn-warning-dashed[disabled],
+.btn .btn-danger-dashed[disabled],
+.btn .btn-success-dashed[disabled],
+.btn .btn-info-dashed[disabled],
+.btn .btn-primary-dashed[disabled] {
   color: #ccc;
   background-color: #fff;
   border: 1px dashed #ccc;

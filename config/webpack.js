@@ -26,6 +26,8 @@ const page = [
   'tree',
   'triangle',
   'remind',
+  'popup',
+  'notification',
 
 ]
 

@@ -25,21 +25,22 @@ class PagingView extends Component {
 
   _setPage(page) {
     const { defaultCurrent, total, showSizeChanger } = this.props
+    const start = 2
+    const end = total -1
     let move = 2
     let defaults = []
 
-    console.log(total - page)
-
-    if(page > 3 && page < total -2) {
-      console.log(total - page)
-
+    if(page > start + 1 && page < end - 1) {
       for(let i = -move; i < 3; i++ ) {
         defaults.push(page + i)
       }
 
-    } else if(page === 3 || page === total -2){
-
-      for(let i = -1; i < 3; i++ ) {
+    } else if(page === start + 1) {
+      for(let i = -1; i < 4; i++ ) {
+        defaults.push(page + i)
+      }
+    } else if(page === end-1) {
+      for(let i = -3; i < 2; i++ ) {
         defaults.push(page + i)
       }
     } else {
@@ -56,11 +57,14 @@ class PagingView extends Component {
     const { defaultCurrent, total, showSizeChanger } = this.props
     const { page, defaults } = this.state
 
+
     return defaults.map((item, i) => {
       let className = 'paging-item'
       if(page === item) {
         className += ' paging-active'
       }
+
+
       return (
         <li key={i}
             className={className}
@@ -71,59 +75,107 @@ class PagingView extends Component {
     })
 
   }
-  _changePage(size) {
-    const { total } = this.props
-    const { defaults, page } = this.state
 
-    if(page + size < 1 || page + size > total-3) {
-      return
+  /**
+   * 点击左右箭头，切换到下一个或上一个
+   * @param page
+   * @private
+   */
+  _changePage(page) {
+    const { total } = this.props
+    const _page = this.state.page + page
+
+    if(_page >= 1 && _page <= total) {
+
+      this._setPage(_page)
+    }
+  }
+
+
+  /**
+   * 创建左右翻页
+   * @param fix
+   * @returns {XML}
+   * @private
+   */
+  _createPrevPage(fix) {
+    const { total } = this.props
+    const { page } = this.state
+    const _this = this
+
+    /**
+     * 左右翻页每次翻一页
+     */
+    const turningPage = function () {
+      if(fix === 'prev') {
+        _this._setPage(page - 3)
+      } else if(fix === 'next') {
+        _this._setPage(page + 3)
+      }
     }
 
-    console.log(page + size)
+    // 显示上一页
+    if(fix === 'prev') {
+      if(page <= 4) {
+        return
+      }
+    } else if(fix === 'next') {
+      // 显示下一页
 
-
-    this._setPage(page + size)
-  }
-  _MoveToPage(size) {
-    const { defaults } = this.state
-    const page = defaults.map(item => item + size)
-    this.setState({
-      defaults: page
-    })
-  }
-  render() {
-    const { total } = this.props
-    const pages = this._createPageItems(total)
-    let prevClass = 'paging-item'
-    let nextClass = 'paging-item'
-    if(this.state.page === 1) {
-      prevClass += ' paging-active'
-    }
-    if(this.state.page === total) {
-      nextClass += ' paging-active'
+      if(page >= total - 3) {
+        return
+      }
     }
 
     return (
+      <li className={'paging-jump-' + fix}
+          onClick={turningPage}>
+        <a/>
+      </li>
+    )
+  }
+  render() {
+    const { total } = this.props
+    const { page } = this.state
+    const pages = this._createPageItems(total)
+    let prevClass = 'paging-item'
+    let nextClass = 'paging-item'
+    if(page === 1) {
+      prevClass += ' paging-active'
+    } else if(page === total) {
+      nextClass += ' paging-active'
+    }
+
+    console.log(this.state.defaults, this.state.page)
+    return (
       <ul className="paging">
-        <li className="paging-prev" onClick={() => this._changePage(-1)}>
+        <li className="paging-prev" disabled={page <= 4} onClick={() => this._changePage(-1)}>
           <a className="paging-item-link">＜</a>
         </li>
-        <li className={prevClass} onClick={() => this._setPage( 1)}>
+
+        <li className={prevClass} onClick={() => this._setPage(1)}>
           <a>1</a>
         </li>
-        <li className="paging-jump-prev" onClick={() => this._changePage(-1)}>
-          <a></a>
-        </li>
+
+
+        { // 翻页上一页
+          this._createPrevPage('prev')
+        }
+
+
         {
           pages && pages
         }
-        <li className="paging-jump-next" onClick={() => this._changePage(1)}>
-          <a></a>
-        </li>
+
+        { // 翻页下一页
+          total >= 7 && this._createPrevPage('next')
+        }
+
         <li className={nextClass} onClick={() => this._setPage(total)}>
           <a>{total}</a>
         </li>
-        <li className="paging-next" onClick={() => this._changePage(1)}>
+
+        <li className="paging-next" disabled={page >= total - 3} onClick={() => this._changePage(1)}>
           <a className="paging-item-link">＞</a>
         </li>
       </ul>
@@ -153,7 +205,7 @@ class MyComponent extends Component {
     }
     const paging2 = {
       defaultCurrent: 1,
-      total: 20,
+      total: 8,
       showSizeChanger: true,
     }
 

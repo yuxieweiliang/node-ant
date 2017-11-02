@@ -660,23 +660,7 @@ body {
   border: 1px solid #ffcad0;
   border-radius: 4px;
 }
-.btn,
-.btn-default,
-.btn-warning,
-.btn-warning-line,
-.btn-warning-dashed,
-.btn-danger,
-.btn-danger-line,
-.btn-danger-dashed,
-.btn-success,
-.btn-success-line,
-.btn-success-dashed,
-.btn-info,
-.btn-info-line,
-.btn-info-dashed,
-.btn-primary,
-.btn-primary-line,
-.btn-primary-dashed {
+.btn {
   position: relative;
   font-size: 14px;
   display: inline-block;
@@ -693,6 +677,9 @@ body {
   touch-action: manipulation;
   transition: .5s ease;
   border: 1px solid transparent;
+}
+.btn + .btn {
+  margin-left: 5px;
 }
 .btn-xs {
   font-size: 12px;
@@ -715,34 +702,34 @@ body {
   color: #368ed2;
   border-color: #368ed2;
 }
-.disabled[disabled],
-.btn-warning[disabled],
-.btn-danger[disabled],
-.btn-success[disabled],
-.btn-info[disabled],
-.btn-primary[disabled] {
+.btn .disabled[disabled],
+.btn .btn-warning[disabled],
+.btn .btn-danger[disabled],
+.btn .btn-success[disabled],
+.btn .btn-info[disabled],
+.btn .btn-primary[disabled] {
   color: #999;
   background-color: #ddd;
   border: 1px solid transparent;
   cursor: not-allowed;
 }
-.disabled-line[disabled],
-.btn-warning-line[disabled],
-.btn-danger-line[disabled],
-.btn-success-line[disabled],
-.btn-info-line[disabled],
-.btn-primary-line[disabled] {
+.btn .disabled-line[disabled],
+.btn .btn-warning-line[disabled],
+.btn .btn-danger-line[disabled],
+.btn .btn-success-line[disabled],
+.btn .btn-info-line[disabled],
+.btn .btn-primary-line[disabled] {
   color: #ccc;
   background-color: #fff;
   border: 1px solid #ccc;
   cursor: not-allowed;
 }
-.disabled-dashed[disabled],
-.btn-warning-dashed[disabled],
-.btn-danger-dashed[disabled],
-.btn-success-dashed[disabled],
-.btn-info-dashed[disabled],
-.btn-primary-dashed[disabled] {
+.btn .disabled-dashed[disabled],
+.btn .btn-warning-dashed[disabled],
+.btn .btn-danger-dashed[disabled],
+.btn .btn-success-dashed[disabled],
+.btn .btn-info-dashed[disabled],
+.btn .btn-primary-dashed[disabled] {
   color: #ccc;
   background-color: #fff;
   border: 1px dashed #ccc;
@@ -1113,12 +1100,12 @@ body {
   position: relative;
   font-size: 6px;
   display: block;
-  width: 1.8em !important;
-  height: 1.8em !important;
-  padding: 0 !important;
+  width: 1.8em ;
+  height: 1.8em ;
+  padding: 0 ;
   cursor: pointer;
   transition: .5s ease;
-  overflow: visible !important;
+  overflow: visible;
 }
 .icon-return:before,
 .icon-return:after {
@@ -1142,6 +1129,7 @@ body {
 .icon-two-dimension {
   position: relative;
   font-size: 12px;
+  display: block;
   width: 2em;
   height: 2em;
   border: 1px solid #666;
@@ -1170,6 +1158,30 @@ body {
   text-align: center;
   background: #fff;
   z-index: 1;
+}
+.icon-close {
+  font-size: 14px;
+  display: block;
+  position: relative;
+  min-width: 1em;
+  min-height: 1em;
+  cursor: pointer;
+}
+.icon-close:before,
+.icon-close:after {
+  position: absolute;
+  content: '一';
+  left: .1em;
+  display: table;
+  width: inherit;
+  height: inherit;
+  color: inherit;
+}
+.icon-close:before {
+  transform: rotate(45deg);
+}
+.icon-close:after {
+  transform: rotate(-45deg);
 }
 .icon-file {
   position: relative;

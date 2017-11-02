@@ -44,7 +44,7 @@
 .paging-jump-prev,
 .paging-jump-next {
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.65);
+  color: #999;
   border-radius: 4px;
   list-style: none;
   min-width: 28px;
@@ -69,7 +69,7 @@
   height: inherit;
   -webkit-transition: all .3s;
   transition: all .3s;
-  color: rgba(0, 0, 0, 0.65);
+  color: inherit;
   user-select: none;
 }
 .paging-item a:hover,
@@ -95,6 +95,16 @@
 .paging-prev .paging-item-link:hover,
 .paging-next .paging-item-link:hover {
   border-color: #368ed2;
+}
+.paging-prev[disabled] a,
+.paging-next[disabled] a {
+  color: #e7e7e7;
+  cursor: default;
+}
+.paging-prev[disabled] a:hover,
+.paging-next[disabled] a:hover {
+  color: #e7e7e7;
+  border-color: #e7e7e7;
 }
 .paging-jump-prev a,
 .paging-jump-next a {

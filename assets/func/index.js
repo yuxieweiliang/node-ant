@@ -4,10 +4,15 @@ const path = require('path');
 /**
  * 获取当前值的类型
  * @param obj
- * @returns {string}
+ * @param target
+ * @returns {*}
  */
-let typeOf = function(obj) {
-  return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
+let typeOf = function(obj, target) {
+  const _obj = Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
+  if(target) {
+    return _obj === target
+  }
+  return _obj
 };
 
 /**

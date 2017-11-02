@@ -24,6 +24,9 @@
 
   border: 1px solid transparent;
 
+  &+.btn {
+    margin-left: 5px;
+  }
   &-xs {
     font-size: 12px;
   }
@@ -37,7 +40,6 @@
     font-size: 20px;
   }
   &-default {
-    &:extend(.btn);
     color: @Gray-6;
     border: 1px solid @Gray-d9;
     background: @Gray-fa;
@@ -46,34 +48,34 @@
       border-color: @Blue;
     }
   }
-}
-
-.disabled {
-  &[disabled] {
-    color: #999;
-    background-color: #ddd;
-    border: 1px solid transparent;
-    cursor: not-allowed;
+  .disabled {
+    &[disabled] {
+      color: #999;
+      background-color: #ddd;
+      border: 1px solid transparent;
+      cursor: not-allowed;
+    }
   }
-}
 
-.disabled-line {
-  &[disabled] {
-    color: #ccc;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    cursor: not-allowed;
+  .disabled-line {
+    &[disabled] {
+      color: #ccc;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      cursor: not-allowed;
+    }
   }
-}
 
-.disabled-dashed {
-  &[disabled] {
-    color: #ccc;
-    background-color: #fff;
-    border: 1px dashed #ccc;
-    cursor: not-allowed;
+  .disabled-dashed {
+    &[disabled] {
+      color: #ccc;
+      background-color: #fff;
+      border: 1px dashed #ccc;
+      cursor: not-allowed;
+    }
   }
+
+  .create-btn(length(@btn));
 }
 
 
-.create-btn(length(@btn));

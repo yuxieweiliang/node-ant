@@ -7,12 +7,12 @@
   position: relative;
   font-size: 6px;
   display: block;
-  width: 1.8em !important;
-  height: 1.8em !important;
-  padding: 0 !important;
+  width: 1.8em ;
+  height: 1.8em ;
+  padding: 0 ;
   cursor: pointer;
   transition: .5s ease;
-  overflow: visible !important;
+  overflow: visible;
   &:before,&:after {
     position: absolute;
     content: '一';
@@ -34,9 +34,12 @@
   }
 }
 
+
+// 二维码
 .icon-two-dimension {
   position: relative;
   font-size: @font-sm;
+  display: block;
   width: 2em;
   height: 2em;
   border: 1px solid #666;
@@ -67,7 +70,30 @@
   }
 }
 
+.icon-close {
+  font-size: 14px;
+  display: block;
+  position: relative;
+  min-width: 1em;
+  min-height: 1em;
+  cursor: pointer;
+  &:before, &:after {
+    position: absolute;
+    content: '一';
+    left: .1em;
+    display: table;
+    width: inherit;
+    height: inherit;
+    color: inherit;
+  }
+  &:before {
+    transform: rotate(45deg);
+  }
+  &:after {
+    transform: rotate(-45deg);
+  }
 
+}
 
 
 .icon-file {

@@ -85,8 +85,7 @@
 
   // 创建btn
   @names: extract(@this, 1);
-  .btn-@{names} {
-    &:extend(.btn);
+  &-@{names} {
     &:extend(.disabled all);
     color: extract(@this, 2);
     background-color: extract(@this, 3);
@@ -98,8 +97,7 @@
   }
 
   // 创建边框型按钮
-  .btn-@{names}-line {
-    &:extend(.btn);
+  &-@{names}-line {
     &:extend(.disabled-line all);
     color: extract(@this, 4);
     border: 1px solid extract(@this, 4);
@@ -110,8 +108,7 @@
     }
   }
   // 创建边框型按钮
-  .btn-@{names}-dashed {
-    &:extend(.btn);
+  &-@{names}-dashed {
     &:extend(.disabled-dashed all);
     color: extract(@this, 4);
     border: 1px dashed @Gray-d9;

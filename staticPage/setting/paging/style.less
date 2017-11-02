@@ -6,7 +6,7 @@
 
 .paging-item {
   cursor: pointer;
-  color: rgba(0,0,0,.65);
+  color: @Gray-9;
   border-radius: 4px;
   list-style: none;
   min-width: 28px;
@@ -27,7 +27,7 @@
     height: inherit;
     -webkit-transition: all .3s;
     transition: all .3s;
-    color: rgba(0,0,0,.65);
+    color: inherit;
     user-select: none;
     &:hover {
       color: @Blue;
@@ -64,11 +64,17 @@
         border-color: @Blue;
       }
     }
+    &[disabled] {
+      a {
+        color: @Gray-e7;
+        cursor: default;
+        &:hover {
+          color: @Gray-e7;
+          border-color: @Gray-e7;
+        }
+      }
+    }
   }
-
-
-
-
 
 
   &-jump-prev,
