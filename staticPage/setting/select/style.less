@@ -1,97 +1,136 @@
 // 配置文件
-@import "../../style/setting";
-@import "../../style/func";
-@import "../../style/color";
-/**
-  checkbox & radio
-*/
+@import "../../style/setting.less";
+@import "../../style/func.less";
+@import "../../style/color.less";
+#root {
+  height: 100%;
+}
 
-.checkbox-radio {
-  &{
-    position: relative;
-    display: inline-block;
-    padding-left: 1.2em;
+
+.select {
+  position: relative;
+  &-selection {
+    .input();
+    padding-right: 2em;
     cursor: pointer;
-
-    input[type="radio"],
-    input[type="checkbox"] {
-      display: none;
+    &-placeholder {
+      color: @Gray-cc;
+      .placeholder();
     }
-    .icon {
-      position: absolute;
-      display: inline-block;
-      cursor: pointer;
-      line-height: 1;
-      left: 0;
-      width: 1em;
-      height: 1em;
-      background: #eee;
-      border: 1px solid #ccc;
-    }
-    input:not([type="text"]):checked+.icon {
-      position: absolute;
-      display: table;
-      line-height: 1rem;
-      font-weight: bold;
-      border: 1px solid #0077b3;
-      text-align: center;
-      &:before {
-        transform: rotate(45deg) scale(1);
-        position: absolute;
-        left: 4px;
-        top: 0;
-        display: table;
-        content: " ";
-        transition: all .1s cubic-bezier(.71,-.46,.88,.6);
+    &-open {
+      .dropdown-menu {
+        display: block
       }
     }
-
-    &:hover {
-      .icon {
-        border: 1px solid #0077b3;
+    &-focused {
+      .select-selection {
+        background: #fafafa;
+        border: 1px solid #2777d1;
+        box-shadow: 0 0 3px #4794ec;
         transition: ease .4s;
       }
     }
-  }
+    &-disabled {
+      .select-selection {
+        cursor: not-allowed;
+        background: #fafafa;
+        &:hover {
+          border: 1px solid #d9d9d9;
+        }
+      }
+    }
+    &[role="combobox"],
+    &[role="multiple"],
+    &[role="tags"] {
+      cursor: text;
+    }
 
-}
+    &-single {
+    }
+    &-multiple {
+      height: auto;
+      min-height: 2em;
+      &:after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+    }
 
-
-.checkbox {
-  &:extend(.checkbox-radio all);
-
-  .icon {
-    border-radius: 2px;
-  }
-
-  input[type="checkbox"]:checked+.icon {
-    background: #0077b3;
-    &:before {
-      width: .3em;
-      height: .6em;
-      border: 2px solid #fff;
-      border-top: 0;
-      border-left: 0;
+    &-choice {
+      margin-top: 3px;
+      height: 20px;
+      line-height: 20px;
+      color: rgba(0,0,0,.65);
+      background-color: #f3f3f3;
+      border-radius: 4px;
+      cursor: default;
+      float: left;
+      margin-right: 4px;
+      max-width: 99%;
+      position: relative;
+      overflow: hidden;
+      transition: padding .3s cubic-bezier(.645,.045,.355,1);
+      padding: 0 20px 0 10px;
     }
   }
-}
 
-.radio {
-  &:extend(.checkbox-radio all);
-
-  .icon {
-    border-radius: 1em;
-  }
-
-  input[type="radio"]:checked+.icon {
-    &:before {
-      left: 3px;
-      top: 3px;
-      width: .5em;
-      height: .5em;
-      background: #0077b3;
-      border-radius: 1em;
+  &:not(.select-selection-disabled):hover {
+    &-selection {
+      border: 1px solid @Blue;
     }
   }
 
+  &:not(.select-selection-disabled):active {
+    &-selection {
+      background: #fafafa;
+      border: 1px solid #2777d1;
+      box-shadow: 0 0 3px #4794ec;
+      transition: ease .4s;
+    }
+  }
+
+
+
+
+  .select-icon-box {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 2em;
+
+    align-items: center;
+    justify-content: center;
+  }
+  .dropdown-menu {
+    right: 0;
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    li{
+      position: relative;
+      display: block;
+      &:before {
+        position: absolute;
+        top: 0;
+        padding: 3px 10px;
+        right: 10px;
+        z-index: 99;
+      }
+      &[aria-selected=false] {
+        &:before {
+          color: @Gray-ea;
+        }
+      }
+      &[aria-selected=true] {
+        background: @Gray-f2;
+        &:before {
+          color: @Blue;
+        }
+
+      }
+    }
+  }
 }

@@ -125,6 +125,38 @@
 
 
 
+.input() {
+  font-size: @from-font;
+  height: @from-height;
+  line-height: @from-height;
+  padding: 0 .6em;
+  border: 1px solid @Gray-d9;
+  border-radius: .4em;
+  width: 100%;
+  transition: ease 1s;
+  &:focus {
+    background: #fafafa;
+    border: 1px solid #2777d1;
+    box-shadow: 0 0 3px #4794ec;
+    transition: ease .4s;
+  }
+}
+
+
+.placeholder(@color: @Gray-cc) {
+  &::-webkit-input-placeholder {
+    color: @color;
+  }
+  &:-moz-placeholder {
+    color: @color;
+  }
+  &::-moz-placeholder {
+    color: @color;
+  }
+  &:-ms-input-placeholder {
+    color: @color;
+  }
+}
 
 .create-drop() {
   &{

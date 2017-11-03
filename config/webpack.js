@@ -28,6 +28,7 @@ const page = [
   'remind',
   'popup',
   'notification',
+  'switch',
 
 ]
 
