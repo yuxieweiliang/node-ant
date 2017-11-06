@@ -1,5 +1,5 @@
 $(function() {
   $('.input-group-menu').on('click', function() {
-    $(this).addClass('open');
+    $(this).addClass('open')
   })
-});
+})
