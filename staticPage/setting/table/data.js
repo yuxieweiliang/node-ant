@@ -23,7 +23,18 @@ export default {
   pagination: true,
 
   // 行选择
-  // rowSelection: {},
+/*  rowSelection: {
+
+    onChange: (selectedRowKeys, selectedRows) => {
+      //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    onSelect: (record, selected, selectedRows) => {
+      //console.log(record, selected, selectedRows);
+    },
+    onSelectAll: (selected, selectedRows, changeRows) => {
+      //console.log(selected, selectedRows, changeRows);
+    },
+  },*/
 
   // 滚动
   scroll: undefined,
@@ -85,7 +96,12 @@ export default {
     {title: '住址', width: 60, fixed: 'right', dataIndex: 'address', key: 'address', },
     {
       title: '编辑', width: 60, fixed: 'right', dataIndex: 'edit', key: 'edit',
-      render: (node) => <a onClick={() => console.log(node)} href="#">{node}</a>,
+      render: (node, nodes) => {
+        console.log(nodes)
+        return (
+          <a onClick={() => console.log(node)} href="#">{node}</a>
+        )
+      },
     }
   ],
 

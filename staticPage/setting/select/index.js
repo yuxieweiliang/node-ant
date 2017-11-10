@@ -4,7 +4,6 @@ import { render } from 'react-dom'
 import _ from 'lodash'
 import { typeOf } from '../../../assets/func'
 import '../../style/main.less'
-import './style.less'
 
 class Select extends Component {
   constructor(props) {

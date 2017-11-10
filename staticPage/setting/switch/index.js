@@ -58,7 +58,6 @@ class Switch extends Component {
   render() {
     const { disabled } = this.props
 
-    console.log(this.props)
     return (
       <span className={this._rootClass()}
             data-checked={this.state.checked}
@@ -89,9 +88,9 @@ class MyComponent extends Component {
   render() {
     const option = {
       type: 'alert',
-      /*onChange: (type) => {
+      onChange: (type) => {
         console.log(type)
-      },*/
+      },
     }
 
     return (
@@ -108,7 +107,7 @@ class MyComponent extends Component {
             <div className="row">
               <div className="width-100"></div>
               <div>
-                <Switch {...option} disabled={this.state.disabled}/>
+                <Switch {...option} disabled={this.state.disabled} defaultChecked={true}/>
                 <button onClick={() => this.setState({disabled: !this.state.disabled})}>agss</button>
               </div>
             </div>

@@ -16,7 +16,7 @@ import { ColumnGroup } from './columnGroup.jsx'
 import { Column } from './column.jsx'
 import { menuId, getTreeCol, flatArray, flatFilter, normalizeColumns, treeMap, assemble } from './func'
 
-
+import { CheckBox } from '../checkbox'
 
 
 
@@ -34,22 +34,34 @@ class Table extends Component {
     header: {},
     body: {}
   }
-  // static defaultProps = data
+  static defaultProps = data
+
+
 
   componentWillMount() {
     const { width, dataSource, rowSelection } = this.props
-    const { selectKeys } = rowSelection
-    let select = selectKeys ? [...selectKeys] : []
     this.setState({
       initialData: [...dataSource],
-      dataSource,
-      rowSelection: {
-        ...this.defaultHeaders.rowSelection,
-        ...rowSelection,
-        selectKeys: select
-      }
+      dataSource
     })
-    // console.log('------------------')
+
+
+
+    if(rowSelection) {
+      const { selectKeys } = rowSelection
+      let select = selectKeys ? [...selectKeys] : []
+      this.setState({
+        rowSelection: {
+          ...this.defaultHeaders.rowSelection,
+          ...rowSelection,
+          selectKeys: select
+        }
+      })
+    }
+
+
+
+
 
   }
 
@@ -158,11 +170,12 @@ class Table extends Component {
    */
   _createSelect(columnArray) {
     let { rowSelection, dataSource } = this.state
+
+
     const key = columnArray[0].key
     let selectKeys = this.state.rowSelection.selectKeys // 用来存当前选中项的key
     const type = rowSelection.type || 'checkbox'
 
-    console.log(key)
     // 如果存在，并且数组中还没有
     if(rowSelection.selections) {
       if(key !== type) {
@@ -173,9 +186,10 @@ class Table extends Component {
             if(type === 'radio') {
               return '选择'
             }
-            return <input type={type}
+            return <CheckBox type={type}
                           checked={checkedAll}
-                          onClick={(e) => {
+                          onChange={() => {
+
                             // 如果key里面的值，并不是全部，则把没有的再存进去
                             if(selectKeys.length !== dataSource.length) {
                               this.state.dataSource.map(item => {
@@ -194,17 +208,20 @@ class Table extends Component {
                                 selectKeys
                               }
                             })
-                          }
-                          }
-                          onChange={() => rowSelection.onSelectAll(selectKeys, )} />
+
+                            if(rowSelection.onSelectAll) {
+                              rowSelection.onSelectAll(selectKeys, )
+                            }
+                          }} />
           },
           width: 80,
           dataIndex: type,
           key: type,
           render: (text, item) => {
-            return (<input type={type}
+            return (<CheckBox type={type}
                            checked={selectKeys.indexOf(item.key) > -1}
-                           onClick={() => {
+                           onChange={(e) => {
+
                              const other = _.filter(selectKeys,  list => list !== item.key)
 
                              if(type === 'radio') {
@@ -223,9 +240,10 @@ class Table extends Component {
                                  selectKeys
                                }
                              })
-
-                           }}
-                           onChange={(e) => rowSelection.onChange(item.key, item,e.target.checked)}/>)
+                             if(rowSelection.onChange) {
+                               rowSelection.onChange(item.key, item,e.target.checked)
+                             }
+                           }}/>)
           }
         })
       }
@@ -237,10 +255,12 @@ class Table extends Component {
     // 检查数据结构
     const columnArray = columns || normalizeColumns(children)
     // 是否需要加载选择
-    const checkbox = this._createSelect(columnArray)
+    let checkbox = null
+
 
     // 如果添加checkbox
-    if(checkbox) {
+    if(rowSelection) {
+      checkbox = this._createSelect(columnArray)
       columnArray.unshift(checkbox)
     }
 
@@ -250,9 +270,6 @@ class Table extends Component {
 
     // 是否需要排序
     // const sorter = this._createSorter(columnArray)
-
-
-
 
     return columnArray
   }
@@ -456,7 +473,7 @@ const rowSelection = {
 
 
 //
-render(<Table {...data} rowSelection={rowSelection} />, document.getElementById('root'));
+render(<Table {...data} />, document.getElementById('root'));
 
 
 

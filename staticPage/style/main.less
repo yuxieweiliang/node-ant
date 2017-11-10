@@ -14,6 +14,7 @@
 @import "./alert.less";
 
 @import "./btn.less";
+@import "./checkbox.less";
 
 @import "./form.less";
 
@@ -51,3 +52,38 @@
   background: #fff;
   text-align: center;
 }
+
+
+
+/////////////////////////////////////////////  main title
+.title-control {
+  display: flex;
+  flex-direction: row;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+  align-items: center;
+  min-height: 41px;
+  .title-name {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    height: 100%;
+    max-width: 100%;
+    line-height: 1;
+  }
+  .title-content {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+  }
+}
+
+
+
+

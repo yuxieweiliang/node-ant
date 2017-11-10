@@ -173,6 +173,8 @@
   flex-direction: column;
   height: 100%;
   border-right: 1px solid #d9d9d9;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .menu-vertical .menu-prev,
 .menu-inline .menu-prev,
@@ -363,10 +365,7 @@
 }
 .menu-vertical .menu-sub {
   position: absolute;
-  top: 100%;
-  left: 0;
   z-index: 1000;
-  display: none;
   float: left;
   min-width: 160px;
   padding: 5px 0;
@@ -379,6 +378,7 @@
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  display: none;
   top: 0;
   left: calc(100% + 4px);
 }
@@ -400,10 +400,7 @@
 }
 .menu-drop {
   position: absolute;
-  top: 100%;
-  left: 0;
   z-index: 1000;
-  display: none;
   float: left;
   min-width: 160px;
   padding: 5px 0;
@@ -416,6 +413,9 @@
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  top: 100%;
+  left: 0;
+  display: none;
 }
 .menu-drop .divider {
   height: 1px;
