@@ -49,7 +49,7 @@ export default {
    */
   dataSource: [
     {key: '1', colSpan: 0, first: '胡', last: '彦斌', sex: '女', name: '胡彦斌', fal:'fdsa', age: 32, address: '西湖区湖底公园1号'},
-    {key: '2', colSpan: 2, name: '胡彦祖', sex: '男', first: '胡', last: '彦祖', age: 42, address: '西湖区湖底公园1号', edit: 'edit_this' },
+    {key: '2', colSpan: 2, name: '胡彦祖', checked: true, sex: '男', first: '胡', last: '彦祖', age: 42, address: '西湖区湖底公园1号', edit: 'edit_this' },
     {key: '3', colSpan: 0, first: '胡', last: '彦斌', sex: '女', name: '胡彦斌', fal:'fdsa', age: 32, address: '西湖区湖底公园1号'},
     {key: '4', colSpan: 2, name: '胡彦祖', sex: '男', first: '胡', last: '彦祖', age: 42, address: '西湖区湖底公园1号', edit: 'edit_this' }
   ],
@@ -97,7 +97,7 @@ export default {
     {
       title: '编辑', width: 60, fixed: 'right', dataIndex: 'edit', key: 'edit',
       render: (node, nodes) => {
-        console.log(nodes)
+        // console.log(nodes)
         return (
           <a onClick={() => console.log(node)} href="#">{node}</a>
         )

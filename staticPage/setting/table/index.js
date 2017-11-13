@@ -219,31 +219,34 @@ class Table extends Component {
           key: type,
           render: (text, item) => {
             return (<CheckBox type={type}
-                           checked={selectKeys.indexOf(item.key) > -1}
-                           onChange={(e) => {
+                              defaultChecked={selectKeys.indexOf(item.key) > -1}
+                              checked={selectKeys.indexOf(item.key) > -1}
+                              onChange={(e) => {
 
-                             const other = _.filter(selectKeys,  list => list !== item.key)
+                                const other = _.filter(selectKeys,  list => list !== item.key)
 
-                             if(type === 'radio') {
-                               selectKeys = [item.key]
-                             } else {
-                               if(selectKeys.indexOf(item.key) < 0) {
-                                 selectKeys.push(item.key)
-                               } else {
-                                 selectKeys = other
-                               }
-                             }
+                                if(type === 'radio') {
+                                  selectKeys = [item.key]
+                                } else {
 
-                             this.setState({
-                               rowSelection: {
-                                 ...rowSelection,
-                                 selectKeys
-                               }
-                             })
-                             if(rowSelection.onChange) {
-                               rowSelection.onChange(item.key, item,e.target.checked)
-                             }
-                           }}/>)
+                                  if(selectKeys.indexOf(item.key) < 0) {
+                                    selectKeys.push(item.key)
+                                  } else {
+                                    selectKeys = other
+                                  }
+                                }
+
+                                this.setState({
+                                  rowSelection: {
+                                    ...rowSelection,
+                                    selectKeys
+                                  }
+                                })
+
+                                if(rowSelection.onChange) {
+                                  rowSelection.onChange(item.key, item,e.target.checked)
+                                }
+                              }}/>)
           }
         })
       }
@@ -257,11 +260,12 @@ class Table extends Component {
     // 是否需要加载选择
     let checkbox = null
 
-
     // 如果添加checkbox
     if(rowSelection) {
       checkbox = this._createSelect(columnArray)
-      columnArray.unshift(checkbox)
+      if(checkbox) {
+        columnArray.unshift(checkbox)
+      }
     }
 
     // 是否需要加载选择
@@ -284,7 +288,6 @@ class Table extends Component {
     // let child = _getLength(childrens)
 
 
-    // console.log('fffffffffffffffff')
 
     return (<div className={'table table-fixed-header '} >
       <div className="table-content">
@@ -460,6 +463,7 @@ class Table extends Component {
 }
 
 const rowSelection = {
+  selectKeys: ['1'],
   onChange: (selectedRowKeys, selectedRows) => {
     //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
   },
@@ -473,7 +477,7 @@ const rowSelection = {
 
 
 //
-render(<Table {...data} />, document.getElementById('root'));
+render(<Table {...data } rowSelection={rowSelection}/>, document.getElementById('root'));
 
 
 
