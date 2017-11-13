@@ -257,14 +257,20 @@ class Table extends Component {
     let { rootClass, style, dataSource, columns, children, rowSelection } = this.props
     // 检查数据结构
     const columnArray = columns || normalizeColumns(children)
+    const key = columnArray[0].key
+    const type = rowSelection.type || 'checkbox'
     // 是否需要加载选择
     let checkbox = null
 
     // 如果添加checkbox
     if(rowSelection) {
       checkbox = this._createSelect(columnArray)
-      if(checkbox) {
+
+      // 如果第一个不是checkbox，则添加最前面，如果是，就把第一个替换掉。
+      if(key != type) {
         columnArray.unshift(checkbox)
+      } else {
+        columnArray[0] = checkbox
       }
     }
 
