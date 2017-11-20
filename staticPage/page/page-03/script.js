@@ -64,7 +64,7 @@ class InitFetch {
   }
   start() {
     console.log('request is init');
-  }
+  }J88
   load() {
     console.log('request is load');
   }
