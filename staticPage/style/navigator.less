@@ -1,7 +1,6 @@
-// 配置文件
-@import "setting";
-@import "func";
-@import "color";
+@import "./animation.less";
+@import "./color.less";
+@import "./func.less";
 
 
 .nav {
@@ -23,12 +22,12 @@
     }
   }
   &-item {
-    .item;
+    .item();
     &:hover {
       .opacity(80);
     }
     &-blue {
-      .item;
+      .item();
       color: #fff;
       border-color: #428bca;
       background: #428bca;

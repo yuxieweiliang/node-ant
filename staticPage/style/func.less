@@ -1,5 +1,4 @@
-// 配置文件
-@import "setting";
+@import "./setting.less";
 
 
 
@@ -86,8 +85,7 @@
 
   // 创建btn
   @names: extract(@this, 1);
-  .btn-@{names} {
-    &:extend(.btn);
+  &-@{names} {
     &:extend(.disabled all);
     color: extract(@this, 2);
     background-color: extract(@this, 3);
@@ -99,8 +97,7 @@
   }
 
   // 创建边框型按钮
-  .btn-@{names}-line {
-    &:extend(.btn);
+  &-@{names}-line {
     &:extend(.disabled-line all);
     color: extract(@this, 4);
     border: 1px solid extract(@this, 4);
@@ -111,8 +108,7 @@
     }
   }
   // 创建边框型按钮
-  .btn-@{names}-dashed {
-    &:extend(.btn);
+  &-@{names}-dashed {
     &:extend(.disabled-dashed all);
     color: extract(@this, 4);
     border: 1px dashed @Gray-d9;
@@ -125,4 +121,58 @@
   }
   // 递归
   .create-btn(@i - 1);
+}
+
+
+
+.input() {
+  font-size: @from-font;
+  height: @from-height;
+  line-height: @from-height;
+  padding: 0 .6em;
+  border: 1px solid @Gray-d9;
+  border-radius: .4em;
+  width: 100%;
+  transition: ease 1s;
+  &:focus {
+    background: #fafafa;
+    border: 1px solid #2777d1;
+    box-shadow: 0 0 3px #4794ec;
+    transition: ease .4s;
+  }
+}
+
+
+.placeholder(@color: @Gray-cc) {
+  &::-webkit-input-placeholder {
+    color: @color;
+  }
+  &:-moz-placeholder {
+    color: @color;
+  }
+  &::-moz-placeholder {
+    color: @color;
+  }
+  &:-ms-input-placeholder {
+    color: @color;
+  }
+}
+
+.create-drop() {
+  &{
+    position: absolute;
+    z-index: 1000;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  }
 }

@@ -1,141 +1,89 @@
-// 配置文件
-@import "setting";
-@import "func";
-@import "color";
-@import "init";
 
-* {
-  box-sizing: border-box;
-}
 
-html,body {
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
+// 全局
+@import "./init.less";
+@import "./container.less";
 
-.container {
-  height: 100%;
-  width: 100%;
-  background: @bgBodyColor;
-  overflow: hidden;
-}
+// 布局
+@import "./flex.less";
+@import "./grid.less";
+@import "./ratio.less";
 
-.header {
-  background: @bgHeaderColor;
-  height: @heightHeader;
-  border-bottom: 1px solid #eee;
-}
-.main {
-  flex: 1;
 
-  overflow: hidden;
-  overflow-y: auto;
-}
-.footer {
-  display: flex;
-  flex-direction: row;
-  background: @footerColor;
-  height: @heightFooter;
-}
-.menu-list {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-}
+// 组建
+@import "./alert.less";
 
-// padding: left & right
-.between {
-  padding: 0 @between;
-}
-.between-sm {
-  padding: 0 @between - 5;
-}
-.between-lg {
-  padding: 0 @between + 5;
-}
+@import "./btn.less";
+@import "./checkbox.less";
 
-// margin-top
-.mt {
-  margin-top: @interval;
-}
-.mt-sm {
-  margin-top: @interval - 5;
-}
-.mt-lg {
-  margin-top: @interval + 5;
-}
-.pb {
-  padding-bottom: @interval;
-}
-.pb-sm {
-  padding-bottom: @interval - 5;;
-}
-.pb-lg {
-  padding-bottom: @interval + 5;;
-}
+@import "./form.less";
 
-.inner {
-  width: 100%;
-  height: 100%;
-  > * {
-    width: 100%;
-    height: 100%;
-  }
-}
-.width-inner {
-  width: 100%;
-  > * {
-    width: 100%;
-  }
-}
-.height-inner {
-  height: 100%;
-  > * {
-    height: 100%;
-  }
-}
+@import "./input.less";
+@import "./icon.less";
 
-.img-width-inner {
-  width: 100%;
-  img {
-    width: 100%;
-  }
-}
 
-.img-height-inner {
-  height: 100%;
-  img {
-    height: 100%;
-  }
-}
+@import "./layout.less";
+@import "./list.less";
+
+@import "./timeline.less";
+@import "./table.less";
+@import "./tab.less";
+@import "./triangle.less";
+@import "./tree.less";
+@import "./tag.less";
+
+@import "./select.less";
+@import "./step.less";
+
+@import "./menu.less";
+
+@import "./nav.less";
+@import "./navigator.less";
 
 
 
-.hidden {
-  display: none;
-}
+
+
+@import "./other.less";
 
 
 
-.text-left {
-  text-align: left;
-}
-.text-right {
-  text-align: right;
-}
-.text-center {
+
+.page-title {
+  background: #fff;
   text-align: center;
 }
-.text-between {
-  text-align: -webkit-center;
-  text-align-last: left;
-  text-align: justify;
+
+
+
+/////////////////////////////////////////////  main title
+.title-control {
+  display: flex;
+  flex-direction: row;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+  align-items: center;
+  min-height: 41px;
+  .title-name {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    height: 100%;
+    max-width: 100%;
+    line-height: 1;
+  }
+  .title-content {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+  }
 }
-
-
 
 
 

@@ -1,5 +1,7 @@
-@import "color";
-@import "animation";
+@import "./animation.less";
+@import "./color.less";
+@import "./func.less";
+@import "./extend.less";
 
 .input-group {
   width: 100%;
@@ -26,8 +28,13 @@
     width: 100%;
     margin-bottom: 0;
     &:first-child {
+      border-right: 0;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+    }
+    &:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 }
@@ -50,19 +57,37 @@
   .input-group-addon + .form-control {
     border-left: 0;
   }
+  .open {
+    .fa-angle-down {
+      transform: rotate(180deg);
+      transition: ease .4s;
+    }
+    .dropdown-menu {
+      display: block;
+      animation: antSlideUpIn .4s;
+    }
+    .dropdown-menu-right {
+      right: 0;
+      left: auto;
+      animation: antSlideUpIn .4s;
+    }
+    .dropdown-menu-down {
+      top: auto;
+      bottom: 100%;
+      box-shadow: 0 -6px 12px rgba(0,0,0,.175);
+      animation: antSlideDownIn .4s;
+    }
+    .dropdown-menu-down-right {
+      top: auto;
+      left: auto;
+      right: 0;
+      bottom: 100%;
+      box-shadow: 0 -6px 12px rgba(0,0,0,.175);
+      animation: antSlideDownIn .4s;
+    }
+  }
 }
 
-.form-control {
-  &:first-child {
-    border-right: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  &:last-child {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-}
 
 
 .input-group-menu,
@@ -89,30 +114,24 @@
   }
 }
 
-
-
+.input {
+  &-sm {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+  }
+}
 
 .dropdown-menu {
-  position: absolute;
+  .create-drop();
   top: 100%;
   left: 0;
-  z-index: 1000;
   display: none;
-  float: left;
-  min-width: 160px;
-  padding: 5px 0;
-  margin: 2px 0 0;
-  font-size: 14px;
-  text-align: left;
-  list-style: none;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid rgba(0,0,0,.15);
-  border-radius: 4px;
-  box-shadow: 0 6px 12px rgba(0,0,0,.175);
   > li {
     // divider: 分割器
     &.divider {
+      &:extend(.div-line);
       height: 1px;
       margin: 9px 0;
       overflow: hidden;
@@ -134,38 +153,4 @@
       }
     }
   }
-}
-
-.open {
-  .fa-angle-down {
-    transform: rotate(180deg);
-    transition: ease .4s;
-  }
-  .dropdown-menu {
-    display: block;
-    animation: antSlideUpIn .4s;
-  }
-  .dropdown-menu-right {
-    right: 0;
-    left: auto;
-    animation: antSlideUpIn .4s;
-  }
-  .dropdown-menu-down {
-    top: auto;
-    bottom: 100%;
-    box-shadow: 0 -6px 12px rgba(0,0,0,.175);
-    animation: antSlideDownIn .4s;
-  }
-  .dropdown-menu-down-right {
-    top: auto;
-    left: auto;
-    right: 0;
-    bottom: 100%;
-    box-shadow: 0 -6px 12px rgba(0,0,0,.175);
-    animation: antSlideDownIn .4s;
-  }
-}
-//  infinite 循环播放
-.div {
-  animation: antSwingIn 1s infinite;
 }

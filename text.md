@@ -79,32 +79,6 @@ _movie.save(function(error, movie) {
 
 
 
-2017-08-23T13:19:31.334+0800 I CONTROL  [main] Hotfix KB2731284 or later update is not installed, will zero-out data files
-
-2017-08-23T13:19:31.334+0800 I CONTROL  [initandlisten] MongoDB starting : pid=7320 port=27017 dbpath=E:\00_project\01_node\mong\ab 64-bit host=USER
- -20170422WB
-
-2017-08-23T13:19:31.334+0800 I CONTROL  [initandlisten] targetMinOS: Windows 7/Windows Server 2008 R2
-2017-08-23T13:19:31.334+0800 I CONTROL  [initandlisten] db version v3.2.10
-
-2017-08-23T13:19:31.334+0800 I CONTROL  [initandlisten] git version: 79d9b3ab5ce20f51c272b4411202710a082d0317
-2017-08-23T13:19:31.334+0800 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1t-fips  3 May 2016
-2017-08-23T13:19:31.334+0800 I CONTROL  [initandlisten] allocator: tcmalloc
-2017-08-23T13:19:31.334+0800 I CONTROL  [initandlisten] modules: none
-2017-08-23T13:19:31.334+0800 I CONTROL  [initandlisten] build environment:
-
-2017-08-23T13:19:31.334+0800 I CONTROL  [initandlisten]     distmod: 2008plus-ssl
-2017-08-23T13:19:31.334+0800 I CONTROL  [initandlisten]     distarch: x86_64
-2017-08-23T13:19:31.334+0800 I CONTROL  [initandlisten]     target_arch: x86_64
-2017-08-23T13:19:31.334+0800 I CONTROL  [initandlisten] options: { storage: { dbPath: "E:\00_project\01_node\mong\ab" } }
-
-2017-08-23T13:19:31.349+0800 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=4G,session_max=20000,eviction=(threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),checkpoint=(wait=60,log_size=2GB),statistics_log=(wait=0),2017-08-23T13:19:32.023+0800 I NETWORK  [HostnameCanonicalizationWorker] Starting hostname canonicalization worker
-
-2017-08-23T13:19:32.023+0800 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory 'E:/00_project/01_node/mongo/ab/diagnostic.data'
-
-2017-08-23T13:19:32.227+0800 I NETWORK  [initandlisten] waiting for connec
-tions on port 27017
-
 
 
 

@@ -38,7 +38,7 @@ let conf = require(curr)(PROJECT_ROOT);
 conf = merge(base, conf);*/
 //"webpack-hot-middleware/client?noInfo=true&reload=true","./src/module1.js","./src/module2.js"
 
-const renderer = new marked.Renderer();
+
 
 // 项目根目录,请确保命令在根目录执行 sails-webpack2
 const ROOTS = process.cwd();
@@ -48,7 +48,7 @@ const config = {
   entry: {
     'home/index': path.join(__dirname,'./src/page/input.jsx'),
     // 将所有公用的东西都放在一个文件里
-    vendors: ['lodash']
+    vendors: ['react', 'react-dom', 'lodash']
   },
   output: {
     path: publicPath, // 也可以使用 publicPath
@@ -136,7 +136,7 @@ const config = {
             loader: "markdown-loader",
             options: {
               pedantic: true,
-              renderer
+              renderer: new marked.Renderer()
             }
           }
         ]
