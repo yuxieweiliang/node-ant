@@ -545,8 +545,8 @@ exports.tick = function tick(callback) {
 
 exports.isMongooseObject = function(v) {
   Document || (Document = require('./document'));
-  MongooseArray || (MongooseArray = require('./types').Array);
-  MongooseBuffer || (MongooseBuffer = require('./types').Buffer);
+  MongooseArray || (MongooseArray = require('./types/index').Array);
+  MongooseBuffer || (MongooseBuffer = require('./types/index').Buffer);
 
   return v instanceof Document ||
       (v && v.isMongooseArray) ||

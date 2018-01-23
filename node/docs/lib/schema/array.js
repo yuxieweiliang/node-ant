@@ -15,8 +15,8 @@ var Types = {
   ObjectId: require('./objectid'),
   Buffer: require('./buffer')
 };
-var MongooseArray = require('../types').Array;
-var EmbeddedDoc = require('../types').Embedded;
+var MongooseArray = require('../types/index').Array;
+var EmbeddedDoc = require('../types/index').Embedded;
 var Mixed = require('./mixed');
 var cast = require('../cast');
 var util = require('util');
