@@ -1,6 +1,3 @@
-//  git rm -rf --cached .  清除缓存 -r 循环 -f强制
-
-
 40: 黑
 30: 黑
 41: 紅
@@ -43,6 +40,11 @@
 
 
 
+
+unit ： 单元
+
+utils ：工具
+
 assets ：
     - func 通用函数
 
@@ -50,14 +52,14 @@ assets ：
 ## 前端页面
 src ：
     - style 样式
-    - component ：
+    - component ：组件
                 - view 视图
                 - action 行为
                 - controller 控制器
                 - moddle 数据模型
                 - readme 自述
                 - example 例子
-    - assembly ：
+    - assembly ：配装
                 - view 视图
                 - action 行为
                 - controller 控制器
@@ -105,36 +107,3 @@ test ：
 
 docs ：
      - 组建的说明文档
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
