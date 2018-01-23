@@ -3,4 +3,5 @@ commit
 .idea/
 dist/
 mongo/
+bower_components/
 

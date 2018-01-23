@@ -15,6 +15,6 @@ use
 other
 dist
 mong
-bower_components
+../bower_components
 *.docx
 app/

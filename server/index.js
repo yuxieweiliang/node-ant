@@ -5,7 +5,7 @@ import React from 'react'
 // import func from '../func'
 import serve from 'koa-static'
 import router from './router'// 路由
-import '../mongodb';
+import '../mongodb/mongodb';
 import readMarked from '../docs'
 import templatePug from './pug'
 import koaWebpack from './koa-webpack'
