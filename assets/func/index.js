@@ -8,7 +8,7 @@ const path = require('path');
  * @returns {*}
  */
 let typeOf = function(obj, target) {
-  const _obj = Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
+  const _obj = Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
   if(target) {
     return _obj === target
   }
@@ -75,7 +75,6 @@ let getOffset = function(element) {
 };
 
 module.exports = {
-  fetch,
   typeOf,
   readFile,
   readDir,

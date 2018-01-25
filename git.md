@@ -14,6 +14,11 @@ git remote add origin [url] -> git remote add origin git@github.com:yuxieweilian
 # 提交
 git push origin master -> git push
 
+git push -u origin master
+git push -u origin --all // 不管是否存在都推送
+git push -u origin --tags // 如果要一次推送所有本地新增的标签上去
+
+git push -u origin gaga 相当于 git push origin gaga + git branch --set-upstream-to=origin/gaga master
 
 ## 启动数据库
 cd mongodb/mongo/bin
@@ -37,12 +42,12 @@ git push origin master:master -f
 git push origin develop:master -f
 把本地的 develop 分支强制(-f)推送到远程 master
 
-
-
-
-
-
+# 设置全局变量
+git config --global user.name "风吹雪"
+git config --global user.email "yunruofengsheng@126.com"
 
 
     git push --set-upstream origin last
 
+git remote rename origin old-origin
+git remote add origin git@gitlab.com:yuxieweiliang/book.git

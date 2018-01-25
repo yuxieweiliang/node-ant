@@ -1,7 +1,0 @@
-{
-    "name": "sample-social-graph"
-  , "version": "0.0.1"
-  , "dependencies": {
-        "redis": "0.7.1"
-    }
-}
