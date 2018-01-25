@@ -46,7 +46,7 @@ const ROOTS = process.cwd();
 const publicPath = path.resolve(path.normalize(`${ROOTS}/dist/`));
 const config = {
   entry: {
-    'home/index': path.join(__dirname,'./src/page/input.jsx'),
+    'home/index': path.join(__dirname,'./src/page/index.jsx'),
     // 将所有公用的东西都放在一个文件里
     vendors: ['react', 'react-dom', 'lodash']
   },
@@ -169,9 +169,9 @@ const config = {
      postcss: [require('autoprefixer')({browsers: ['last 5 versions']})]
      }
      }),*/
-    new webpack.ProvidePlugin({
+    /*new webpack.ProvidePlugin({
       _: 'lodash'
-    }),
+    }),*/
     // 消除前后端 require 差异
     /*new IsomorphicPlugin({
      extensions: ['jpg', 'png', 'gif', 'css']

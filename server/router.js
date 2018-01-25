@@ -5,19 +5,19 @@ import Input from '../src/page/index'
 
 const router = new Router();
 
-
 const json = {
   a: 'a',
   b: 'b'
 };
 
 /**
- * 首页
+ * 首页 <script src=""></script>
  */
 router.get('/', async function(ctx, next) {
-  const domRender = ReactServer.renderToString(<Input/>);
+  const domRender = ReactServer.renderToString(<Input number="fdsafdsa"/>);
   ctx.render('index', {
     script: '/home/index.build.js',
+    script2: '/socket.io/socket.io.js',
     name: 'name',
     json: JSON.stringify(json),
     table: JSON.stringify(ctx.macked),

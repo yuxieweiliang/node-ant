@@ -1,6 +1,4 @@
 const fs = require('fs');
-// const fs = require('fs');
-const path = require('path');
 /**
  * 获取当前值的类型
  * @param obj
@@ -38,7 +36,7 @@ let readFile = function (fileName, format) {
 let readDir = function (pathName) {
   return new Promise(function(resolve, reject) {
     fs.readdir(pathName, function (err, files) {
-      if (err) return reject(error);
+      if (err) return reject(err);
       resolve(files);
     });
   })
