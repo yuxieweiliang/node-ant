@@ -2,6 +2,7 @@ node_modules/
 commit
 .idea/
 dist/
-mongo/
+node/
+db/
 bower_components/
 
