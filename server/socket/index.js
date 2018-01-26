@@ -1,6 +1,8 @@
 import subscribe from './subscribe';
 import unsubscribe from './unsubscribe';
 import disconnect from './disconnect';
+import message from './message';
+import notice from './notice';
 
 export default function (client){
   const url = client.request.headers.referer;
@@ -9,14 +11,10 @@ export default function (client){
 
 
 
-  client.on('message', function(data) {
-    console.log('-|-|-|-|-|-|-|-|-|-|-|-', data)
-  });
-
-  // client.socket('ff').emit('messages', 'for your eyes only');
-
-
-
+  // 客户端的send方法发送的消息
+  message(client);
+  // 通知指定 userId 的用户
+  notice(client);
 
 
 

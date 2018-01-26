@@ -24,10 +24,14 @@ class MyComponent extends React.Component {
 
     // 会出发服务端的message 方法
     socket.on('connect', function () {
+      // 在客户端链接到服务端后被添加，
+      console.log(socket.id);
       socket.send('hi');
     });
-
-
+    /*socket.emit('login', {
+      userId: room
+    });
+*/
     // 接受订阅消息
     socket.on('subscribe', function(data) {
       console.log('----------');
@@ -66,10 +70,13 @@ class MyComponent extends React.Component {
     var { socket } = this.state;
 
     // 发起退订请求
-    socket.emit('unsubscribe', {
+    socket.emit('notice', {
       room: this.state.room,
       userId: this.state.userName,
       common: this.state.common
+    }, function(msg) {
+      // 订阅的回调方法
+      console.log(msg)
     });
     console.log('----------socket');
   }
