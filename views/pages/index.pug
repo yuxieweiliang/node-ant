@@ -1,10 +1,6 @@
 extends ../layout.pug
 block content
     div(id="root")!=JSON.parse(domRender)
-    div= title
-    div!=JSON.parse(table)
-    div(id="list")
-    script var raw = !{json};
     // script document.querySelector('#list').innerHTML = !{domRender}; //console.log(!{domRender})
     script(src= script2)
     script(src= script)

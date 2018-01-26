@@ -17,10 +17,7 @@ router.get('/', async function(ctx, next) {
   const domRender = ReactServer.renderToString(<Input number="fdsafdsa"/>);
   ctx.render('index', {
     script: '/home/index.build.js',
-    script2: '/socket.io/socket.io.js',
-    name: 'name',
-    json: JSON.stringify(json),
-    table: JSON.stringify(ctx.macked),
+    script2: '/socket.io-client/dist/socket.io.slim.js',
     domRender: JSON.stringify(domRender)
   })
 });
