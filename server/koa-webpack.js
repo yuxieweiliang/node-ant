@@ -9,14 +9,14 @@ export default function(app) {
     // display no info to console (only warnings and errors)
     noInfo: false,
 
-    // display nothing to the console
-    quiet: false,
+    // display nothing to the console 不在控制台显示
+    quiet: true,
 
-    // switch into lazy mode
-    // that means no watching, but recompilation on every request
-    lazy: true,
+    // switch into lazy mode  切换到懒惰模式
+    // that means no watching, but recompilation on every request  没有监视，每次请求时编译
+    lazy: false,
 
-    // watch options (only lazy: false)
+    // watch options (only lazy: false) // 监控的时间
     watchOptions: {
       aggregateTimeout: 300,
       poll: true
@@ -26,10 +26,10 @@ export default function(app) {
     // use the same as in webpack
     publicPath: devConfig.output.publicPath,
 
-    // custom headers
+    // 自定义头部
     headers: { "X-Custom-Header": "yes" },
 
-    // options for formating the statistics
+    // 格式化数据选项
     stats: {
       colors: true
     }

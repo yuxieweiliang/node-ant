@@ -15,13 +15,12 @@ import logger from './logger'
 import connection from './socket';
 
 const app = new Koa();
+// 添加socket.io
 const server = http.Server(app.callback());
 const io = new Socket(server);
 
 io.on('connection', connection);
-io.on('messages', function(data) {
-  console.log('-|-|-|-|-|-|-|-|-|-|-|-', data)
-});
+
 io.on('leave', function () {
 
   console.log('-----------');
