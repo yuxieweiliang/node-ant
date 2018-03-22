@@ -1,17 +1,17 @@
 import _ from 'lodash'
 import 'whatwg-fetch'
-import { lowerKeyCase } from '../method'
+import { lowerKeyCase } from '../func'
 
 
 class KN {
   constructor() {}
   creatUrl({url, option}) {
-    let _url = url + '?'
+    let _url = url + '?';
     if(typeof option != 'undefined') {
       _.each(option, (opt, key) => {
       //   console.log(option)
         _url += key + '=' + opt + '&'
-      })
+      });
       return _url.substring(0, _url.length-1)
     } else {
       return url
@@ -41,7 +41,7 @@ class KN {
   }
 
   cookie(name, value, options) {
-    if (typeof value != 'undefined') {
+    if (typeof value !== 'undefined') {
       options = options || {};
       //如果值为null, 删除cookie
       if (value === null) {
@@ -52,9 +52,9 @@ class KN {
       }
       //设置有效期
       let expires = '';
-      if (options.expires && (typeof options.expires == 'number' || options.expires.toGMTString)) {
+      if (options.expires && (typeof options.expires === 'number' || options.expires.toGMTString)) {
         let date;
-        if (typeof options.expires == 'number') {
+        if (typeof options.expires === 'number') {
           date = new Date();
           date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
         } else {
@@ -70,11 +70,11 @@ class KN {
     } else {
       //读取cookie
       if (document.cookie.length > 0) {
-        let start = document.cookie.indexOf(name + '=')
-        if (start != -1) {
+        let start = document.cookie.indexOf(name + '=');
+        if (start !== -1) {
           start = start + name.length + 1;
           let end = document.cookie.indexOf(';', start);
-          if (end == -1){
+          if (end === -1){
             end = document.cookie.length;
           }
           //设置cookie     encodeURIComponent : 解码

@@ -1,0 +1,10 @@
+doctype html
+html
+  head
+    mate(charset="utf-8")
+    link(href="antd/dist/antd.min.css",rel="stylesheet")
+  body
+    div(id="root", class="ant-layout")!=domRender
+    script(src="/vendors.js")
+    each js in script
+      script(src= js)

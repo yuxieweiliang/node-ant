@@ -20,10 +20,17 @@ git push -u origin --tags // 如果要一次推送所有本地新增的标签上
 
 git push -u origin gaga 相当于 git push origin gaga + git branch --set-upstream-to=origin/gaga master
 
-## 启动数据库
-cd mongodb/mongo/bin
-mongod --dbpath ../db
-###
+# 从远程获取数据到当前目录
+git pull origin master
+
+# 查看当前始用的源
+git remote -v
+
+# 删除远程地址
+git remote rm origin
+
+#查看线上的分支
+git remote
 
 # 清理本地缓存命令
 git clean -df

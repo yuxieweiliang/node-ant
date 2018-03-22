@@ -1,54 +1,25 @@
 const webpack = require('webpack');
+const fs = require('fs');
 const path = require('path');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin'); // 打开指定浏览器
 const CleanWebpackPlugin = require('clean-webpack-plugin'); // 清理
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// var extract = require('extract-text-webpack-plugin');
 // const WebpackMd5Hash = require('webpack-md5-hash');
 const marked = require("marked");
-
-
+import method from './assets/method'
 
 // 合并webpack配置
 let merge = require('webpack-merge');
 
-/*
- * 获取当前的执行环境，分为 开发环境、生产环境
- * 开发环境用'dev' 来表示,可以不用设置
- * 生产环境用'pro' 来表示
- */
-/*
-const EXECENV = String(process.env.NODE_ENV).trim();
-// 获取项目根目录，声明为常量，不能更改
-const PROJECT_ROOT = path.resolve(__dirname);
-// 当前的配置的路径
-let curr = './conf/webpack/develop.js';
-
-// 当执行环境发生变化时
-if (EXECENV === 'pro') {
-  curr = './conf/webpack/product.js';
-}
-
-// 获取公共配置fdsa
-let base = require('./conf/webpack/common.js')(PROJECT_ROOT, EXECENV);
-
-// 加载当前配置
-let conf = require(curr)(PROJECT_ROOT);
-
-// 合并配置
-conf = merge(base, conf);*/
-//"webpack-hot-middleware/client?noInfo=true&reload=true","./src/module1.js","./src/module2.js"
-
-
-
 // 项目根目录,请确保命令在根目录执行 sails-webpack2
 const ROOTS = process.cwd();
 // 打包目录
-const publicPath = path.resolve(path.normalize(`${ROOTS}/dist/`));
+const publicPath = method.assemblyPath(ROOTS, '/dist/');
 const config = {
   entry: {
-    'home/index': path.join(__dirname,'./src/page/index.jsx'),
     // 将所有公用的东西都放在一个文件里
-    vendors: ['react', 'react-dom', 'lodash']
+    vendors: ['react', 'react-dom', 'lodash', 'antd']
   },
   output: {
     path: publicPath, // 也可以使用 publicPath
@@ -76,12 +47,17 @@ const config = {
         test: /\.css$/,
         use: ['style-loader','css-loader','postcss-loader']
       },
+
+      // 处理 css
+      {
+        test: /\.less/,
+        use: ['style-loader','css-loader','postcss-loader','less-loader']
+      },
       // 处理scss
       {
         test: /\.scss$/,
         use: ['style-loader','css-loader','postcss-loader','sass-loader']
       },
-
       // 处理图片
       {
         test: /\.(jpg|png|jpeg|gif)$/,
@@ -145,6 +121,7 @@ const config = {
   },
   resolve: {
     modules: [path.resolve(__dirname, 'node_modules')],
+    extensions: ['.js', '.jsx', '.es6', '.less'],
     alias: {
       moment: "moment/min/moment-with-locales.min.js"
       //'type': path.resolve(rootDir, './lib/jquery.min.js')
@@ -161,21 +138,6 @@ const config = {
       verbose: true,
       dry: false,
     }),
-    // 使用checkhash
-    //new WebpackMd5Hash(),
-    //new ExtractTextPlugin('[name].css'),
-    /*new webpack.LoaderOptionsPlugin({
-     options: {
-     postcss: [require('autoprefixer')({browsers: ['last 5 versions']})]
-     }
-     }),*/
-    /*new webpack.ProvidePlugin({
-      _: 'lodash'
-    }),*/
-    // 消除前后端 require 差异
-    /*new IsomorphicPlugin({
-     extensions: ['jpg', 'png', 'gif', 'css']
-     }),*/
     // 抽取公用脚本
     new webpack.optimize.CommonsChunkPlugin({
       name: ['vendors'],
@@ -184,6 +146,13 @@ const config = {
     }),
   ]
 };
+
+const viewPath = method.assemblyPath(ROOTS, '/src/page/');
+var files = fs.readdirSync(viewPath,'utf-8');
+
+files.map(item => {
+  config.entry[item] = method.assemblyPath(viewPath, `${item}`);
+});
 
 
 module.exports = config;

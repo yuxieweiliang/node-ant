@@ -5,7 +5,7 @@ import React from 'react';
 import http from 'http';
 // import func from '../func'
 import serve from 'koa-static';
-import router from './router';// 路由
+import controllers from './router';// 路由
 import Socket from 'socket.io';
 import '../mongo';
 import readMarked from '../docs'
@@ -43,7 +43,7 @@ app.use(readMarked);
 // logger 当前路由信息
 app.use(logger);
 
-app.use(router.routes());
+app.use(controllers());
 server.listen(3000);
 
 

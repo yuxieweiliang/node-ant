@@ -1,64 +1,91 @@
-import React from 'react'
+import path from 'path'
+import fs from 'fs'
 import Router from 'koa-router'
-import ReactServer from 'react-dom/server'
-import Input from '../src/page/index'
+
 
 const router = new Router();
 
-const json = {
-  a: 'a',
-  b: 'b'
+
+// { 'GET /book': [Function: get_book],'POST /book': [Function: post_book] }
+// { 'GET /hello/:name': [Function: fn_hello] }
+function addMapping(router, mapping) {
+  console.log('method', mapping);
+  // var files = fs.readdirSync(mapping);
+
+  for (let url in mapping) {
+    if (url.startsWith('GET ')) {
+      let path = url.substring(4);
+      router.get(path, mapping[url]);
+
+    } else if (url.startsWith('POST ')) {
+
+      let path = url.substring(5);
+      router.post(path, mapping[url]);
+    } else if (url.startsWith('UPDATE ')) {
+
+      let path = url.substring(7);
+      router.put(path, mapping[url]);
+    } else if (url.startsWith('DELETE ')) {
+
+      let path = url.substring(7);
+      router.del(path, mapping[url]);
+    }
+  }
+}
+
+/**
+ * 递归获取制定目录下所有指定类型的页面
+ * @param dirs // 指定目录
+ * @param type // 指定类型
+ * @returns {Array}
+ */
+function getAllFileOfPath(dirs, type) {
+  const files = [];
+  const getFiles = (dirs) => {
+    const fileDir = fs.readdirSync(dirs);
+
+    fileDir.map(file => {
+      if(file.endsWith(type)) {
+        files.push(dirs + '/' +  file)
+      } else {
+        if(!file.endsWith('.md')) {
+          getFiles(dirs + '/' + file)
+        }
+      }
+    })
+  };
+  getFiles(dirs);
+  return files;
+}
+
+/**
+ * 获取所有目录下文件的返回值
+ * @param router
+ * @param dirs
+ */
+function addControllers(router, dirs) {
+  let apiPath = getAllFileOfPath(dirs, '.js');
+
+  for (let f of apiPath) {
+    // console.log(`process controller: ${f}...`);
+    let mapping = require(f);
+    addMapping(router, mapping);
+  }
+
+  /*readDir(dirs).then(files => {
+   var js_files = files.filter((f) => {
+   return f.endsWith('.js');
+   });
+   for (var f of js_files) {
+   console.log(`process controller: ${apiPath + f}...`);
+   let mapping = require(apiPath + f);
+   addMapping(router, mapping);
+   }
+   })*/
+}
+
+module.exports = function(dir) {
+  const ctrl_dirs = dir || path.join(__dirname, './controllers/')
+  addControllers(router, ctrl_dirs)
+  return router.routes()
 };
-
-/**
- * 首页 <script src=""></script>
- */
-router.get('/', async function(ctx, next) {
-  const domRender = ReactServer.renderToString(<Input number="fdsafdsa"/>);
-  ctx.render('index', {
-    script: '/home/index.build.js',
-    script2: '/socket.io-client/dist/socket.io.slim.js',
-    domRender: JSON.stringify(domRender)
-  })
-});
-/**
- * 首页
- */
-router.get('/save', async function(ctx, next) {
-  const domRender = ReactServer.renderToString(<Input number="fsdafsa"/>);
-  ctx.body = json;
-});
-
-/**
- * 文档
- */
-router.get('/docs', async function(ctx, next) {
-  ctx.body = ctx.macked;
-});
-
-/**
- * 书籍
- */
-router.get('/book', async function(ctx, next) {
-  ctx.render('book', {
-    title: 'book',
-    data: 'json',
-    render: 'reactDom'
-  })
-});
-
-router.get('/hello/:name', async (ctx, next) => {
-  let name = ctx.params.name;
-  ctx.body = `<h1>Hello, ${name}!</h1>`;
-});
-
-router.get('/docs', async (ctx, next) => {
-  ctx.body = '<h1>docs</h1>';
-});
-
-router.get('/example', async (ctx, next) => {
-  ctx.body = '<h1>example</h1>';
-});
-
-
-module.exports = router;

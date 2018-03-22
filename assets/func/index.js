@@ -1,12 +1,12 @@
-const fs = require('fs');
 /**
  * 获取当前值的类型
  * @param obj
  * @param target
  * @returns {*}
  */
-let typeOf = function(obj, target) {
+export let typeOf = function(obj, target) {
   const _obj = Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+
   if(target) {
     return _obj === target
   }
@@ -14,53 +14,49 @@ let typeOf = function(obj, target) {
 };
 
 /**
- * 读取文件内容
- * @param fileName
- * @param format
- * @returns {Promise}
+ * 将字符串转换为 base64
+ * @param str
+ * @returns {string}
  */
-let readFile = function (fileName, format) {
-  return new Promise(function (resolve, reject) {
-    fs.readFile(fileName, format, function(error, data) {
-      if (error) return reject(error);
-      resolve(data);
-    });
-  });
+export const b64Encode =(str) => {
+
+  return btoa(encodeURIComponent(str)
+    .replace(/%([0-9A-F]{2})/g, (match, p1) => {
+      return String.fromCharCode('0x' + p1);
+    })
+  );
 };
 
 /**
- * 一次获取一个文件夹
- * @param pathName
- * @returns {Promise}
+ * 将base64转为中文
+ * @param str
+ * @returns {string}
  */
-let readDir = function (pathName) {
-  return new Promise(function(resolve, reject) {
-    fs.readdir(pathName, function (err, files) {
-      if (err) return reject(err);
-      resolve(files);
-    });
-  })
+export const  b64Decode = (str) => {
+
+  return decodeURIComponent(atob(str)
+    .split('').map(c => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
 };
 
-/**
- * 一次获取多个文件夹
- * @param pathName
- * @returns {Promise.<*>}
- */
-let getFilesPath = function(pathName) {
-  const read = pathName.map(item => readDir(item));
-  return Promise.all(read)
-};
+
+export function extend(object, methods) {
+  for(var i in methods) {
+    object[i] = methods[i]
+  }
+}
 
 /**
  * 获取元素的绝对位置
  * @param element
  * @returns {{left: (number|Number), top: (Number|number)}}
  */
-let getOffset = function(element) {
-  var actualLeft = element.offsetLeft;
-  var actualTop = element.offsetTop;
-  var current = element.offsetParent;
+export let getOffset = function(element) {
+  let actualLeft = element.offsetLeft;
+  let actualTop = element.offsetTop;
+  let current = element.offsetParent;
+
   while (current !== null) {
     actualLeft += current.offsetLeft;
     actualTop += current.offsetTop;
@@ -70,12 +66,4 @@ let getOffset = function(element) {
     left: actualLeft,
     top: actualTop
   }
-};
-
-module.exports = {
-  typeOf,
-  readFile,
-  readDir,
-  getFilesPath,
-  getOffset,
 };

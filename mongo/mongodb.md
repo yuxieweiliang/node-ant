@@ -7,6 +7,10 @@ mongodb 使用
 
 
 
+## 启动数据库
+cd mongodb/mongo/bin
+mongod --dbpath ../db
+
 cd mongo\bin                                      // 切换到mongod.exe目录
 mongod --dbpath E:\00_project\01_node\mong\db    // 用来创建并运行数据库
 

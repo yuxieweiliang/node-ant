@@ -1,7 +1,3 @@
-
-
-
-
 // (2) 进入 logger 中间件
 export default async function(ctx, next) {
   // 记录请求时间
