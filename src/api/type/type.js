@@ -3,7 +3,7 @@
  */
 const createApi = function(common) {
   return function(api) {
-    return common + '/' + api
+    return '/api/' + common + '/' + api
   }
 };
 
@@ -11,25 +11,7 @@ const createApi = function(common) {
  * 公共api
  */
 const commonRoot = createApi('common');
-const common = {
-  getLoginToken: commonRoot('GetLoginToken'),
-  getHISUserInfo: commonRoot('GetHISUserInfo'),
+export const common = {
+  postImg: commonRoot('update-img'),
+  postImg2: commonRoot('update-img2'),
 };
-
-/**
- * report
- */
-const reportRoot = createApi('Report');
-const report = {
-  getReportWidget: reportRoot('GetReport_widget'),
-};
-
-
-export default {
-
-  /*    common    */
-  common,
-
-  /*    report    */
-  report
-}

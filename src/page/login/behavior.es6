@@ -1,4 +1,4 @@
-import kn from '../../../assets/server'
+// import kn from '../../../assets/server'
 
 
 export default {
@@ -11,7 +11,7 @@ export default {
   },
   _nameHandle: function(title) {
     let { book } = this.state;
-    book.title = title
+    book.title = title;
     this.setState({ book });
   },
   _descriptionHandle: function(description) {
@@ -21,8 +21,11 @@ export default {
   },
   createBook: function() {
     let { book } = this.state;
-    kn.post({url: kn.root + 'api/book'}, book)
-      .then(res => console.log(res))
+
+    this.fetch({url: 'api/login', params: {...book}}).then(res => res.json()).then(res => console.log(res));
+    console.log(this);
+    //kn.post({url: kn.root + 'api/book'}, book)
+      // .then(res => console.log(res))
   },
   getBook: function() {
     let { book } = this.state;

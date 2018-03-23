@@ -1,15 +1,18 @@
 
 // 请求系统
-const System = require('./system');
+import System from './system';
 
 // 请求用户
-const User = require('./user');
+import User from './user';
 
 // 请求结构
-const Setting = require('./setting');
+import Setting from './setting';
+
+// 请求结构
+import Img from './img';
 
 const api = {};
-const apiArr = [System, User, Setting];
+const apiArr = [System, User, Setting, Img];
 
 for(let i in apiArr) {
   for(let key in apiArr[i]) {

@@ -9,7 +9,7 @@ import RootView from '../../script/common'
 class View extends RootView {
   constructor(props) {
     super(props);
-    this.method.extend(this, behavior);
+    this.method._extend(this, behavior);
   }
   render = renderView
 }

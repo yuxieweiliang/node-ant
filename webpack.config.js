@@ -53,11 +53,6 @@ const config = {
         test: /\.less/,
         use: ['style-loader','css-loader','postcss-loader','less-loader']
       },
-      // 处理scss
-      {
-        test: /\.scss$/,
-        use: ['style-loader','css-loader','postcss-loader','sass-loader']
-      },
       // 处理图片
       {
         test: /\.(jpg|png|jpeg|gif)$/,
@@ -80,10 +75,6 @@ const config = {
             name: '[name].[ext]'
           }
         }]
-      },
-      {
-        test: /\.jade$/,
-        loader: 'jade'
       },
       {
         test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,

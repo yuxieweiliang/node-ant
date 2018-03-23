@@ -121,8 +121,30 @@
       object[i] = methods[i]
     }
   }
+
+  function _extend(object, methods, key) {
+    if(key) object[key] = object[key] || {};
+    const ext = function(i) {
+      return function() {
+        return methods[i].apply(object, arguments)
+      }
+    };
+
+    for(var i in methods) {
+      if(typeOf(methods[i]) === 'function') {
+        if(key) {
+          object[key][i] = ext(i)
+        } else {
+          object[i] = ext(i)
+        }
+      } else {
+        object[i] = methods[i]
+      }
+    }
+  }
 module.exports = {
   extend: extend,
+  _extend: _extend,
   subscribe: subscribe,
   publish: publish,
   typeOf: typeOf,
@@ -132,6 +154,6 @@ module.exports = {
   b64Decode: b64Decode,
   getOffset: getOffset,
   createParams: createParams,
-}
+};
 
 

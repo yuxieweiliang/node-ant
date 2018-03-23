@@ -1,23 +1,28 @@
-import React, { Component } from 'react'
-import func from './behavior';//视图
-import { Tab, TabBarItem, Article, Layout, Menu, Icon, Row  } from 'antd';
+import React from 'react'
+import { Button, Layout, Menu, Icon, Row  } from 'antd'
+const { Header, Content, Footer, Sider } = Layout;
 
-class TabBarAutoDemo extends Component {
-  render() {
-    return (
-      <div type="tabbar">
-        index
-      </div>
-    );
-  }
+export default function() {
+
+  // console.log(this);
+  return (<Layout >
+    <Content >
+      <Row type="flex" justify="center">
+        <input type="file" name="file" multiple="true" onChange={this.imgChange}/>
+        <button type="button"  onClick={this.updateImg}>上传</button>
+      </Row>
+      <Row type="flex" justify="center">
+        <input type="file" name="file" multiple="true" onChange={this.imgChange2}/>
+        <button type="button"  onClick={this.updateImg2}>上传</button>
+      </Row>
+      <form action="/api/common/update-img2" encType="multipart/form-data" method="post">
+        <input type="file" name="upload" multiple="true"/>
+        <input type="submit" value="Upload"/>
+      </form>
+    </Content>
+  </Layout>);
 }
 
-
-TabBarAutoDemo.propTypes = {
-
-};
-
-export default TabBarAutoDemo;
 
 /*
 const React = require('react');

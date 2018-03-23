@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style type="text/css">
+    div{
+      width: 300px;
+      height: 300px;
+      background: pink;
+    }
+  </style>
+</head>
+<body>
+<div  multiple></div>
+</body>
+<script type="text/javascript">
+  var ipt = document.querySelector('div');//获取用于盛放文件的容器
+  ipt.ondragover = function () { return false; };//取消dragover的默认事件；
+
+
+  ipt.ondrop = function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    e = e || window.event;
+    var files = e.dataTransfer.files;
+    console.log(files);
+
+    var reader = new FileReader();
+    reader.onload = function(){
+      var dataUrl = reader.result;
+      console.log(dataUrl)
+
+
+    }
+    console.log(reader)
+    reader.readAsDataURL(files[0]);//该方法会读取指定的 Blob 或 File 对象。读取操作完成的时候，readyState 会变成已完成（DONE），并触发 loadend 事件，同时 result 属性将包含一个data:URL格式的字符串（base64编码）以表示所读取文件的内容。
+
+    //reader.readAsText(files[0]);//readAsText 方法可以将 Blob 或者 File 对象转根据特殊的编码格式转化为内容(字符串形式),这个方法是异步的，也就是说，只有当执行完成后才能够查看到结果，如果直接查看是无结果的，并返回undefined,也就是说必须要挂载 实例下的 onload 或 onloadend 的方法处理转化后的结果,当转化完成后， readyState 这个参数就会转换 为 done 即完成态， event("loadend") 挂载的事件会被触发，并可以通过事件返回的形参得到中的 FileReader.result 属性得到转化后的结果
+
+    //reader.readAsBinaryString(files[0]);//readAsBinaryString 方法会读取指定的 Blob 或 File 对象，当读取完成的时候，readyState  会变成已完成（DONE），并触发 loadend 事件，同时 result 属性将包含所读取文件原始二进制格式。注意：从 2012 年 7 月 12 日起，该方法已从 W3C 工作草案废除。
+
+    //reader.readAsArrayBuffer(files[0]);//FileReader 提供的 readAsArrayBuffer() 方法会开始读取制定的 Blob 或 File 对象。当读取操作完成的时候，readyState 变成已完成（DONE），并触发 loadend 事件，同时 result 属性中将包含一个 ArrayBuffer 对象以表示所读取文件的数据。
+    var url = window.URL.createObjectURL(files[0])
+    console.log(url)
+    var img = document.createElement('img');
+    img.src = url;
+    document.body.appendChild(img);
+  };
+
+  var a = ["hello", "world"];
+  var myBlob = new Blob(a, { "type" : "text/xml" });
+  var newBlob = myBlob.slice(0, 5);
+  console.log(newBlob);
+
+
+  var reader = new FileReader();
+  console.log(reader)
+</script>
+</html>
