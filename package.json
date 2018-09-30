@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --inline --hot --color --watch --open --config ./config/webpack",
     "start": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --color --watch",
-    "create:page": "set NODE_ENV=development&& node tool/createPage",
+    "create:page": "set NODE_ENV=development && node tool/createPage",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

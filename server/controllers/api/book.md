@@ -9,3 +9,18 @@ ctx.req.addListener('data', (data) => {
 
 2、http.createServer:
 ## ctx.req就是http.createServer中的原始的request
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

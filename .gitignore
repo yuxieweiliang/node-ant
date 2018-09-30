@@ -5,4 +5,5 @@ dist/
 node/
 db/
 bower_components/
+package-lock.json
 

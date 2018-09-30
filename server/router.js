@@ -9,28 +9,37 @@ const router = new Router();
 // { 'GET /book': [Function: get_book],'POST /book': [Function: post_book] }
 // { 'GET /hello/:name': [Function: fn_hello] }
 function addMapping(router, mapping) {
-  console.log('method', mapping);
-  // var files = fs.readdirSync(mapping);
+  let type = { get: 'get', post: 'post', update: 'put', put: 'put', del: 'del', delete: 'del' };
+  for (let string in mapping) {
+    // 解析类型已经API地址
+    let [method, path] = string.replace(/\s+/g, ' ').trim().toLowerCase().split(' ');
 
-  for (let url in mapping) {
-    if (url.startsWith('GET ')) {
-      let path = url.substring(4);
-      router.get(path, mapping[url]);
-
-    } else if (url.startsWith('POST ')) {
-
-      let path = url.substring(5);
-      router.post(path, mapping[url]);
-    } else if (url.startsWith('UPDATE ')) {
-
-      let path = url.substring(7);
-      router.put(path, mapping[url]);
-    } else if (url.startsWith('DELETE ')) {
-
-      let path = url.substring(7);
-      router.del(path, mapping[url]);
+    // console.log(method, type[method])
+    if(type[method] && router[type[method]]) {
+      console.log(type[method], path, mapping[string]);
+      router[type[method]](path, mapping[string]);
     }
   }
+
+  /*for (let url in mapping) {
+   if (url.startsWith('GET ')) {
+   let path = url.substring(4);
+   router.get(path, mapping[url]);
+
+   } else if (url.startsWith('POST ')) {
+
+   let path = url.substring(5);
+   router.post(path, mapping[url]);
+   } else if (url.startsWith('UPDATE ')) {
+
+   let path = url.substring(7);
+   router.put(path, mapping[url]);
+   } else if (url.startsWith('DELETE ')) {
+
+   let path = url.substring(7);
+   router.del(path, mapping[url]);
+   }
+   }*/
 }
 
 /**
