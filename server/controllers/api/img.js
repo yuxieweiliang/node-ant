@@ -11,12 +11,8 @@ async function saveImg(dataBuffer) {
     fs.writeFile("out.png", dataBuffer, function(err) {
       if(err){
         reject(err);
-
       }
       resolve();
-
-
-
     });
   });
 

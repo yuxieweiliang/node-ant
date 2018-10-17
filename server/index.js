@@ -1,41 +1,47 @@
 import Koa from 'koa';
 import path from 'path';
 import http from 'http';
-import serve from 'koa-static';
-import controllers from './router';// 路由
-import Socket from 'socket.io';
-import '../mongo';
-import readMarked from '../docs'
-import templatePug from './pug'
-import koaWebpack from './koa-webpack'
-import logger from './logger'
-import connection from './socket';
-import redis from './redis'
-import method from '../assets/method'
-import koaBody from 'koa-body'
-import koaBetterBody from 'koa-better-body'
+// 中间件
+import engineJsx from './middleware/engineJsx';
+import staticServer from './middleware/static';
+import controllers from './middleware/router';// 路由
+import logger from './middleware/logger'
 
+/**
+ * 文档
+ */
+import readMarked from './docs'
+
+/**
+ * 长连接 服务
+ */
+import socketConnect from './socket';
+
+/**
+ * 数据库 & 缓存
+ */
+import database from './database'
+
+/**
+ * 创建 Koa 实例
+ */
 const app = new Koa();
-// 设置cookie 使用 session 读取 cookie 时的密匙
+const server = http.Server(app.callback());
+
+/**
+ * 设置cookie 使用 session 读取 cookie 时的密匙
+ */
 app.keys = ['Yu_Xie_Wei_Liang'];
 
-// 添加socket.io
-const server = http.Server(app.callback());
-const io = new Socket(server);
+/**
+ * 添加 socket.io
+ */
+socketConnect(server);
 
-
-
-// webSocket
-io.on('connection', connection);
-
-io.on('leave', function () {
-  console.log('-----------');
-  io.emit('disconnect');
-});
-
-app.use(serve(method.assemblyPath(__dirname, '/../dist'), { extensions: ['js']}));
-app.use(serve(method.assemblyPath(__dirname, '/../assets/images'), { extensions: ['ico']}));
-app.use(serve(method.assemblyPath(__dirname, '/../node_modules'), { extensions: ['js']}));
+/**
+ * 创建静态资源服务器
+ */
+staticServer(app);
 
 app.use(async function(ctx, next) {
   if(ctx.path.indexOf('api') > -1) {
@@ -43,14 +49,18 @@ app.use(async function(ctx, next) {
   }
   await next();
 });
-// 使用webpack编译前端项目
-koaWebpack(app);
 
-// 模板使用pug
-templatePug(app);
+/**
+ * 使用模板
+ */
+app.use(engineJsx({
+  views: process.cwd() + '/client/app/src',
+  extension: 'js',
+  beautify: true // 是否美化
+}));
 
 // markdown获取 readme文件
-app.use(readMarked);
+// app.use(readMarked);
 
 // logger 当前路由信息
 app.use(logger);
@@ -59,8 +69,10 @@ app.use(logger);
 // app.use(koaBody());
 // app.use(koaBetterBody({textLimit: '300kb'}));
 
-// redis
-redis(app);
+/**
+ * 添加数据库 & 缓存
+ */
+database(app);
 
 
 app.use(controllers());

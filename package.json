@@ -7,6 +7,8 @@
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --inline --hot --color --watch --open --config ./config/webpack",
     "start": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --color --watch",
     "create:page": "set NODE_ENV=development && node tool/createPage",
+    "mongo": "mongod --dbpath ./db",
+    "initpg": "node ./tool/postgresSql/initdb",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -27,6 +29,7 @@
     "file-loader": "^0.11.2",
     "html-loader": "^0.5.0",
     "html-webpack-plugin": "^2.30.1",
+    "js-beautify": "^1.6.11",
     "koa-pug": "^3.0.0-2",
     "koa-static": "^4.0.1",
     "koa-views": "^6.0.2",
@@ -53,10 +56,11 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
-    "antd": "^3.3.1",
+    "antd": "^3.10.1",
     "core-decorators": "^0.20.0",
     "font-awesome": "^4.7.0",
     "formidable": "^1.2.1",
+    "get-paths": "0.0.2",
     "isomorphic-fetch": "^2.2.1",
     "koa": "^2.5.0",
     "koa-better-body": "^3.0.4",
@@ -68,6 +72,8 @@
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "mongoose": "^4.11.7",
+    "mysql": "^2.16.0",
+    "pg": "^7.5.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "redis": "^2.8.0",

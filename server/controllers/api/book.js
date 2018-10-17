@@ -1,7 +1,7 @@
 import React from 'react'
 import mongoose from 'mongoose';
 import ReactServer from 'react-dom/server'
-import BookPage from '../../../src/page/book'
+import BookPage from '../../../client/app/src/book'
 import queryString from 'query-string'
 
 const book = mongoose.model('Book');

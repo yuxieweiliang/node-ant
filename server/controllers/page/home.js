@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactServer from 'react-dom/server';
-import Index from '../../../src/page/home';
+import Index from '../../../client/app/src/home';
 
 
 var index = async function(ctx, next) {
@@ -8,9 +8,9 @@ var index = async function(ctx, next) {
   ctx.session.count = ctx.session.count || 0;
   ctx.session.count++;
 
-  ctx.render('index', {
-    script: ['/socket.io-client/dist/socket.io.slim.js', '/home.build.js'],
-    domRender: domRender
+  ctx.render('home', {
+    script: ['/socket.io-client/dist/socket.io.slim.js'],
+    contentHtml: domRender
   });
 };
 

@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // var extract = require('extract-text-webpack-plugin');
 // const WebpackMd5Hash = require('webpack-md5-hash');
 const marked = require("marked");
-import method from './assets/method'
+import method from './server/utils'
 
 // 合并webpack配置
 let merge = require('webpack-merge');
