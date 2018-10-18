@@ -28,7 +28,7 @@ class RootView extends React.Component{
     this.method._extend(this, api, 'api');
 
     if(typeof document !== 'undefined') {
-      require('../style/root.less');
+      // require('../style/root.less');
 
       // cookie
       this.cookie = cookie;
