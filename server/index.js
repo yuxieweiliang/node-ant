@@ -2,7 +2,7 @@ import Koa from 'koa';
 import path from 'path';
 import http from 'http';
 // 中间件
-import engineJsx from './middleware/engineJsx';
+import koaWebpack from './middleware/koa-webpack'
 import staticServer from './middleware/static';
 import controllers from './middleware/router';// 路由
 import logger from './middleware/logger'
@@ -34,6 +34,12 @@ const server = http.Server(app.callback());
 app.keys = ['Yu_Xie_Wei_Liang'];
 
 /**
+ * 使用模板
+ * 使用webpack编译前端项目
+ */
+koaWebpack(app);
+
+/**
  * 添加 socket.io
  */
 socketConnect(server);
@@ -49,15 +55,6 @@ app.use(async function(ctx, next) {
   }
   await next();
 });
-
-/**
- * 使用模板
- */
-app.use(engineJsx({
-  views: process.cwd() + '/client/app/src',
-  extension: 'js',
-  beautify: true // 是否美化
-}));
 
 // markdown获取 readme文件
 // app.use(readMarked);

@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // var extract = require('extract-text-webpack-plugin');
 // const WebpackMd5Hash = require('webpack-md5-hash');
 const marked = require("marked");
-import method from './server/utils'
+import method from '../utils'
 
 // 合并webpack配置
 let merge = require('webpack-merge');
@@ -111,7 +111,7 @@ const config = {
     ]
   },
   resolve: {
-    modules: [path.resolve(__dirname, 'node_modules')],
+    modules: [path.resolve(ROOTS, 'node_modules')],
     extensions: ['.js', '.jsx', '.es6', '.less'],
     alias: {
       moment: "moment/min/moment-with-locales.min.js"
@@ -138,7 +138,7 @@ const config = {
   ]
 };
 
-const viewPath = method.assemblyPath(ROOTS, '/src/page/');
+const viewPath = method.assemblyPath(ROOTS, '/client/app/src/');
 var files = fs.readdirSync(viewPath,'utf-8');
 
 files.map(item => {
