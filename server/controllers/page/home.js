@@ -9,7 +9,11 @@ var index = async function(ctx, next) {
   ctx.session.count++;
 
   ctx.render('home', {
-    script: ['/socket.io-client/dist/socket.io.slim.js']
+    script: [
+      '/socket.io-client/dist/socket.io.slim.js',
+      '/vendors.js',
+      '/home.build.js',
+    ]
   });
 };
 

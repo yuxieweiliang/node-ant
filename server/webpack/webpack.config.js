@@ -1,9 +1,9 @@
 const webpack = require('webpack');
 const fs = require('fs');
 const path = require('path');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin'); // 打开指定浏览器
+// const OpenBrowserPlugin = require('open-browser-webpack-plugin'); // 打开指定浏览器
 const CleanWebpackPlugin = require('clean-webpack-plugin'); // 清理
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 // var extract = require('extract-text-webpack-plugin');
 // const WebpackMd5Hash = require('webpack-md5-hash');
 const marked = require("marked");
@@ -144,6 +144,5 @@ var files = fs.readdirSync(viewPath,'utf-8');
 files.map(item => {
   config.entry[item] = method.assemblyPath(viewPath, `${item}`);
 });
-
 
 module.exports = config;

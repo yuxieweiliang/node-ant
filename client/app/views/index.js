@@ -19,19 +19,22 @@ export default class HelloMessage extends React.Component{
   }
 
   render() {
-    const { param} = this.props;
-    const cmd = 'var __props=' + safeStringify(param) + ';';
+    const { script } = this.props;
+    // const cmd = 'var __props=' + safeStringify(param) + ';';
+
     return (
       <Html>
         <Head>
           {/*<link href='/css/style.css' rel='stylesheet'/>*/}
-          <script dangerouslySetInnerHTML={{__html: cmd}}/>
+          {/*<script dangerouslySetInnerHTML={{__html: cmd}}/>*/}
         </Head>
         <Body>
-          {
-           param.script && param.script.map((item, key) => <script src={item} key={key}/>)
-          }
-          <script src="main.js"/>
+        <div id="root">
+          { this.props.children }
+        </div>
+        {
+          script && script.map((item, key) => <script src={item} key={key}/>)
+        }
         </Body>
       </Html>
     )

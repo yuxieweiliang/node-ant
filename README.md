@@ -103,6 +103,8 @@ https://github.com/reactjs/express-react-views
 
 
 
+babel-core & babel-loader@8+
+@babel/core & babel-loader@7
 
 
 

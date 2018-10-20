@@ -2,6 +2,9 @@
 // require('babel-core/register');
 require('babel-register')({
   presets: ['es2015', 'react', 'stage-0', 'babel-polyfill'],
-  plugins: ["transform-decorators-legacy", "transform-es2015-modules-commonjs", "transform-object-rest-spread"]
+  plugins: ["transform-decorators-legacy", "transform-es2015-modules-commonjs"]
 });
 require('./server');
+
+
+// , "transform-object-rest-spread"

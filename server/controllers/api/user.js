@@ -5,7 +5,7 @@ import ReactServer from 'react-dom/server'
 import BookPage from '../../../client/app/src/book'
 import queryString from 'query-string'
 
-const User = mongoose.model('User')
+const User = mongoose.model('User');
 /**
  * 书籍
  */
@@ -29,7 +29,7 @@ var getUser = async (ctx) => {
 var postUser = async ctx => {
   let data = JSON.parse(ctx.request.body);
   let params = ctx.request.query || ctx.query;
-  let users = await  User.find({'account.username': data.username })
+  let users = await  User.find({'account.username': data.username });
   let message = null;
 
   if(_.isEmpty(users)) {
@@ -50,7 +50,7 @@ var updateUser = async ctx => {
   if(_.isEmpty(users)) {
     message = '用户不存在'
   } else {
-    let update = await User.update({_id: doc[0]._id}, {'account.password': data.password}, {safe: true})
+    let update = await User.update({_id: doc[0]._id}, {'account.password': data.password}, {safe: true});
     if(_.isEmpty(users)) {
       message = '更新失败！'
     } else {
@@ -67,7 +67,7 @@ var updateUser = async ctx => {
 
 var deleteUser = async ctx => {
   let data = JSON.parse(ctx.request.body);
-  let params = ctx.request.query || ctx.query
+  let params = ctx.request.query || ctx.query;
   let users = await  User.find({'account.username': data.username });
   let message = null;
 

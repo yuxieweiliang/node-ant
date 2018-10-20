@@ -3,6 +3,7 @@ import path from 'path';
 import http from 'http';
 // 中间件
 import koaWebpack from './middleware/koa-webpack'
+import engineJsx from './middleware/engineJsx'
 import staticServer from './middleware/static';
 import controllers from './middleware/router';// 路由
 import logger from './middleware/logger'
@@ -38,6 +39,11 @@ app.keys = ['Yu_Xie_Wei_Liang'];
  * 使用webpack编译前端项目
  */
 koaWebpack(app);
+app.use(engineJsx({
+  views: process.cwd() + '/client/app/src',
+  extension: 'js',
+  beautify: true // 是否美化
+}));
 
 /**
  * 添加 socket.io

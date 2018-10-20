@@ -1,5 +1,4 @@
 import _ from 'lodash'
-import 'whatwg-fetch'
 import { lowerKeyCase } from '../func'
 
 
@@ -31,9 +30,9 @@ class KN {
       method: 'POST',
       headers: myHeaders,
       body: JSON.stringify(data)
-    }
+    };
     // console.log(url)
-    url = this.creatUrl({url, option})
+    url = this.creatUrl({url, option});
 
     return fetch(url, myInit)
     .then((response) => response.json())

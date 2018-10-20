@@ -148,7 +148,7 @@ class MyComponent extends React.Component {
 }
 
 if(typeof document !== 'undefined') {
-  request('./style.less')// 视图样式
+  require('./style.less')// 视图样式
   render(<MyComponent/>, document.getElementById('root'));
 }
 
