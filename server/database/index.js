@@ -13,8 +13,4 @@ export default function(app) {
    * postgresSql
    */
   pg(pgConfig.Postgre);
-  /**
-   * redis
-   */
-  redis(app)
 }

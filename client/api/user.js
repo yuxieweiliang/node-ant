@@ -28,11 +28,14 @@
  setCookie("Ann_Login_Time=" + (Date.parse(new Date()) + (3 * 60 * 1000)));
  */
 
-import { common } from './type/type'
+import { common } from './type'
 
 export default {
   getUser: function (option) {
     var _this = this;
+
+    console.log()
+
 
     return this.Ajax.get(common.getHISUserInfo, option)
       .then(function(res) {

@@ -4,8 +4,10 @@ import http from 'http';
 // 中间件
 import koaWebpack from './middleware/koa-webpack'
 import engineJsx from './middleware/engineJsx'
+import koaBody from './middleware/koa-body';
 import staticServer from './middleware/static';
 import controllers from './middleware/router';// 路由
+import OAuth2 from './middleware/OAuth2.0';// 认证
 import logger from './middleware/logger'
 
 /**
@@ -19,9 +21,15 @@ import readMarked from './docs'
 import socketConnect from './socket';
 
 /**
- * 数据库 & 缓存
+ * 数据库
  */
-import database from './database'
+// import database from './database'
+
+/**
+ * 缓存
+ */
+import redis from './database/redis'
+import pg from './database/pg'
 
 /**
  * 创建 Koa 实例
@@ -51,6 +59,20 @@ app.use(engineJsx({
 socketConnect(server);
 
 /**
+ * 解析请求体中间件
+ */
+app.use(koaBody());
+
+/**
+ * 添加数据库 & 缓存
+ */
+pg(app);
+/**
+ * redis
+ */
+redis(app);
+
+/**
  * 创建静态资源服务器
  */
 staticServer(app);
@@ -68,17 +90,15 @@ app.use(async function(ctx, next) {
 // logger 当前路由信息
 app.use(logger);
 
-// logger 当前路由信息
-// app.use(koaBody());
-// app.use(koaBetterBody({textLimit: '300kb'}));
+/**
+ * 认证
+ */
+OAuth2(app);
 
 /**
- * 添加数据库 & 缓存
+ * 路由
  */
-database(app);
-
-
 app.use(controllers());
-server.listen(3000);
+server.listen(4000);
 
 

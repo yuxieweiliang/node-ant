@@ -22,16 +22,17 @@ var DEFAULT_OPTIONS = {
   transformViews: true,
   babel: {
     presets: [
-      'react',
-      'es2015',
-      'stage-0',
-      'babel-polyfill'
+      '@babel/preset-react',
+      [
+        '@babel/preset-env',
+        {
+          targets: {
+            node: 'current',
+          },
+        },
+      ],
     ],
-    plugins: [
-      "transform-decorators-legacy",
-      "transform-es2015-modules-commonjs",
-      "transform-object-rest-spread"
-    ]
+    plugins: ['@babel/transform-flow-strip-types'],
   },
 };
 
@@ -63,7 +64,7 @@ function createEngine(engineOptions) {
         // Passing a RegExp to Babel results in an issue on Windows so we'll just
         // pass the view path.
 
-        require('babel-register')(engineOptions.babel);
+        require('@babel/register')(engineOptions.babel);
         /**
          * 如果有only参数，则只解析一次，
          * 也就是只解析当前引用的一个页面，这个页面引用的页面，则不解析
@@ -84,6 +85,8 @@ function createEngine(engineOptions) {
         /**
          * React.createElement 接受三个参数
          * React.createElement('li', null, 'Second Text Content');
+         * renderToString
+         * renderToStaticMarkup
          */
         markup += ReactDOMServer.renderToString(
           React.createElement(component, locals)
@@ -114,9 +117,10 @@ function createEngine(engineOptions) {
         // subtly different than prod.
         markup = beautifyHTML(markup);
       }
+
       ctx.type = 'text/html';
-      ctx.body = markup
-      // return markup
+      ctx.body = markup;
+      return markup
 
     };
 

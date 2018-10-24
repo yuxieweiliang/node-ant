@@ -1,4 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
+
+const Schema = mongoose.Schema;
+
 var async = require('async');
 import { Book } from './book';
 let db = mongoose.connect('mongodb://localhost/test');

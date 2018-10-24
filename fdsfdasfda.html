@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  var session = {};
+  const CONTEXT_SESSION = Symbol('context#contextSession');
+  const _CONTEXT_SESSION = Symbol('context#_contextSession');
+
+  Object.defineProperties(session, {
+    session: {
+      get(){
+        return this[CONTEXT_SESSION]
+      },
+      set(val) {
+        this[CONTEXT_SESSION] = val;
+      },
+      configurable: true,
+    }
+  });
+
+  session.session = 'aaa';
+
+  console.log(session.session)
+</script>
+</body>
+</html>

@@ -1,4 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
+
+const Schema = mongoose.Schema;
+
 const UserSchema = new Schema({
   id: {type: Schema.Types.ObjectId, ref: 'User'},
   dates: {created: Date},

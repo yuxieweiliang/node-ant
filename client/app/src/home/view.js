@@ -83,14 +83,12 @@ export default class MyComponent extends React.Component {
   }
 
   render() {
-
     return (<div>
       <input onInput={this._room.bind(this)}/>
       <input onInput={this._input.bind(this)}/>
       <input onInput={this._common.bind(this)}/>
       <button onClick={this._clickBtn.bind(this)}>进入</button>
       <button onClick={this._LeaveBtn.bind(this)}>离开</button>
-
     </div>);
   }
 }

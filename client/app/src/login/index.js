@@ -1,29 +1,31 @@
 import React from 'react'
-import { render } from 'react-dom'
-import renderView from './view'
-import behavior from './behavior'
+import ReactDOM from 'react-dom'
+import RenderView from './view'
+import ReactDOMServer from 'react-dom/server'
 import RootView from '../../script/common'
-
+import Container from '../../views'
 
 // 进行组装
-class View extends RootView {
-  constructor(props) {
-    super(props);
-    this.method._extend(this, behavior);
+class ServerView extends RootView {
+  render() {
+    const contentHtml = ReactDOMServer.renderToString(<RenderView />);
+
+    return(
+      <Container
+        {...this.props}
+        dangerouslySetInnerHTML={{__html: contentHtml}}
+      />
+    );
   }
-  render = renderView
 }
 
 // 值检查
-View.propTypes = {
+ServerView.propTypes = {
 
 };
 
-
-// 如果是webpack打包
-if(typeof document !== 'undefined') {
-  require('./style.less');
-  render(<View/>, document.getElementById('root'));
+if(typeof document !== 'undefined'){
+  ReactDOM.hydrate(<RenderView/>, document.getElementById('root'));
 }
 
-export default View;
+export default ServerView;

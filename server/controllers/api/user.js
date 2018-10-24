@@ -1,11 +1,10 @@
 import React from 'react';
 import mongoose from 'mongoose';
 import _ from 'lodash';
-import ReactServer from 'react-dom/server'
-import BookPage from '../../../client/app/src/book'
 import queryString from 'query-string'
 
-const User = mongoose.model('User');
+// const User = mongoose.model('User');
+const User = '';
 /**
  * 书籍
  */

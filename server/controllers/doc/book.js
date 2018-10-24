@@ -1,7 +1,8 @@
 import React from 'react'
 import mongoose from 'mongoose';
 
-const book = mongoose.model('Book');
+// const book = mongoose.model('Book');
+const book = '';
 
 var get_book = async (ctx, next) => {
   let postdata = '';

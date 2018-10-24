@@ -1,4 +1,4 @@
-import { common } from './type/type'
+import { common } from './type'
 /**
  * 登陆
  */

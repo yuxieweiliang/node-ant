@@ -1,50 +1,59 @@
-const React = require('react');
-import { render } from 'react-dom'
+import React from 'react'
+import { Button, Input, Form, Layout, Menu, Icon, Row  } from 'antd'
+import RootView from '../../script/common'
+import behavior from './behavior'
+import system from '../../../api/system'
 
-import { Button, Input, Form, Layout, Menu, Icon, SubMenu  } from 'antd';
+
 const { Header, Content, Footer, Sider } = Layout;
 
-
-class MyComponent extends React.Component {
+export default class MyComponent extends RootView {
   constructor(props) {
     super(props);
+    this.method._extend(this, behavior);
     this.state = {
-      username: null,
-      password: null
+      username: '',
+      password: ''
     }
   }
   _setUsername(username) {
-    console.log('aaaa')
+    console.log('aaaa');
     this.setState({username})
   }
   _setPassword(password) {
-    console.log(password)
+    console.log(password);
     this.setState({password})
   }
   login() {
     let {username, password} = this.state;
-    let option = {
-      url: 'http://localhost:3000/api/user'
-    };
-    let data = {username, password}
+    let data = {username, password};
 
-    kn.post(option, data)
-      .then(res => console.log(res))
+
+    system.login(data).then(res => console.log(res));
   }
+  login2() {
+    let {username, password} = this.state;
+    let data = {username, password};
+
+
+    system.login2(data).then(res => console.log(res));
+  }
+
   render() {
+
     return (<Layout>
       <Header>header</Header>
       <Layout>
         <Sider>s</Sider>
         <Content>
           <Form layout="horizontal">
-            <Form.Item label="user name" {...{labelCol: { span: 4 },wrapperCol: { span: 14 }}}>
+            <Form.Item label="用户名" {...{labelCol: { span: 4 },wrapperCol: { span: 14 }}}>
               <Input size="small"
                      placeholder="Basic usage"
                      defaultValue={this.state.username}
                      onInput={(e) => this._setUsername(e.target.value)}/>
             </Form.Item>
-            <Form.Item label="password" {...{labelCol: { span: 4 },wrapperCol: { span: 14 }}}>
+            <Form.Item label="密码" {...{labelCol: { span: 4 },wrapperCol: { span: 14 }}}>
               <Input size="small"
                      placeholder="Basic usage"
                      defaultValue={this.state.password}
@@ -52,6 +61,7 @@ class MyComponent extends React.Component {
             </Form.Item>
             <Form.Item label="Form Layout" {...{labelCol: { span: 4 },wrapperCol: { span: 14 }}}>
               <Button type="primary" onClick={() => this.login()}>登陆</Button>
+              <Button type="primary" onClick={() => this.login2()}>获取</Button>
             </Form.Item>
           </Form>
         </Content>
@@ -59,17 +69,6 @@ class MyComponent extends React.Component {
       </Layout>
       <Footer>f</Footer>
     </Layout>);
+
   }
 }
-
-if(typeof document !== 'undefined') {
-  require('./IndexPage.less');
-  render(<MyComponent/>, document.getElementById('root'));
-}
-
-
-MyComponent.propTypes = {
-
-};
-
-module.exports = MyComponent;

@@ -32,7 +32,16 @@ const config = {
       // 处理 js,es6 / jsx
       {
         test: /\.(js|es6|jsx)$/,
-        use: ['babel-loader'],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: [
+              // require('@babel/plugin-proposal-class-properties'),
+              // require('@babel/plugin-proposal-object-rest-spread'),
+            ]
+          }
+        },
         exclude: /node_modules/
       },
 

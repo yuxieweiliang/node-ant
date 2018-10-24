@@ -6,19 +6,28 @@ import Router from 'koa-router'
 const router = new Router();
 
 
+function createRouter(type, path, params) {
+  // console.log(type, path, params); // , mapping[string]
+  router[type](path, params)
+}
 // { 'GET /book': [Function: get_book],'POST /book': [Function: post_book] }
 // { 'GET /hello/:name': [Function: fn_hello] }
 function addMapping(router, mapping) {
   let type = { get: 'get', post: 'post', update: 'put', put: 'put', del: 'del', delete: 'del' };
+
+
   for (let string in mapping) {
     // 解析类型已经API地址
     let [method, path] = string.replace(/\s+/g, ' ').trim().toLowerCase().split(' ');
 
-    // console.log(method, type[method])
     if(type[method] && router[type[method]]) {
+      createRouter(type[method], path, mapping[string]);
+    }
+    // console.log(method, type[method])
+    /*if(type[method] && router[type[method]]) {
       console.log(type[method], path); // , mapping[string]
       router[type[method]](path, mapping[string]);
-    }
+    }*/
   }
 
   /*for (let url in mapping) {
