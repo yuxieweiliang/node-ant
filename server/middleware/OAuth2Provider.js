@@ -18,6 +18,7 @@
 var EventEmitter = require('events').EventEmitter,
   querystring = require('querystring'),
   serializer = require('serializer'); // 序列化库
+import unless from './koa-unless'
 
 let _extend = function(dst,src) {
 
@@ -39,7 +40,7 @@ let _extend = function(dst,src) {
   };
 
   return dst;
-}
+};
 /**
  * 将token转换为名字与密码字符串
  * @param authorization
@@ -116,24 +117,26 @@ OAuth2Provider.prototype.generateAccessToken = function(user_id, client_id, extr
 OAuth2Provider.prototype.login = function() {
   var self = this;
 
-  return function(ctx, next) {
-    const { req, res } = ctx;
-    var data, atok, user_id, client_id, grant_date, extra_data;
 
+  function _login(ctx, next) {
+    const query = ctx.request.query;
+    const authorization = ctx.req.headers.authorization;
+    let data, atok, user_id, client_id, grant_date, extra_data;
+
+
+    console.log('query', query);
     /**
-     * 获取 token
-     * 如果有 access_token
-     * 或者 头部有 authorization
-     * 则取出 atok
+     * 获取 access_token || authorization
+     * 1、 www.xxx.com ? access_token = xxxxxxxxx
+     * 2、 headers: {authorization: 'Bearer xxxxxxxxx'}
      */
-    if(req.query['access_token']) {
-      atok = req.query['access_token'];
-    } else if((req.headers['authorization'] || '').indexOf('Bearer ') == 0) {
-      atok = req.headers['authorization'].replace('Bearer', '').trim();
+    if(query['access_token']) {
+      atok = query['access_token'];
+    } else if((authorization || '').indexOf('Bearer ') === 0) {
+      atok = authorization.replace('Bearer', '').trim();
     } else {
       return next();
     }
-
     /**
      * 如果有token 则为token 重新赋值过期时间
      */
@@ -144,30 +147,36 @@ OAuth2Provider.prototype.login = function() {
       grant_date = new Date(data[2]);
       extra_data = data[3];
     } catch(e) {
-      res.writeHead(400);
-      return res.end(e.message);
+      ctx.status = 400;
+      ctx.body = e.message;
+      return;
     }
 
     // 发送给access_token
-    self.emit('access_token', req, {
+    self.emit('access_token', ctx, {
       user_id: user_id,
       client_id: client_id,
       extra_data: extra_data,
       grant_date: grant_date
     }, next);
   };
+
+  _login.unless = unless;
+  return _login
 };
+
+
 
 OAuth2Provider.prototype.oauth = function() {
   var self = this;
 
-  return function(ctx, next) {
-    const { req, res } = ctx;
+  function _oauth(ctx, next) {
+    const { req, res, request } = ctx;
+    const { authorize_uri, access_token_uri } = self.options;
+    let { client_id, redirect_uri } = request.query;
+
     var uri = ~req.url.indexOf('?') ? req.url.substr(0, req.url.indexOf('?')) : req.url;
 
-    console.log('uri', uri);
-    console.log('self.options', self.options);
-    console.log('req.query', req.query);
     /**
      * 检查url中是否包含
      * client_id
@@ -182,35 +191,45 @@ OAuth2Provider.prototype.oauth = function() {
      * }
      */
 
-    if(req.method == 'GET' && self.options.authorize_uri == uri) {
-      var    client_id = req.query.client_id,
-        redirect_uri = req.query.redirect_uri;
+    /**
+     * 获取授权页面，有同意以及拒绝按钮
+     */
+    if(req.method === 'GET' && authorize_uri === uri) {
 
+      console.log(!client_id || !redirect_uri);
       if(!client_id || !redirect_uri) {
-        res.writeHead(400);
-        return res.end('client_id and redirect_uri required');
+        ctx.type = 'text/html';
+        ctx.status = 400;
+        return ctx.body = ('client_id and redirect_uri required');
       }
 
       // authorization form will be POSTed to same URL, so we'll have all params
       var authorize_url = req.url;
 
       // 执行login
-      self.emit('enforce_login', req, res, authorize_url, function(user_id) {
+      self.emit('enforce_login', ctx, authorize_url, function(user_id) {
+
         // store user_id in an HMAC-protected encrypted query param
         authorize_url += '&' + querystring.stringify({x_user_id: self.serializer.stringify(user_id)});
 
         // user is logged in, render approval page
-        self.emit('authorize_form', req, res, client_id, authorize_url);
+        self.emit('authorize_form', ctx, client_id, authorize_url);
       });
 
-    } else if(req.method == 'POST' && self.options.authorize_uri == uri) {
-      var     client_id = (req.query.client_id || req.body.client_id),
-        redirect_uri = (req.query.redirect_uri || req.body.redirect_uri),
-        response_type = (req.query.response_type || req.body.response_type) || 'code',
-        state = (req.query.state || req.body.state),
-        x_user_id = (req.query.x_user_id || req.body.x_user_id);
+    }
+    /**
+     * 是否同意授权
+     *
+     */
+    else if(req.method === 'POST' && self.options.authorize_uri === uri) {
+        let response_type = (request.query.response_type || request.body.response_type) || 'code',
+        state = (request.query.state || request.body.state),
+        x_user_id = (request.query.x_user_id || request.body.x_user_id);
 
-      var url = redirect_uri;
+      client_id = (client_id || request.body.client_id);
+      redirect_uri = (redirect_uri || request.body.redirect_uri);
+
+      let url = redirect_uri;
 
       switch(response_type) {
         case 'code': url += '?'; break;
@@ -220,8 +239,12 @@ OAuth2Provider.prototype.oauth = function() {
           return res.end('invalid response_type requested');
       }
 
-      if('allow' in req.body) {
-        if('token' == response_type) {
+      console.log(request.body);
+
+
+
+      if('allow' in request.body) {
+        if('token' === response_type) {
           var user_id;
 
           try {
@@ -229,8 +252,9 @@ OAuth2Provider.prototype.oauth = function() {
           } catch(e) {
             console.error('allow/token error', e.stack);
 
-            res.writeHead(500);
-            return res.end(e.message);
+            ctx.status = 500;
+            ctx.body = e.message;
+            return;
           }
 
           self.emit('create_access_token', user_id, client_id, function(extra_data,token_options) {
@@ -241,14 +265,14 @@ OAuth2Provider.prototype.oauth = function() {
 
             url += querystring.stringify(atok);
 
-            res.writeHead(303, {Location: url});
-            res.end();
+            ctx.status = 303;
+            ctx.body = {url};
           });
         } else {
-          var code = serializer.randomString(128);
+          let code = serializer.randomString(128);
 
-          self.emit('save_grant', req, client_id, code, function() {
-            var extras = {
+          self.emit('save_grant', ctx, client_id, code, function() {
+            let extras = {
               code: code,
             };
 
@@ -258,66 +282,87 @@ OAuth2Provider.prototype.oauth = function() {
 
             url += querystring.stringify(extras);
 
-            res.writeHead(303, {Location: url});
-            res.end();
+            ctx.status = 303;
+            ctx.body = {url};
           });
         }
       } else {
         url += querystring.stringify({error: 'access_denied'});
 
-        res.writeHead(303, {Location: url});
-        res.end();
+        ctx.status = 303;
+        ctx.body = {url};
       }
 
-    } else if(req.method == 'POST' && self.options.access_token_uri == uri) {
-      var     client_id = req.body.client_id,
-        client_secret = req.body.client_secret,
-        redirect_uri = req.body.redirect_uri,
-        code = req.body.code;
+
+    } else
+    /**
+     * 始用 账号 & 密码
+     * 获取 access_token
+     */
+    if(req.method === 'POST' && self.options.access_token_uri === uri) {
+      let code = request.body.code;
+
+      client_id = request.body.client_id;
+      client_secret = request.body.client_secret;
+      redirect_uri = request.body.redirect_uri;
 
       if(!client_id || !client_secret) {
-        var authorization = parse_authorization(req.headers.authorization);
+        let authorization = parse_authorization(req.headers.authorization);
 
         if(!authorization) {
-          res.writeHead(400);
-          return res.end('client_id and client_secret required');
+          ctx.status = 400;
+          ctx.body = 'client_id and client_secret required';
+          return;
         }
 
         client_id = authorization[0];
         client_secret = authorization[1];
       }
 
-      if('password' == req.body.grant_type) {
-        if(self.listeners('client_auth').length == 0) {
-          res.writeHead(401);
-          return res.end('client authentication not supported');
+      /**
+       * 如果是密码
+       */
+      if('password' === request.body.grant_type) {
+
+        if(self.listeners('client_auth').length === 0) {
+          // 不支持客户端身份验证
+          ctx.status = 401;
+          ctx.body = 'client authentication not supported';
+          return;
         }
 
         self.emit('client_auth', client_id, client_secret, req.body.username, req.body.password, function(err, user_id) {
           if(err) {
-            res.writeHead(401);
-            return res.end(err.message);
+            ctx.status = 401;
+            ctx.body = err.message;
+            return;
           }
 
-          res.writeHead(200, {'Content-type': 'application/json'});
+          ctx.status = 200;
+          ctx.set('Content-Type', 'application/json; charset=utf-8');
 
           self._createAccessToken(user_id, client_id, function(atok) {
-            res.end(JSON.stringify(atok));
+            ctx.body = JSON.stringify(atok);
           });
         });
       } else {
+
+        /**
+         * 查看授权
+         */
         self.emit('lookup_grant', client_id, client_secret, code, function(err, user_id) {
           if(err) {
-            res.writeHead(400);
-            return res.end(err.message);
+            ctx.status = 400;
+            ctx.body = err.message;
+            return;
           }
 
-          res.writeHead(200, {'Content-type': 'application/json'});
+          ctx.status = 200;
+          ctx.set('Content-Type', 'application/json; charset=utf-8');
 
           self._createAccessToken(user_id, client_id, function(atok) {
             self.emit('remove_grant', user_id, client_id, code);
-
-            res.end(JSON.stringify(atok));
+            ctx.body = JSON.stringify(atok);
           });
         });
       }
@@ -326,6 +371,8 @@ OAuth2Provider.prototype.oauth = function() {
       return next();
     }
   };
+  _oauth.unless = unless;
+  return _oauth;
 };
 
 OAuth2Provider.prototype._createAccessToken = function(user_id, client_id, cb) {

@@ -7,7 +7,6 @@ import engineJsx from './middleware/engineJsx'
 import koaBody from './middleware/koa-body';
 import staticServer from './middleware/static';
 import controllers from './middleware/router';// 路由
-import OAuth2 from './middleware/OAuth2.0';// 认证
 import logger from './middleware/logger'
 
 /**
@@ -93,12 +92,12 @@ app.use(logger);
 /**
  * 认证
  */
-OAuth2(app);
+// OAuth2(app);
 
 /**
  * 路由
  */
-app.use(controllers());
+controllers(app);
 server.listen(4000);
 
 

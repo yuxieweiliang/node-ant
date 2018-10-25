@@ -8,16 +8,16 @@ var login = async function(ctx, next) {
 
   // console.log('cookie: ', cookie);
 
-  await ctx.render('login', {
-    styles: ['antd/dist/antd.min.css'],
+  await ctx.render('authorize', {
+    styles: ['http://localhost:4000/antd/dist/antd.min.css'],
     scripts: [
       '/socket.io-client/dist/socket.io.slim.js',
       '/vendors.js',
-      '/login.build.js',
+      '/authorize.build.js',
     ]
   });
 };
 
 module.exports = {
-  'GET /login': login,
+  'GET /system/authorize': login,
 };

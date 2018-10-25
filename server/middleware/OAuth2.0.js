@@ -10,23 +10,142 @@
  */
 
 import { OAuth2Provider } from './OAuth2Provider'
-
 const oAuth2 = new OAuth2Provider({
   crypt_key: 'encryption secret',
   sign_key: 'signing secret'
 });
 
+// hardcoded list of <client id, client secret> tuples
+// 客户端ID、客户端机密>元组的硬编码列表
+var myClients = {
+  1: '1secret'
+};
+// 临时授权存储
+const myGrants = {};
+/**
+ * enforce: 执行
+ * 在显示授权页之前，请确保用户已登录。
+ * 验证保存再 session 上的数据是否存在。
+ * 如果存在，证明已经登陆了
+ * 否则跳转到登陆页面
+ */
+oAuth2.on('enforce_login', function(ctx, authorize_url, next) {
+  if(ctx.session.user) {
+    next(ctx.session.user);
+  } else {
+    ctx.redirect('/login?next=' + encodeURIComponent(authorize_url));
+  }
+});
+
+/**
+ * 请求开通权限：
+ * 授权 | 拒绝。
+ */
+oAuth2.on('authorize_form', function(ctx, client_id, authorize_url) {
+  console.log('authorize_form', client_id, authorize_url);
+
+  ctx.status = 200;
+  ctx.set('Content-Type', 'application/json; charset=utf-8');
+  ctx.body = authorize_url;
+  // ctx.redirect('/system/authorize');
+});
+
+/**
+ * 点击同意 & 生成授权码
+ * 为当前用户保存生成的授权代码
+ */
+oAuth2.on('save_grant', function(ctx, client_id, code, next) {
+  // console.log('save_grant', req, client_id, code)
+  if(!(ctx.session.user in myGrants))
+    myGrants[req.session.user] = {};
+
+  myGrants[ctx.session.user][client_id] = code;
+  next();
+});
+
+/**
+ * 当访问令牌已被发送时移除授权
+ */
+oAuth2.on('remove_grant', function(user_id, client_id, code) {
+  // console.log('remove_grant', user_id, client_id, code)
+  if(myGrants[user_id] && myGrants[user_id][client_id])
+    delete myGrants[user_id][client_id];
+});
+
+/**
+ * 找到授权用户
+ */
+oAuth2.on('lookup_grant', function(client_id, client_secret, code, next) {
+  // console.log('lookup_grant', client_id, client_secret, code)
+  // verify that client id/secret pair are valid
+  if(client_id in myClients && myClients[client_id] == client_secret) {
+    for(var user in myGrants) {
+      var clients = myGrants[user];
+
+      if(clients[client_id] && clients[client_id] == code)
+        return next(null, user);
+    }
+  }
+
+  next(new Error('no such grant found'));
+});
 
 
-export default function(app) {
+
+/**
+ * 再登陆的时候，创建令牌
+ * 在生成的访问令牌中嵌入不透明值
+ */
+oAuth2.on('create_access_token', function(user_id, client_id, next) {
+  // console.log('create_access_token', client_id, client_id)
+  var extra_data = 'blah'; // can be any data type or null
+  //var oauth_params = {token_type: 'bearer'};
+
+  next(extra_data/*, oauth_params*/);
+});
+
+
+
+// (optional) do something with the generated access token
+oAuth2.on('save_access_token', function(user_id, client_id, access_token) {
+  // console.log('save_access_token', client_id, client_id, access_token)
+  console.log('saving access token %s for user_id=%s client_id=%s', JSON.stringify(access_token), user_id, client_id);
+});
+
+
+
+/**
+ * 始用 oAuth2.login() 中会再每次请求时获取到 access_token
+ * 然后调用此方法，处理
+ * 在URL查询字符串参数或HTTP报头中接收访问令牌。
+ */
+oAuth2.on('access_token', function(ctx, token, next) {
+  var TOKEN_TTL = 10 * 60 * 1000; // 10 minutes
+  // console.log('save_access_token', req, token)
+
+  if(token.grant_date.getTime() + TOKEN_TTL > Date.now()) {
+    ctx.session.user = token.user_id;
+    ctx.session.data = token.extra_data;
+  } else {
+    console.warn('access token for user %s has expired', token.user_id);
+  }
+
+  next();
+});
+export default oAuth2
+/*export default function(app) {
 
   app.use(oAuth2.oauth());
-  // app.use(oAuth2.login());
+  app.use(oAuth2.login());
 
+  app.use(auth().unless({
+    //数组中的路径不需要通过jwt验证
+    // path: [/\/system\/register/, /\/login/, /\/system\/token/,]
+  }));
   app.use(async function(ctx, next) {
 
 
     console.log(':::::::::::: OAuth2Provider ::::::::::::');
-    next()
+    await next()
   });
-}
+}*/
