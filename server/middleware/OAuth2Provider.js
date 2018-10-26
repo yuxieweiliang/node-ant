@@ -123,8 +123,6 @@ OAuth2Provider.prototype.login = function() {
     const authorization = ctx.req.headers.authorization;
     let data, atok, user_id, client_id, grant_date, extra_data;
 
-
-    console.log('query', query);
     /**
      * 获取 access_token || authorization
      * 1、 www.xxx.com ? access_token = xxxxxxxxx
@@ -152,13 +150,9 @@ OAuth2Provider.prototype.login = function() {
       return;
     }
 
+    console.log('atok', data);
     // 发送给access_token
-    self.emit('access_token', ctx, {
-      user_id: user_id,
-      client_id: client_id,
-      extra_data: extra_data,
-      grant_date: grant_date
-    }, next);
+    self.emit('access_token', ctx, { user_id, client_id, extra_data, grant_date }, next);
   };
 
   _login.unless = unless;

@@ -10,7 +10,7 @@ function validate(data) {
   if(data) {
     return {
       data,
-      error: 0,
+      error: null,
       state: 0
     }
   } else {
@@ -36,6 +36,13 @@ const pg = {
       return error
     }
   },
+  find: async function(query) {
+    try{
+      return await this.query(query);
+    }catch(error) {
+      return error;
+    }
+  },
   findOne: async function(query) {
     try{
       const res = await this.query(query);
@@ -50,6 +57,7 @@ const pg = {
 
 export default function(app) {
   client.connect();
+  console.log("数据库连接成功....................");
   app.use(async function(ctx, next) {
     app.context.pg = pg;
     await next()

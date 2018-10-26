@@ -25,14 +25,6 @@ export default class MyComponent extends RootView {
     this.setState({password})
   }
 
-  login() {
-    let {username, password} = this.state;
-    system.login({username, password}).then(res =>{
-      localStorage.setItem("token", JSON.stringify(res.data));
-      window.location.href = '/'
-    });
-  }
-
   render() {
 
     return (<Layout>
@@ -54,7 +46,7 @@ export default class MyComponent extends RootView {
                      onInput={(e) => this._setPassword(e.target.value)}/>
             </Form.Item>
             <Form.Item label="Form Layout" {...{labelCol: { span: 4 },wrapperCol: { span: 14 }}}>
-              <Button type="primary" onClick={() => this.login()}>登陆</Button>
+              <Button type="primary" onClick={() => system.register(this.state)}>登陆</Button>
             </Form.Item>
           </Form>
         </Content>

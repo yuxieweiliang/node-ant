@@ -1,3 +1,4 @@
+import kn from '../../../assets/server'
 export default {
   state: {
     book: {

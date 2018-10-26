@@ -10,6 +10,7 @@
  */
 
 import { OAuth2Provider } from './OAuth2Provider'
+
 const oAuth2 = new OAuth2Provider({
   crypt_key: 'encryption secret',
   sign_key: 'signing secret'
@@ -57,7 +58,7 @@ oAuth2.on('authorize_form', function(ctx, client_id, authorize_url) {
 oAuth2.on('save_grant', function(ctx, client_id, code, next) {
   // console.log('save_grant', req, client_id, code)
   if(!(ctx.session.user in myGrants))
-    myGrants[req.session.user] = {};
+    myGrants[ctx.session.user] = {};
 
   myGrants[ctx.session.user][client_id] = code;
   next();
@@ -98,10 +99,33 @@ oAuth2.on('lookup_grant', function(client_id, client_secret, code, next) {
  */
 oAuth2.on('create_access_token', function(user_id, client_id, next) {
   // console.log('create_access_token', client_id, client_id)
-  var extra_data = 'blah'; // can be any data type or null
-  //var oauth_params = {token_type: 'bearer'};
+  var extra_data = 'blah'; // 附加数据，可以为 null
+  var access_token = oAuth2.serializer.stringify([user_id, client_id, +new Date, extra_data]);
+  var refresh_token = oAuth2.serializer.stringify([user_id, +new Date, extra_data]);
+  var oauth_params = {
+    token_type: 'Bearer',
+    refresh_token,
+    access_token
+  };
 
-  next(extra_data/*, oauth_params*/);
+  next(oauth_params);
+});
+
+/**
+ * 再登陆的时候，创建令牌
+ * 在生成的访问令牌中嵌入不透明值
+ */
+oAuth2.on('create_token', function(user_id, user_name, cb) {
+  // console.log('create_access_token', client_id, client_id)
+  let extra_data = 'blah'; // 附加数据，可以为 null
+  let access_token = oAuth2.serializer.stringify([user_id, user_name, +new Date, extra_data]);
+  let refresh_token = oAuth2.serializer.stringify([user_id, +new Date]);
+
+  cb({
+    token_type: 'Bearer',
+    refresh_token,
+    access_token
+  });
 });
 
 
@@ -121,15 +145,15 @@ oAuth2.on('save_access_token', function(user_id, client_id, access_token) {
  */
 oAuth2.on('access_token', function(ctx, token, next) {
   var TOKEN_TTL = 10 * 60 * 1000; // 10 minutes
+  let isOld = token.grant_date.getTime() + TOKEN_TTL > Date.now()
   // console.log('save_access_token', req, token)
 
-  if(token.grant_date.getTime() + TOKEN_TTL > Date.now()) {
+  if(!isOld) {
     ctx.session.user = token.user_id;
     ctx.session.data = token.extra_data;
   } else {
     console.warn('access token for user %s has expired', token.user_id);
   }
-
   next();
 });
 export default oAuth2

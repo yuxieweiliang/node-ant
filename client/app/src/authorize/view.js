@@ -32,6 +32,10 @@ export default class MyComponent extends RootView {
               <Button type="primary" onClick={() => this.allow()}>同意</Button>
               <Button type="primary" onClick={() => this.deny()}>拒绝</Button>
             </Form.Item>
+            <Form.Item label="Form Layout" {...{labelCol: { span: 4 },wrapperCol: { span: 14 }}}>
+              <Button type="primary" onClick={() => system.allow2()}>同意</Button>
+              <Button type="primary" onClick={() => tsystem.deny()}>拒绝</Button>
+            </Form.Item>
           </Form>
         </Content>
         <Sider>s</Sider>

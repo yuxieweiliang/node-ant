@@ -16,20 +16,23 @@ CREATE SEQUENCE if NOT EXISTS public.users_user_id_seq
 /**
 *  创建用户表
 *  user_id < 主键 >
-*  username 账号
-*  password 密码
+*  user_sex 性别
+*  user_name 名字
+*  user_role 角色
+*  user_auth 权限
 */
-CREATE TABLE if NOT EXISTS public.users (
-  user_id      int           NOT NULL DEFAULT nextval('users_user_id_seq') PRIMARY KEY,
-  username     varchar(13)   NOT NULL UNIQUE,
-  password     varchar(13)   NOT NULL
-  /*CONSTRAINT id PRIMARY KEY (user_id, username)*/
+CREATE TABLE if NOT EXISTS public.user_info (
+  user_id       SERIAL        NOT NULL PRIMARY KEY,
+  user_sex      enum_sex      DEFAULT NULL,
+  user_name     varchar(13)   NOT NULL,
+  user_role     varchar(13)   NOT NULL,
+  user_auth     enum_type     DEFAULT NULL
 ) WITH (OIDS = FALSE);
 ALTER SEQUENCE public.users_user_id_seq OWNED BY users.user_id;
 
-ALTER TABLE public.users
+ALTER TABLE public.user_info
   OWNER TO postgres;
 
-COMMENT ON TABLE public.users
-IS '用户 - 注册';
+COMMENT ON TABLE public.user_info
+IS '用户 - 信息';
 

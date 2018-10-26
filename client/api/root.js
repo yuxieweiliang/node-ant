@@ -14,6 +14,7 @@ const _book = createApi(config.api, 'book');
 
 export const system = {
   login: _system('login'),
+  register: _system('register'),
   login2: _system('login2'),
   logout: _system('logout'),
 };

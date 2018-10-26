@@ -4,24 +4,21 @@ import _ from 'lodash';
 import queryString from 'query-string'
 
 // const User = mongoose.model('User');
-const User = '';
 /**
  * 书籍
  */
 var getUser = async (ctx) => {
-  let data = JSON.parse(ctx.request.body);
+  // let data = JSON.parse(ctx.request.body);
   let params = ctx.request.query || ctx.query;
-  let users = await  User.find({'account.username': data.username });
   let message = null;
 
-  if(_.isEmpty(users)) {
+  console.log('/////////////////////////////////////////////', ctx.session.user, ctx.session.data);
+  /*if(_.isEmpty(users)) {
     message = '用户不存在'
   } else {
     message = users;
-  }
-  ctx.body = JSON.stringify({
-    data: message
-  });
+  }*/
+  ctx.body = '用户不存在';
 };
 
 

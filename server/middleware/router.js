@@ -14,7 +14,7 @@ function createRouter(type, path, func) {
 // { 'GET /hello/:name': [Function: fn_hello] }
 function addMapping(router, mapping) {
   let type = { get: 'get', post: 'post', update: 'put', put: 'put', del: 'del', delete: 'del' };
-
+  // console.log(mapping);
   for (let string in mapping) {
     // 解析类型已经API地址
     let [method, path] = string.replace(/\s+/g, ' ').trim().toLowerCase().split(' ');
@@ -64,24 +64,13 @@ function addControllers(router, dirs) {
   }
 }
 
-
-
-
-router.post('/login', function(ctx, next) {
-  // console.log('post/login', req.body)
-  // res.writeHead(303, {Location: req.body.next || '/'});
-  // res.end();
-});
-
-
-
 module.exports = function(app) {
   const ctrl_dirs = path.join(process.cwd(), './server/controllers/');
   addControllers(router, ctrl_dirs);
 
+  const unless = { ext: ['css'], path: [/\/register/, /\/login/,  /\/register/, /\/oauth2.0/,] };
 
-
-  app.use(oAuth2.oauth().unless({ ext: ['css'] }));
-  app.use(oAuth2.login().unless({ ext: ['css'] }));
+  app.use(oAuth2.oauth().unless(unless));
+  app.use(oAuth2.login().unless(unless));
   app.use(router.routes());
 };
