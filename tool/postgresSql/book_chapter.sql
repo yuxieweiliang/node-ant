@@ -1,6 +1,6 @@
 /*
 *  书籍 - 章节
-*  book_chapter_id             < 主键 >
+*  book_chapter_id              < 主键 >
 *  book_chapter_title           章节名字
 *  book_chapter_content         主要内容
 *  book_chapter_discuss         讨论

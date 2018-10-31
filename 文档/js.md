@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-<script>
   var date1=new Date();  //开始时间
   alert("aa");
   var date2=new Date();    //结束时间
@@ -25,7 +17,11 @@
 
   //计算相差秒数
   var leave3=leave2%(60*1000)      //计算分钟数后剩余的毫秒数
-  var seconds=Math.round(leave3/1000)
-</script>
-</body>
-</html>
+  var seconds=Math.round(leave3/1000);
+
+
+  new Date().getTime() === +new Date()
+
+!!~-1 => false
+!!~0 => true
+!!~( any > 0 ) => true
