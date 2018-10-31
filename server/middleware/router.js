@@ -1,8 +1,9 @@
 import path from 'path'
 import fs from 'fs'
 import Router from 'koa-router'
+import graphqlHTTP from 'koa-graphql'
 import oAuth2 from './OAuth2.0';// 认证
-
+import schema from '../Schema'
 
 const router = new Router();
 
@@ -66,11 +67,32 @@ function addControllers(router, dirs) {
 
 module.exports = function(app) {
   const ctrl_dirs = path.join(process.cwd(), './server/controllers/');
-  addControllers(router, ctrl_dirs);
-
   const unless = { ext: ['css'], path: [/\/register/, /\/login/,  /\/register/, /\/oauth2.0/,] };
 
+  /**
+   * 读取/server/containers 下的所有文件
+   * 将其设为路由
+   */
+  addControllers(router, ctrl_dirs);
+
+  /**
+   * 这里时用来认证的
+   * 检查auth : 头部是否含有 authorization
+   * 检查login ： 检查是否登陆
+   */
   app.use(oAuth2.oauth().unless(unless));
   app.use(oAuth2.login().unless(unless));
+
+  /**
+   * 设置 graphql 服务
+   */
+  router.all('/graphql', graphqlHTTP({
+    schema: schema,
+    graphiql: true
+  }));
+
+  /**
+   * 添加 路由
+   */
   app.use(router.routes());
 };

@@ -12,16 +12,16 @@
 *  book_role_weapons        武器
 */
 CREATE TABLE if NOT EXISTS public.book_roles (
-  book_role_id               SERIAL              NOT NULL PRIMARY KEY,
+  book_role_id               SERIAL               NOT NULL PRIMARY KEY,
 
-  book_role_name             varchar(13)         NOT NULL,
-  user_role_sex              enum_sex            DEFAULT NULL,
-  user_role_date_of_birth    date                DEFAULT (now()),
-  book_role_introduction     character(100)      DEFAULT NULL,
+  book_role_name             varchar(13)          NOT NULL,
+  user_role_sex              enum_sex             DEFAULT NULL,
+  user_role_birthday         date                 DEFAULT (now()),
+  book_role_introduction     character(100)       DEFAULT NULL,
 
-  book_role_identity      varchar(13)         NOT NULL,
-  book_role_camp             varchar(13)         NOT NULL,
-  book_role_weapons          varchar(13)         NOT NULL
+  book_role_identity         varchar(13)          NOT NULL,
+  book_role_camp             varchar(13)          NOT NULL,
+  book_role_weapons          varchar(13)          NOT NULL
 ) WITH (OIDS = FALSE);
 
 /*  ALTER TABLE <tablename> OWNER TO <username>  将这张表赋给当前用户  */
