@@ -43,6 +43,8 @@ book_role:
 {
   b_r_name: 李清柔,
   b_r_sex: 女,
+  b_r_portrait: url/xxx.jpeg, #【头像】
+  b_r_image: url/xxx.jpeg, #【形象】
   b_r_age: 6,
   b_r_character: 6, # 【性格】
   b_r_introduction: '…………', # 【简介】
