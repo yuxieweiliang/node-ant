@@ -43,6 +43,13 @@ const pg = {
       return error;
     }
   },
+  find_01: async function(query, select) {
+    try{
+      return await this.query(query, select);
+    }catch(error) {
+      return error;
+    }
+  },
   findOne: async function(query) {
     try{
       const res = await this.query(query);

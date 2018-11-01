@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import path from 'path';
 import http from 'http';
+import cors from 'koa2-cors';
 // 中间件
 import koaWebpack from './middleware/koa-webpack'
 import engineJsx from './middleware/engineJsx'
@@ -45,12 +46,14 @@ app.keys = ['Yu_Xie_Wei_Liang'];
  * 使用模板
  * 使用webpack编译前端项目
  */
-koaWebpack(app);
-app.use(engineJsx({
-  views: process.cwd() + '/client/app/src',
-  extension: 'js',
-  beautify: true // 是否美化
-}));
+if(process.env.NODE_ENV !== 'development') {
+  koaWebpack(app);
+  app.use(engineJsx({
+    views: process.cwd() + '/client/app/src',
+    extension: 'js',
+    beautify: true // 是否美化
+  }));
+}
 
 /**
  * 添加 socket.io
@@ -87,6 +90,7 @@ app.use(async function(ctx, next) {
 // app.use(readMarked);
 
 // logger 当前路由信息
+app.use(cors());
 app.use(logger);
 
 /**

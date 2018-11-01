@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 
 const BookSchema = new Schema({
+  id: String,
   // 模板
   template: String,// 'base'
   // 标题
@@ -13,7 +14,6 @@ const BookSchema = new Schema({
   body:   String,
   // 名字
   name:   String,
-  id: String,
   // 语言
   language: String,
   // 许可

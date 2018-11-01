@@ -8,9 +8,13 @@
 CREATE TABLE if NOT EXISTS public.books (
   book_id               SERIAL              NOT NULL PRIMARY KEY,
   book_name             varchar(16)         NOT NULL,
-  book_author           varchar(100)      DEFAULT NULL,
-  book_introduction     varchar(500)      DEFAULT NULL,
-  book_settings         varchar[]      DEFAULT NULL
+  book_author           varchar(100)        DEFAULT NULL,
+  book_signature        varchar(16)         NOT NULL,
+  book_introduction     varchar(500)        DEFAULT NULL,
+  book_editor           varchar(500)        DEFAULT NULL,
+  book_role             varchar(500)        DEFAULT NULL,
+  book_architecture     varchar(500)        DEFAULT NULL,
+  book_settings         varchar[]           DEFAULT NULL
 ) WITH (OIDS = FALSE);
 
 /*  ALTER TABLE <tablename> OWNER TO <username>  将这张表赋给当前用户  */

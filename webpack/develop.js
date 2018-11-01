@@ -54,7 +54,6 @@ module.exports = function() {
                     test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
                     use: 'file-loader'
                 }
-
             ]
         },
         plugins: [

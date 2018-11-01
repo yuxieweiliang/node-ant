@@ -21,22 +21,39 @@ function readSql(url) {
  * 初始化 SQL 文件路径
  * 读取 .sql 文件内容
  */
-const delete_table      = readSql('./delete_table.sql');
-const create_type       = readSql('./create_type.sql');
+const delete_table                = readSql('./delete_table.sql');
+const create_type                 = readSql('./create_type.sql');
 
-const books             = readSql('./books.sql');
-const book_sets         = readSql('./book_sets.sql');
-const book_roles        = readSql('./book_roles.sql');
-const book_set_other    = readSql('./book_set_other.sql');
-const book_chapter      = readSql('./book_chapter.sql');
+const architectures               = readSql('./architectures.sql');
 
-const users             = readSql('./users.sql');
+const book_chapters               = readSql('./book_chapters.sql');
+const books                       = readSql('./books.sql');
 
-const rankings             = readSql('./rankings.sql');
-const rankings_details             = readSql('./rankings_details.sql');
+const comments                    = readSql('./comments.sql');
+const clients                     = readSql('./clients.sql');
+
+const ranking_details             = readSql('./ranking_details.sql');
+const rankings                    = readSql('./rankings.sql');
+const replys                      = readSql('./replys.sql');
+const role_sets                   = readSql('./role_sets.sql');
+const roles                       = readSql('./roles.sql');
+
+const set_items                   = readSql('./set_items.sql');
+const set_templates               = readSql('./set_templates.sql');
+const set_values                  = readSql('./set_values.sql');
+const settings                    = readSql('./settings.sql');
+
+const time_point_events            = readSql('./time_point_events.sql');
+
+const user_information            = readSql('./user_information.sql');
+const users                       = readSql('./users.sql');
+
+const word_similar                = readSql('./word_similar.sql');
+const word_thinks                 = readSql('./word_thinks.sql');
+const words                       = readSql('./words.sql');
 
 
-;(async function() {
+async function init() {
   try{
     await client.connect();
     console.log("数据库连接成功...\b", '开始执行 SQL 文件...\n');
@@ -47,31 +64,64 @@ const rankings_details             = readSql('./rankings_details.sql');
     console.log('\x1b[32m', "... 创建符合类型成功....................\n", '\x1b[37m');
 
 
+    await client.query(architectures);
+    console.log("architectures");
+
+    await client.query(book_chapters);
+    console.log("book_chapters");
     await client.query(books);
-    console.log("     books             表创建成功....................");
-    await client.query(book_roles);
-    console.log("     book_roles        表创建成功....................");
-    await client.query(book_sets);
-    console.log("     book_sets         表创建成功....................");
-    await client.query(book_set_other);
-    console.log("     book_set_other    表创建成功....................");
-    await client.query(book_chapter);
-    console.log("     book_chapter      表创建成功....................");
+    console.log("books");
 
-    await client.query(users);
-    console.log("     users             表创建成功....................");
+    await client.query(comments);
+    console.log("comments");
+    await client.query(clients);
+    console.log("clients");
 
+    await client.query(ranking_details);
+    console.log("ranking_details");
     await client.query(rankings);
-    console.log("     rankings          表创建成功....................");
-    await client.query(rankings_details);
-    console.log("     rankings_details  表创建成功....................");
+    console.log("rankings");
+    await client.query(replys);
+    console.log("replys");
+    await client.query(role_sets);
+    console.log("role_sets");
+    await client.query(roles);
+    console.log("roles");
+
+    await client.query(set_items);
+    console.log("set_items");
+    await client.query(set_templates);
+    console.log("set_templates");
+    await client.query(set_values);
+    console.log("set_values");
+    await client.query(settings);
+    console.log("settings");
+
+    await client.query(time_point_events);
+    console.log("time_point_events");
+
+    await client.query(user_information);
+    console.log("user_information");
+    await client.query(users);
+    console.log("users");
+
+    await client.query(word_similar);
+    console.log("word_similar");
+    await client.query(word_thinks);
+    console.log("word_thinks");
+    await client.query(words);
+    console.log("words");
 
 
+
+    console.log(" 数据库创建成功....................");
   }catch(err) {
-    console.log("创建失败....................", err);
+    console.log("数据库创建失败....................", err);
   }
 
   await client.end()
-})();
+}
+
+init();
 
 

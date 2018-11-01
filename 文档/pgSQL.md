@@ -30,3 +30,6 @@ ALTER TABLE user_tbl RENAME TO backup_tbl;
 
 # 删除表格
 DROP TABLE IF EXISTS backup_tbl;
+
+有双冒号(::)这种操作，可以直接进行格式化，比如：
+SELECT t.id::number FROM t_product_type t;

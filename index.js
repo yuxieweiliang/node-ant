@@ -16,6 +16,5 @@ require('@babel/register')({
   // plugins: ["transform-decorators-legacy", "transform-es2015-modules-commonjs"]
 });
 require('./server');
-
-
+console.log(process.env.NODE_ENV);
 // , "transform-object-rest-spread"

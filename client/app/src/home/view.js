@@ -1,7 +1,7 @@
 const React = require('react');
 import RootView from '../../script/common'
 import behavior from './behavior'
-import user from '../../../api/user'
+import book from '../../../api/book'
 import { Button, Input, Form, Layout, Menu, Icon, Row  } from 'antd'
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -14,10 +14,14 @@ export default class MyComponent extends RootView {
     this.state = {}
   }
 
-  componentDidMount() {
-
-  }
+  componentWillMount() {}
+  componentDidMount() {}
   render() {
+    if(typeof window !== 'undefined') {
+      const token = localStorage.getItem("token");
+      console.log(token);
+    }
+    book.getBook();
     return (<Layout>
       <Header>header</Header>
       <Layout>
@@ -25,7 +29,7 @@ export default class MyComponent extends RootView {
         <Content>
           <Form layout="horizontal">
             <Form.Item label="Form Layout" {...{labelCol: { span: 4 },wrapperCol: { span: 14 }}}>
-              <Button type="primary" onClick={() => user.getUser()}>登陆</Button>
+              <Button type="primary" onClick={() => book.getBook()}>登陆</Button>
             </Form.Item>
           </Form>
         </Content>

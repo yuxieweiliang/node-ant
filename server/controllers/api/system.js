@@ -4,10 +4,16 @@ import queryString from 'query-string'
 import oAuth2 from '../../middleware/OAuth2.0';// 认证
 
 let sql = {
-  login() {
+  findOneUser(username) {
     return {
       text: `SELECT * FROM users WHERE username = $1`,
-      values: [...arguments]
+      values: [username]
+    }
+  },
+  createUser(username, password) {
+    return {
+      text: `INSERT INTO users(username, password) VALUES($1, $2) RETURNING *`,
+      values: [username, password]
     }
   }
 };
@@ -16,7 +22,15 @@ module.exports = {
   'POST /api/system/login': async (ctx, next) => {
     let body = ctx.request.body;
     let params = ctx.request.query || ctx.query;
-    const data = await ctx.pg.findOne(sql.login(body.username));
+    if(!body.username || !body.password) {
+      ctx.body = {
+        data: null,
+        error: !body.username ? '用户名不能为空' : '密码不能为空',
+        state: 1
+      };
+      return;
+    }
+    const data = await ctx.pg.findOne(sql.findOneUser(body.username));
     const user = data.data;
 
     if(!data) {
@@ -53,20 +67,6 @@ module.exports = {
      */
     // ctx.redirect(body.next || '/');
   },
-  'GET /api/system/login2': async (ctx, next) => {
-    let body = ctx.request.body;
-    let sql = {
-      text: `SELECT * FROM users WHERE user_name = $1`,
-      values: ['543']
-    };
-    const cookie = ctx.cookies.get('cid');
-
-    console.log('cookie: ', cookie);
-
-
-    ctx.body = 'data';
-
-  },
   /**
    *  创建用户表
    *  user_id < 主键 >
@@ -77,15 +77,8 @@ module.exports = {
    */
   'POST /api/system/register': async (ctx, next) => {
     let { username, password } = ctx.request.body;
-    let sql_1 = {
-      text: `SELECT * FROM users WHERE username = $1`,
-      values: [username]
-    };
-    let sql_2 = {
-      text: `INSERT INTO users(username, password) VALUES($1, $2) RETURNING *`,
-      values: [username, password]
-    };
-    const res = await ctx.pg.find(sql_1);
+
+    const res = await ctx.pg.find(sql.findOneUser(username));
 
     if(res.data) {
       ctx.body = {
@@ -96,7 +89,7 @@ module.exports = {
       return;
     }
 
-    const created = await ctx.pg.findOne(sql_2);
+    const created = await ctx.pg.findOne(sql.findOneUser(username, password));
 
     console.log('data2: ', created);
     ctx.body = created;

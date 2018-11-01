@@ -3,11 +3,11 @@ const fs = require('fs');
 const path = require('path');
 // const OpenBrowserPlugin = require('open-browser-webpack-plugin'); // 打开指定浏览器
 const CleanWebpackPlugin = require('clean-webpack-plugin'); // 清理
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 // var extract = require('extract-text-webpack-plugin');
 // const WebpackMd5Hash = require('webpack-md5-hash');
 const marked = require("marked");
-const method = require("../utils");
+const method = require("../server/utils");
 
 // 合并webpack配置
 let merge = require('webpack-merge');
@@ -54,13 +54,13 @@ const config = {
       // 处理 css
       {
         test: /\.css$/,
-        use: ['style-loader','css-loader','postcss-loader']
+        use: ['style-loader','css-loader?modules','postcss-loader']
       },
 
       // 处理 css
       {
         test: /\.less/,
-        use: ['style-loader','css-loader','postcss-loader','less-loader']
+        use: ['style-loader','css-loader?modules','postcss-loader','less-loader']
       },
       // 处理图片
       {
@@ -148,10 +148,20 @@ const config = {
 };
 
 const viewPath = method.assemblyPath(ROOTS, '/client/app/src/');
-var files = fs.readdirSync(viewPath,'utf-8');
+const files = fs.readdirSync(viewPath,'utf-8');
 
 files.map(item => {
-  config.entry[item] = method.assemblyPath(viewPath, `${item}`);
-});
+  const _item = item === 'home' ? 'index':  item;
+  config.entry[_item] = method.assemblyPath(viewPath, `${item}`);
 
+  let plugins = new HtmlWebpackPlugin({
+    title: _item,
+    filename: _item + '.html',
+    template: 'index.html',
+    inject: 'body',
+    chunks: ['vendors', _item]
+  });
+
+  config.plugins.push(plugins);
+});
 module.exports = config;
