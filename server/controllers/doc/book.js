@@ -28,5 +28,5 @@ var get_book = async (ctx, next) => {
 };
 
 module.exports = {
-  'get /doc/book': get_book,
+  'GET /doc/book': get_book,
 };

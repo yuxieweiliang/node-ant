@@ -139,11 +139,11 @@ const config = {
       dry: false,
     }),
     // 抽取公用脚本
-    new webpack.optimize.CommonsChunkPlugin({
+    /*new webpack.optimize.CommonsChunkPlugin({
       name: ['vendors'],
       filename: 'vendors.js',
       minChunks: Infinity,
-    }),
+    }),*/
   ]
 };
 

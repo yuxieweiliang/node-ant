@@ -32,7 +32,9 @@ export default class MyComponent extends RootView {
       localStorage.setItem("token", JSON.stringify(res.data));
       console.log(res);
       if(res.data) {
-        window.location.href = '/'
+
+        alert('fffff')
+        // window.location.href = '/'
       }
     });
   }

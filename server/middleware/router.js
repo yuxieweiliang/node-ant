@@ -15,11 +15,9 @@ function createRouter(type, path, func) {
 // { 'GET /hello/:name': [Function: fn_hello] }
 function addMapping(router, mapping) {
   let type = { get: 'get', post: 'post', update: 'put', put: 'put', del: 'del', delete: 'del' };
-  // console.log(mapping);
   for (let string in mapping) {
     // 解析类型已经API地址
     let [method, path] = string.replace(/\s+/g, ' ').trim().toLowerCase().split(' ');
-
     if(type[method] && router[type[method]]) {
       createRouter(type[method], path, mapping[string]);
     }

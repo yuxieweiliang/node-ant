@@ -29,7 +29,7 @@ export default class MyComponent extends RootView {
         <Content>
           <Form layout="horizontal">
             <Form.Item label="Form Layout" {...{labelCol: { span: 4 },wrapperCol: { span: 14 }}}>
-              <Button type="primary" onClick={() => book.getBook()}>登陆</Button>
+              <Button type="primary" onClick={() => book.getBookById()}>登陆</Button>
             </Form.Item>
           </Form>
         </Content>

@@ -31,6 +31,7 @@ const myGrants = {};
  * 否则跳转到登陆页面
  */
 oAuth2.on('enforce_login', function(ctx, authorize_url, next) {
+  console.log('enforce_login');
   if(ctx.session.user) {
     next(ctx.session.user);
   } else {
@@ -43,7 +44,7 @@ oAuth2.on('enforce_login', function(ctx, authorize_url, next) {
  * 授权 | 拒绝。
  */
 oAuth2.on('authorize_form', function(ctx, client_id, authorize_url) {
-  console.log('authorize_form', client_id, authorize_url);
+  console.log('authorize_form');
 
   ctx.status = 200;
   ctx.set('Content-Type', 'application/json; charset=utf-8');
@@ -56,7 +57,7 @@ oAuth2.on('authorize_form', function(ctx, client_id, authorize_url) {
  * 为当前用户保存生成的授权代码
  */
 oAuth2.on('save_grant', function(ctx, client_id, code, next) {
-  // console.log('save_grant', req, client_id, code)
+  console.log('save_grant');
   if(!(ctx.session.user in myGrants))
     myGrants[ctx.session.user] = {};
 
@@ -68,7 +69,7 @@ oAuth2.on('save_grant', function(ctx, client_id, code, next) {
  * 当访问令牌已被发送时移除授权
  */
 oAuth2.on('remove_grant', function(user_id, client_id, code) {
-  // console.log('remove_grant', user_id, client_id, code)
+  console.log('remove_grant');
   if(myGrants[user_id] && myGrants[user_id][client_id])
     delete myGrants[user_id][client_id];
 });
@@ -77,7 +78,7 @@ oAuth2.on('remove_grant', function(user_id, client_id, code) {
  * 找到授权用户
  */
 oAuth2.on('lookup_grant', function(client_id, client_secret, code, next) {
-  // console.log('lookup_grant', client_id, client_secret, code)
+  console.log('lookup_grant');
   // verify that client id/secret pair are valid
   if(client_id in myClients && myClients[client_id] == client_secret) {
     for(var user in myGrants) {
@@ -97,8 +98,8 @@ oAuth2.on('lookup_grant', function(client_id, client_secret, code, next) {
  * 再登陆的时候，创建令牌
  * 在生成的访问令牌中嵌入不透明值
  */
-oAuth2.on('create_access_token', function(user_id, client_id, next) {
-  // console.log('create_access_token', client_id, client_id)
+oAuth2.on('create_access_token', async function(user_id, client_id, next) {
+  console.log('create_access_token');
   var extra_data = 'blah'; // 附加数据，可以为 null
   var access_token = oAuth2.serializer.stringify([user_id, client_id, +new Date, extra_data]);
   var refresh_token = oAuth2.serializer.stringify([user_id, +new Date, extra_data]);
@@ -108,7 +109,7 @@ oAuth2.on('create_access_token', function(user_id, client_id, next) {
     access_token
   };
 
-  next(oauth_params);
+  await next(oauth_params);
 });
 
 /**
@@ -116,7 +117,7 @@ oAuth2.on('create_access_token', function(user_id, client_id, next) {
  * 在生成的访问令牌中嵌入不透明值
  */
 oAuth2.on('create_token', function(user_id, user_name, cb) {
-  // console.log('create_access_token', client_id, client_id)
+  console.log('create_token');
   let extra_data = 'blah'; // 附加数据，可以为 null
   let access_token = oAuth2.serializer.stringify([user_id, user_name, +new Date, extra_data]);
   let refresh_token = oAuth2.serializer.stringify([user_id, +new Date]);
@@ -143,10 +144,10 @@ oAuth2.on('save_access_token', function(user_id, client_id, access_token) {
  * 然后调用此方法，处理
  * 在URL查询字符串参数或HTTP报头中接收访问令牌。
  */
-oAuth2.on('access_token', function(ctx, token, next) {
+oAuth2.on('access_token', async function(ctx, token) {
   var TOKEN_TTL = 10 * 60 * 1000; // 10 minutes
-  let isOld = token.grant_date.getTime() + TOKEN_TTL > Date.now()
-  // console.log('save_access_token', req, token)
+  let isOld = token.grant_date.getTime() + TOKEN_TTL > Date.now();
+  console.log('access_token');
 
   if(!isOld) {
     ctx.session.user = token.user_id;
@@ -154,7 +155,7 @@ oAuth2.on('access_token', function(ctx, token, next) {
   } else {
     console.warn('access token for user %s has expired', token.user_id);
   }
-  next();
+  console.log('access_token, next');
 });
 export default oAuth2
 /*export default function(app) {

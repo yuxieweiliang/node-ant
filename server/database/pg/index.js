@@ -29,7 +29,17 @@ const pg = {
       const res = await client.query(query);
       const data = res.rows.length > 0 ? res.rows : null;
 
+      console.log('findOne', data);
       return validate(data)
+    }catch(error) {
+      client.end();
+      console.log("数据库连接失败....................");
+      return error
+    }
+  },
+  query_01: async function(query) {
+    try{
+      return await client.query(query);
     }catch(error) {
       client.end();
       console.log("数据库连接失败....................");
@@ -43,18 +53,10 @@ const pg = {
       return error;
     }
   },
-  find_01: async function(query, select) {
-    try{
-      return await this.query(query, select);
-    }catch(error) {
-      return error;
-    }
-  },
   findOne: async function(query) {
     try{
       const res = await this.query(query);
       const data = res.data ? res.data[0] : null;
-
       return data ? {...res, data} : res
     }catch(error) {
       return error;

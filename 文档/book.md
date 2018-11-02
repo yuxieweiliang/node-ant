@@ -49,6 +49,8 @@ book:
   book_author:              作者, # ID 这里是作品的归属 & 可以做一个外键
   user_signature:           署名, # 签名
   book_introduction:        简介,
+  book_classify:            分类,
+  book_tags:                标签,
   book_editor:              [编辑], # 只有这里有的人，才可以编辑
   book_role:                [角色] #
   book_sets:                [设定] #

@@ -118,7 +118,7 @@ OAuth2Provider.prototype.login = function() {
   var self = this;
 
 
-  function _login(ctx, next) {
+  async function _login(ctx, next) {
     const query = ctx.request.query;
     const authorization = ctx.req.headers.authorization;
     let data, atok, user_id, client_id, grant_date, extra_data;
@@ -133,7 +133,7 @@ OAuth2Provider.prototype.login = function() {
     } else if((authorization || '').indexOf('Bearer ') === 0) {
       atok = authorization.replace('Bearer', '').trim();
     } else {
-      return next();
+      return await next();
     }
     /**
      * 如果有token 则为token 重新赋值过期时间
@@ -153,6 +153,10 @@ OAuth2Provider.prototype.login = function() {
     console.log('atok', data);
     // 发送给access_token
     self.emit('access_token', ctx, { user_id, client_id, extra_data, grant_date }, next);
+
+    await next();
+    console.log('atok -> access_token');
+
   };
 
   _login.unless = unless;
@@ -164,7 +168,7 @@ OAuth2Provider.prototype.login = function() {
 OAuth2Provider.prototype.oauth = function() {
   var self = this;
 
-  function _oauth(ctx, next) {
+  async function _oauth(ctx, next) {
     const { req, res, request } = ctx;
     const { authorize_uri, access_token_uri } = self.options;
     let { client_id, redirect_uri } = request.query;
@@ -362,7 +366,9 @@ OAuth2Provider.prototype.oauth = function() {
       }
 
     } else {
-      return next();
+
+      console.log('auth next');
+      return await next();
     }
   };
   _oauth.unless = unless;

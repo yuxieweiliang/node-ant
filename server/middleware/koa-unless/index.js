@@ -7,7 +7,7 @@ module.exports = function(options) {
   var opts = typeof options === 'function' ? {custom: options} : options;
   opts.useOriginalUrl = (typeof opts.useOriginalUrl === 'undefined') ? true : opts.useOriginalUrl;
 
-  return function(ctx, next) {
+  return async function(ctx, next) {
     // Original: 原件 | 原始
     var requestedUrl = url.parse((opts.useOriginalUrl ? ctx.originalUrl : ctx.url) || '', true);
 
@@ -65,7 +65,7 @@ module.exports = function(options) {
 
 
     if (skip) {
-      return next();
+      return await next();
     }
 
     return parent(ctx, next);

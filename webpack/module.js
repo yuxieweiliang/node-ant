@@ -19,10 +19,10 @@ module.exports = {
     },
 
     // 处理 json
-    {
+    /*{
       test: /\.json$/,
       use: 'json-loader'
-    },
+    },*/
 
     // 处理 css
     {
