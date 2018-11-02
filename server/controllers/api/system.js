@@ -22,6 +22,8 @@ module.exports = {
   'POST /api/system/login': async (ctx, next) => {
     let body = ctx.request.body;
     let params = ctx.request.query || ctx.query;
+
+
     if(!body.username || !body.password) {
       ctx.body = {
         data: null,
@@ -30,18 +32,19 @@ module.exports = {
       };
       return;
     }
+
+
+
     const data = await ctx.pg.findOne(sql.findOneUser(body.username));
     const user = data.data;
 
-    if(!data) {
-      ctx.body = {
-        error: '用户不存在',
-        code: 500
-      };
+    console.log('create_token: ', data);
+    if(!data.data) {
+      ctx.body = data;
       return;
     }
 
-    console.log('create_token: ', data);
+
     // create_token
     oAuth2.emit('create_token', user.user_id, user.username, function(data) {
       ctx.session[body.username] = data;

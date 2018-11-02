@@ -37,15 +37,6 @@ const pg = {
       return error
     }
   },
-  query_01: async function(query) {
-    try{
-      return await client.query(query);
-    }catch(error) {
-      client.end();
-      console.log("数据库连接失败....................");
-      return error
-    }
-  },
   find: async function(query) {
     try{
       return await this.query(query);

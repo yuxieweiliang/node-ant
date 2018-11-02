@@ -15,6 +15,7 @@ require('@babel/register')({
   plugins: ['@babel/transform-flow-strip-types', '@babel/plugin-proposal-class-properties'],
   // plugins: ["transform-decorators-legacy", "transform-es2015-modules-commonjs"]
 });
+
 require('./server');
 console.log(process.env.NODE_ENV);
 // , "transform-object-rest-spread"

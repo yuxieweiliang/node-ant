@@ -1,3 +1,15 @@
+创建一个名为 reading 的数据库:
+CREATE DATABASE reading;
+
+查看数据库:
+\l;
+
+创建用户:
+create user xyf;
+
+创建密码:
+alter user xyf password '123456';
+
 # 创建新表
 CREATE TABLE user_tbl(name VARCHAR(20), signup_date DATE);
 
