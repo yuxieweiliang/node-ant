@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --inline --hot --color --watch --open --config ./webpack/webpack.config",
-    "build": "webpack --config ./webpack/webpack.config",
+    "dev:web": "cross-env NODE_ENV=dev webpack-dev-server --inline --hot --color --watch --open --config ./webpack/web.config",
+    "build:web": "webpack --config ./webpack/web.config",
     "start": "cross-env NODE_ENV=development nodemon index.js",
     "create: start": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --color --watch",
     "create:page": "set NODE_ENV=development && node tool/createPage",

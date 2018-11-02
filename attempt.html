@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html,body{
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+<textarea name="text" id="text" style="width:100%;height:50%;padding: 15px;margin:0;">
+ 德兰大陆只有契灵卡，他们都在努力的将自身契灵变得更加的强大，同时也有契灵丹药，各种丹药非常的驳杂，并且效果也非常的出众。
+    而过了格兰之森，那边却有着更加现代化的生活，无论是畜灵卡还是很多需要用能量的地方，都有着非常高的发展，而且与只能用魔核作为能量核心的德兰大陆不同，他们可以将魔法师的魔力储存在卡片中，所以无论是什么系的魔法师，都是可以的，也正是因此，他们对于德兰大陆的魔核才会显得那样的若有若无。
+          当然也并非全无需要，因为魔兽可以封印在魔灵卡中，成为一个可以供人使唤的魔灵，从而让那些没有契约，便毫无战力的普通人，也拥有能够召唤契灵的机会，只要你有钱，没有什么不可以。
+    而当德兰大陆还在研究如何让人与机甲能够更加完美的融为一体时，羽族已经有了自主意识的智能化人形战争兵器。
+</textarea>
+<div id="html" style="width:100%;height:50%;padding: 15px;margin:0;"></div>
+</body>
+<script>
+  var text = document.querySelector('#text').value;
+  var html = document.querySelector('#html');
+  console.log(text);
+  var innerHtml = text.replace(/\n/g, '</p><p>').replace(/\s+/g, '　　');
+  html.innerHTML = `<p>${innerHtml}</p>`;
+  console.log(innerHtml);
+</script>
+</html>
