@@ -14,22 +14,61 @@ const ROOTS = process.cwd();
 const publicPath = method.assemblyPath(ROOTS, `/dist/admin`);
 const config = commonConfig(publicPath);
 
-const viewPath = method.assemblyPath(ROOTS, '/client/admin/src/');
-const files = fs.readdirSync(viewPath,'utf-8');
 
-files.map(item => {
+const viewPath = method.assemblyPath(ROOTS, '/client/admin/');
+config.entry.index = ["@babel/polyfill", method.assemblyPath(viewPath, `index`)];
+config.entry.vendors = ['react', 'react-dom', 'redux', 'redux-saga'];
+
+let plugins = new HtmlWebpackPlugin({
+  title: 'index',
+  // host: 'http://localhost:8080/', // 像页面中引入的js中注入域名
+  host: '/', // 像页面中引入的js中注入域名
+  filename: 'index.html',
+  template: 'index.html',
+  // inject: 'body',
+  inject: false,
+  chunks: ['vendors','commons', 'index']
+});
+
+config.plugins.push(plugins);
+
+config.devServer = {
+  // index: '',
+  historyApiFallback: true,
+  // host: '127.0.0.1',
+  // disableHostCheck: true, // 添加域名
+  // noInfo: true,
+  hot: true,
+  inline: true,
+  progress: true,
+  proxy: {
+    context: ['*'],
+    target: "http://localhost:8080/",
+    bypass: function(req, res, proxyOptions) {
+      let index = req.url.indexOf('.js');
+      ///res.redirect('/');
+      /*if (!!~index) {
+        res.redirect(`http://localhost:8080${req.url.substring(index)}`);
+        return true;
+      }*/
+      console.log(req.href);
+      return '/index.html'
+    }
+  }
+};
+
+
+
+
+
+
+
+
+
+/*files.map(item => {
   const _item = item === 'home' ? 'index':  item;
   config.entry[_item] = method.assemblyPath(viewPath, `${item}`);
 
   console.log(_item);
-  let plugins = new HtmlWebpackPlugin({
-    title: _item,
-    filename: _item + '.html',
-    template: 'index.html',
-    inject: 'body',
-    chunks: ['vendors','commons', _item]
-  });
-
-  config.plugins.push(plugins);
-});
+});*/
 module.exports = config;

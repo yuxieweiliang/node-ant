@@ -5,8 +5,10 @@
       "@babel/preset-env",
       {
         "targets": {
-          "node": "current"
-        }
+          "node": "current",
+          "browsers": ["ie >=9"]
+        },
+        "useBuiltIns": true
       }
     ]
   ],

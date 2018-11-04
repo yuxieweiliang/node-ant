@@ -24,8 +24,8 @@ ServerView.propTypes = {
 
 };
 
-if(typeof document !== 'undefined'){
+/*if(typeof document !== 'undefined'){
   ReactDOM.hydrate(<RenderView/>, document.getElementById('root'));
-}
+}*/
 
-export default ServerView;
+export default RenderView;

@@ -44,18 +44,30 @@ architecture:
 书： # 创建一本书的同时，就会创建一个架构
 book:
 {
-  book_id:                  < 主键 >,
+  book_id:                  < 主键 >, # 书号
   book_name:                书名, #
   book_author:              作者, # ID 这里是作品的归属 & 可以做一个外键
   user_signature:           署名, # 签名
   book_introduction:        简介,
+  book_title_message:       扉页寄语,
+  book_type:                作品类型,
+  book_authhorization:      授权级别,
+  book_edited_group:        责编分组,
+  book_volumes:             章节,
   book_classify:            分类,
+  book_subscribe:           订阅,
   book_tags:                标签,
+  book_collection:          收藏,
+  book_contribution_fee:    稿费,
+  book_chapter_fee:         章节费, # subscribe 订阅
+  book_status:              作品状态, # 草稿：draft, 发布：release，销毁：destroy
   book_editor:              [编辑], # 只有这里有的人，才可以编辑
   book_role:                [角色] #
   book_sets:                [设定] #
   book_architecture:        架构 # ID 本书所属的架构 （书 属于 架构， 架构可以包含多本书）
 }
+
+
 
 书中角色：
 roles:
@@ -166,17 +178,27 @@ word_thinks:
 [{id: 1, lable: '形态'}, {id: 2, lable: '等级'}, ]
 
 
+书籍 - 卷：
+book_volumes:
+{
+  book_v_id:                 < 主键 >,
+  book_v_title:              卷名,
+  book_v_introduction:       简介,
+  book_chapters:             [章节], # 包含那些章节
+  book_v_create_time:        创建时间,
+  book_v_update_time:        更新时间,
+}
 书籍 - 章节：
 book_chapters:
 {
-  b_c_id:                 < 主键 >,
-  b_c_title:              章节名字,
-  b_c_content:            主要内容,
-  b_c_comments:           讨论,
-  b_c_replys:             留言,
-  b_c_page:               页码,
-  b_c_create_time:        创建时间,
-  b_c_update_time:        更新时间,
+  book_c_id:                 < 主键 >,
+  book_c_title:              章节名字,
+  book_c_content:            主要内容,
+  book_c_comments:           讨论,
+  book_c_replys:             留言,
+  book_c_page:               页码,
+  book_c_create_time:        创建时间,
+  book_c_update_time:        更新时间,
 }
 
 comments:

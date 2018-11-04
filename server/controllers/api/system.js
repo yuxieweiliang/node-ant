@@ -33,8 +33,6 @@ module.exports = {
       return;
     }
 
-
-
     const data = await ctx.pg.findOne(sql.findOneUser(body.username));
     const user = data.data;
 
@@ -92,7 +90,7 @@ module.exports = {
       return;
     }
 
-    const created = await ctx.pg.findOne(sql.findOneUser(username, password));
+    const created = await ctx.pg.findOne(sql.createUser(username, password));
 
     console.log('data2: ', created);
     ctx.body = created;
