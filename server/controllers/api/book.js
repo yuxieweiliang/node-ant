@@ -27,9 +27,6 @@ module.exports = {
     let postData = '';
     let params = ctx.request.query || ctx.query;
 
-    const ct = await create();
-
-    console.log('--------', ct);
     const data = await ctx.pg.findOne(sql.findBookById('xueyuffei'));
 
     console.log('--------', data.rows);
