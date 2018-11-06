@@ -50,9 +50,9 @@ book:
   user_signature:           署名, # 签名
   book_introduction:        简介,
   book_title_message:       扉页寄语,
-  book_type:                作品类型,
+  book_type:                作品状态, # 驻站， 签约， 未签约， 公众作品
   book_authhorization:      授权级别,
-  book_edited_group:        责编分组,
+  edited_group:             责编分组,
   book_volumes:             章节,
   book_classify:            分类,
   book_subscribe:           订阅,
@@ -62,12 +62,26 @@ book:
   book_chapter_fee:         章节费, # subscribe 订阅
   book_status:              作品状态, # 草稿：draft, 发布：release，销毁：destroy
   book_editor:              [编辑], # 只有这里有的人，才可以编辑
-  book_role:                [角色] #
-  book_sets:                [设定] #
-  book_architecture:        架构 # ID 本书所属的架构 （书 属于 架构， 架构可以包含多本书）
+  book_role:                [角色], #
+  book_sets:                [设定], #
+  book_architecture:        架构, # ID 本书所属的架构 （书 属于 架构， 架构可以包含多本书）
+  book_create_time:         创建时间, # ID 本书所属的架构 （书 属于 架构， 架构可以包含多本书）
 }
 
+分类：
+book_classify:
+{
+  book_c_id:              < 主键 >,
+  book_c_name:            名字,
+}
 
+编辑组：
+edited_group:
+{
+  book_e_g_id:              < 主键 >,
+  book_e_g_name:            名字,
+  book_e_g_member:          成员,
+}
 
 书中角色：
 roles:

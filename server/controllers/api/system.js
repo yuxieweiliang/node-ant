@@ -19,21 +19,21 @@ let sql = {
 };
 
 module.exports = {
-  'POST /api/system/login': async (ctx, next) => {
+  'GET /api/system/login': async (ctx, next) => {
     let body = ctx.request.body;
     let params = ctx.request.query || ctx.query;
 
 
-    if(!body.username || !body.password) {
+    if(!params.username || !params.password) {
       ctx.body = {
         data: null,
-        error: !body.username ? '用户名不能为空' : '密码不能为空',
+        error: !params.username ? '用户名不能为空' : '密码不能为空',
         state: 1
       };
       return;
     }
 
-    const data = await ctx.pg.findOne(sql.findOneUser(body.username));
+    const data = await ctx.pg.findOne(sql.findOneUser(params.username));
     const user = data.data;
 
     console.log('create_token: ', data);
@@ -45,7 +45,7 @@ module.exports = {
 
     // create_token
     oAuth2.emit('create_token', user.user_id, user.username, function(data) {
-      ctx.session[body.username] = data;
+      ctx.session[params.username] = data;
       ctx.body = {
         data,
         error: null,

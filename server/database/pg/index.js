@@ -44,6 +44,13 @@ const pg = {
       return error;
     }
   },
+  save: async function(query) {
+    try{
+      return await this.query(query);
+    }catch(error) {
+      return error;
+    }
+  },
   findOne: async function(query) {
     try{
       const res = await this.query(query);
