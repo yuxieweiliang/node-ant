@@ -7,10 +7,11 @@
 */
 CREATE TABLE if NOT EXISTS public.architectures (
   archite_id                SERIAL            NOT NULL PRIMARY KEY,
-  archite_name              varchar(16)       NOT NULL,
+  archite_name              varchar(16)       DEFAULT NULL,
   archite_author            varchar(100)      DEFAULT NULL,
   archite_editor            varchar(500)      DEFAULT NULL,
   archite_background        varchar(500)      DEFAULT NULL,
+  archite_create_time       varchar(500)      DEFAULT NULL,
   archite_datetime          varchar(500)      DEFAULT NULL,
   archite_ranking           varchar(500)      DEFAULT NULL
 ) WITH (OIDS = FALSE);

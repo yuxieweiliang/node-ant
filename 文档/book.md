@@ -10,7 +10,7 @@
 用户：
 user:
 {
-  user_id:                 < 主键 >,
+  id:                      < 主键 >,
   username:                用户名, #【王五】
   password:                密码, #【】
 }
@@ -21,12 +21,17 @@ user_info:
   user_id:                  < 主键 >,
   user_sex:                 性别,
   user_birthday:            生日,
-  user_name:                实名, #【真是姓名】
-  user_nickname:            昵称, #【昵称】
+  user_name:                实名, #
+  user_nickname:            昵称, #
+  user_author:              作者, # 【笔名】ID 这里是作品的归属 & 可以做一个外键
   user_collect_books:       [收藏的书], #
   user_follow_authors:      [关注的作者], #
   user_role:                角色, # 普通用户，作家，编辑，管理员，小组成员
   user_auth:                权限, #
+}
+author:
+{
+  author_name:              笔名,
 }
 
 架构：
@@ -46,8 +51,7 @@ book:
 {
   book_id:                  < 主键 >, # 书号
   book_name:                书名, #
-  book_author:              作者, # ID 这里是作品的归属 & 可以做一个外键
-  user_signature:           署名, # 签名
+  book_pseudonym:           笔名, # 签名 署名
   book_introduction:        简介,
   book_title_message:       扉页寄语,
   book_type:                作品状态, # 驻站， 签约， 未签约， 公众作品

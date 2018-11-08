@@ -10,12 +10,11 @@ export default {
     const text = `SELECT * FROM books WHERE book_name = $1`;
     return { text, values: [book_name] };
   },
-  createBook(values) {
-    const text = `INSERT INTO architecture(
-      archite_name,
+  createArchite(values) {
+    const text = `INSERT INTO architectures(
       archite_author
     )
-    VALUES($1, $2)
+    VALUES($1)
     RETURNING *`;
     return { text, values };
   }

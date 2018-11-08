@@ -29,7 +29,7 @@ export function GET_POSTS_ERROR(error) {
 }
 
 // reducer
-const initialState = { 
+const initialState = {
 	fetched: false, 
 	users: [{
 		key: '1',
@@ -47,23 +47,19 @@ const initialState = {
 const appReducer = (state = initialState, action) => {
     switch(action.type) {
         case FETCH_USERS_ERROR: {
-            return {...state, error: action.error} 
-            break;
+            return {...state, error: action.error};
         }
         case RECEIVE_USERS: {
-            return {...state, fetched: true, users: action.users} 
-            break;
+            return {...state, fetched: true, users: action.users};
         }
         case FETCH_POSTS_ERROR: {
-            return {...state, error: action.error} 
-            break;
+            return {...state, error: action.error};
         }
         case RECEIVE_POSTS: {
-            return {...state, fetched: true, posts: action.posts} 
-            break;
+            return {...state, fetched: true, posts: action.posts};
         }
     }
     return state;
-}
+};
 
 export default appReducer

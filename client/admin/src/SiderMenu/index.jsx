@@ -21,9 +21,9 @@ class Sider extends Component {
                     defaultSelectedKeys={['sub1']}
                     mode="inline"
                 >
-                  <Menu.Item key="sub1"><Link to="/book-novels"><Icon type="bars" />作品管理</Link></Menu.Item>
+                  <Menu.Item key="sub1"><Link to="/book-management"><Icon type="bars" />作品管理</Link></Menu.Item>
                   <Menu.Item key="sub2"><Link to="/other-set">数据统计</Link></Menu.Item>
-                  <Menu.Item key="sub3"><Link to="/page1">稿酬收入</Link></Menu.Item>
+                  <Menu.Item key="sub3"><Link to="/book-novels">稿酬收入</Link></Menu.Item>
                   <Menu.Item key="sub4"><Link to="/page1">劳务收入</Link></Menu.Item>
                   <Menu.Item key="sub5"><Link to="/page1">作家咨询</Link></Menu.Item>
                   <Menu.Item key="sub6"><Link to="/page1">积分兑换</Link></Menu.Item>

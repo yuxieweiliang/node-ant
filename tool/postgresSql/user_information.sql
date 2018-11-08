@@ -18,6 +18,7 @@ CREATE SEQUENCE if NOT EXISTS public.users_user_information_id_seq
   user_id:                  < 主键 >,
   user_sex:                 性别,
   user_name:                实名, #【真是姓名】
+  user_pseudonym:           笔名, # 签名 署名
   user_birthday:            生日,
   user_nickname:            昵称, #【昵称】
   user_collect_books:       [收藏的书], #
@@ -26,17 +27,18 @@ CREATE SEQUENCE if NOT EXISTS public.users_user_information_id_seq
   user_auth:                权限, #
 */
 CREATE TABLE if NOT EXISTS public.user_information (
-  u_i_id                 SERIAL        NOT NULL PRIMARY KEY,
-  u_i_sex                enum_sex      DEFAULT NULL,
-  u_i_name               varchar(13)   NOT NULL,
-  u_i_birthday           varchar(13)   NOT NULL,
-  u_i_nickname           varchar(13)   NOT NULL,
-  u_i_collect_books      varchar(13)   NOT NULL,
-  u_i_follow_authors     varchar(13)   NOT NULL,
-  u_i_role               varchar(13)   NOT NULL,
-  u_i_auth               enum_type     DEFAULT NULL
+  user_id                 SERIAL        NOT NULL PRIMARY KEY,
+  user_sex                enum_sex      DEFAULT NULL,
+  user_name               varchar(13)   DEFAULT NULL,
+  user_birthday           varchar(13)   DEFAULT NULL,
+  user_nickname           varchar(13)   DEFAULT NULL,
+  user_pseudonym          varchar(16)   DEFAULT NULL,
+  user_collect_books      varchar(13)   DEFAULT NULL,
+  user_follow_authors     varchar(13)   DEFAULT NULL,
+  user_role               varchar(13)   DEFAULT NULL,
+  user_auth               enum_type     DEFAULT NULL
 ) WITH (OIDS = FALSE);
-ALTER SEQUENCE public.users_user_information_id_seq OWNED BY user_information.u_i_id;
+ALTER SEQUENCE public.users_user_information_id_seq OWNED BY user_information.user_id;
 
 ALTER TABLE public.user_information
   OWNER TO postgres;

@@ -32,8 +32,8 @@ const myGrants = {};
  */
 oAuth2.on('enforce_login', function(ctx, authorize_url, next) {
   console.log('enforce_login');
-  if(ctx.session.user) {
-    next(ctx.session.user);
+  if(ctx.session.user_id) {
+    next(ctx.session.user_id);
   } else {
     ctx.redirect('/login?next=' + encodeURIComponent(authorize_url));
   }
@@ -58,10 +58,10 @@ oAuth2.on('authorize_form', function(ctx, client_id, authorize_url) {
  */
 oAuth2.on('save_grant', function(ctx, client_id, code, next) {
   console.log('save_grant');
-  if(!(ctx.session.user in myGrants))
-    myGrants[ctx.session.user] = {};
+  if(!(ctx.session.user_id in myGrants))
+    myGrants[ctx.session.user_id] = {};
 
-  myGrants[ctx.session.user][client_id] = code;
+  myGrants[ctx.session.user_id][client_id] = code;
   next();
 });
 
@@ -150,7 +150,7 @@ oAuth2.on('access_token', async function(ctx, token) {
   console.log('access_token');
 
   if(!isOld) {
-    ctx.session.user = token.user_id;
+    ctx.session.user_id = token.user_id;
     ctx.session.data = token.extra_data;
   } else {
     console.warn('access token for user %s has expired', token.user_id);

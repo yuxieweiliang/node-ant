@@ -1,7 +1,7 @@
 import React from 'react';
 import book_sql from '../../sql/book';
+import arch_sql from '../../sql/architecture';
 import queryString from 'query-string'
-
 
 module.exports = {
   /**
@@ -9,25 +9,22 @@ module.exports = {
    * @returns {Promise.<void>}
    */
   'POST /api/book': async function(ctx) {
-    let defaultValue = {
-      book_name: null,
-      book_author: null,
-      book_signature: 'null',
-      book_editor: null,
-      book_role: null,
-      book_settings: null,
-    };
-    let body = Object.assign(defaultValue, ctx.request.body);
-    let params = ctx.request.query || ctx.query;
+    let bookBody = ctx.request.body;
+    let author = ctx.session.user;
 
-    const data = await ctx.pg.save(book_sql.createBook([...Object.values(body)]));
+    const architecture = await ctx.pg.save(arch_sql.createArchite(['author']));
+    if(!architecture.data) {
+      return ctx.body = JSON.stringify({
+        data: '创建失败'
+      });
+    }
 
-    console.log(data);
+    bookBody.book_author = 'author';
+    bookBody.book_architecture = architecture.data.archite_id;
+    const data = await ctx.pg.save(book_sql.createBook(bookBody));
 
     // author 需要获取 userId  , 可以从token 中获取
-    ctx.body = JSON.stringify({
-      data: '创建成功'
-    });
+    ctx.body = JSON.stringify({ data });
     // const findBook = await book.find({title: data.title});
   },
   /**

@@ -4,9 +4,18 @@ import queryString from 'query-string'
 import oAuth2 from '../../middleware/OAuth2.0';// 认证
 
 let sql = {
-  findOneUser(username) {
+  login(username) {
     return {
       text: `SELECT * FROM users WHERE username = $1`,
+      values: [username]
+    }
+  },
+  isRegister(username) {
+    return this.login(username);
+  },
+  findOneUser(username) {
+    return {
+      text: `SELECT * FROM user_information WHERE user_id = $1`,
       values: [username]
     }
   },
@@ -33,10 +42,12 @@ module.exports = {
       return;
     }
 
-    const data = await ctx.pg.findOne(sql.findOneUser(params.username));
+    const data = await ctx.pg.findOne(sql.login(params.username));
+    console.log('create_token: ', data);
+    const userInfo = await ctx.pg.findOne(sql.findOneUser(data.data.user_id));
     const user = data.data;
 
-    console.log('create_token: ', data);
+    console.log('create_token: ', userInfo);
     if(!data.data) {
       ctx.body = data;
       return;
@@ -46,6 +57,7 @@ module.exports = {
     // create_token
     oAuth2.emit('create_token', user.user_id, user.username, function(data) {
       ctx.session[params.username] = data;
+      ctx.session.user = {...user, ...userInfo.data};
       ctx.body = {
         data,
         error: null,
@@ -79,7 +91,7 @@ module.exports = {
   'POST /api/system/register': async (ctx, next) => {
     let { username, password } = ctx.request.body;
 
-    const res = await ctx.pg.find(sql.findOneUser(username));
+    const res = await ctx.pg.find(sql.isRegister(username));
 
     if(res.data) {
       ctx.body = {
