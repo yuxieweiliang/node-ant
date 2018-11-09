@@ -347,7 +347,7 @@ class PostList extends Component {
                         <Panel
                           header={
                             <div style={{paddingRight:15}}>
-                              寒霜刃
+                              林莫锋
                               <span style={{float: 'right'}} onClick={(e) => {
                                 e.stopPropagation();
                                 this.setState({visible: true})}

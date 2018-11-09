@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Menu, Icon, Layout, Input, Row, Col, Button, Breadcrumb, Select } from 'antd';
 import Sider from '../SiderMenu';
 import SiderBookList from '../SiderBookList';
 import axios from 'axios';
 import styles from './style.less';
 import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Menu, Icon, Layout, Breadcrumb, Form, Input, Tooltip, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -186,7 +185,7 @@ class PostList extends Component {
                   <Form onSubmit={this.handleSubmit}>
                     <FormItem
                       {...formItemLayout}
-                      label="E-mail"
+                      label="架构名称"
                     >
                       {getFieldDecorator('email', {
                         rules: [{
@@ -200,7 +199,7 @@ class PostList extends Component {
                     </FormItem>
                     <FormItem
                       {...formItemLayout}
-                      label="Password"
+                      label="架构详情"
                     >
                       {getFieldDecorator('password', {
                         rules: [{
@@ -214,7 +213,7 @@ class PostList extends Component {
                     </FormItem>
                     <FormItem
                       {...formItemLayout}
-                      label="Confirm Password"
+                      label="世界背景"
                     >
                       {getFieldDecorator('confirm', {
                         rules: [{
@@ -230,11 +229,11 @@ class PostList extends Component {
                       {...formItemLayout}
                       label={(
                         <span>
-              Nickname&nbsp;
+                          Nickname&nbsp;
                           <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
+                            <Icon type="question-circle-o" />
+                          </Tooltip>
+                        </span>
                       )}
                     >
                       {getFieldDecorator('nickname', {

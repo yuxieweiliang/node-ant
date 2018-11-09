@@ -23,6 +23,7 @@ user_info:
   user_birthday:            生日,
   user_name:                实名, #
   user_nickname:            昵称, #
+  user_speciality:          特长, #
   user_author:              作者, # 【笔名】ID 这里是作品的归属 & 可以做一个外键
   user_collect_books:       [收藏的书], #
   user_follow_authors:      [关注的作者], #

@@ -8,9 +8,12 @@ import Register from './src/Register';
 import UserList from './src/UserList';
 import BookNovels from './src/BookNovels'; // 小说
 import BookManagement from './src/BookManagement'; // 小说
+import Select from './src/Select'; // 小说
+import List from './src/List'; // 小说
 import BookEdit from './src/BookEdit'; // 小说
-import Architecture from './src/Architecture'; // 小说
-import ArchitectureEdit from './src/ArchitectureEdit'; // 小说
+import Architecture from './src/Architecture'; // 架构
+import ArchitectureNew from './src/ArchitectureNew'; // 架构
+import ArchitectureEdit from './src/ArchitectureEdit'; // 架构
 import OtherSetting from './src/OtherSetting';
 
 const SubMenu = Menu.SubMenu;
@@ -32,8 +35,11 @@ class App extends Component {
                 <Route path="/" exact component={BookNovels} />
                 <Route path="/book-novels" component={BookNovels} />
                 <Route path="/book-management" component={BookManagement} />
+                <Route path="/select" component={Select} />
+                <Route path="/list" component={List} />
                 <Route path="/book-edit" component={BookEdit} />
                 <Route path="/architecture" component={Architecture} />
+                <Route path="/architecture-new" component={ArchitectureNew} />
                 <Route path="/architecture-edit" component={ArchitectureEdit} />
                 <Route path="/other-set" component={OtherSetting} />
                 <Route path="/register" component={Register} />

@@ -7,7 +7,6 @@ import styles from './style.less';
 import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
 import { Menu, Icon, Layout, Breadcrumb, Form, Input, Tabs, List, Modal, Select, Row, Col, Collapse, Button, AutoComplete, Card, Tag, Affix  } from 'antd';
 
-const SubMenu = Menu.SubMenu;
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
@@ -61,14 +60,10 @@ class PostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      openKeys: ['sub1'],
       confirmDirty: false,
-      collapsed: true,
       autoCompleteResult: [],
     };
   }
-  rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
-
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -104,22 +99,6 @@ class PostList extends Component {
     this.props.dispatch(Begin_GET_POSTS());
   }
 
-  onOpenChange = (openKeys) => {
-    const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
-    if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      this.setState({ openKeys });
-    } else {
-      this.setState({
-        openKeys: latestOpenKey ? [latestOpenKey] : [],
-      });
-    }
-  };
-
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
@@ -135,13 +114,14 @@ class PostList extends Component {
       },
     };
     return (
-      <Layout style={{flexDirection: 'row'}}>
-        <Sider collapsed={this.state.collapsed}/>
+      <Layout>
+        <Sider/>
         <Layout>
           <Layout.Header className={styles.header}
                          style={{ background: '#fff', padding: 0 }}>
-            <div className={styles.button} onClick={this.toggleCollapsed}>
-              <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
+            <div className={styles.button}>
+              {/*<Icon type="menu-unfold" />*/}
+              <Icon type="menu-fold" />
             </div>
             <div className={styles.headerRight}>
               <div className={styles.button}>
@@ -181,41 +161,9 @@ class PostList extends Component {
                   )}
                 />
               </Layout.Sider>*/}
-              <Layout.Sider id="leftMenu" style={{background: '#fff'}}>
-                <Menu
-                  mode="inline"
-                  openKeys={this.state.openKeys}
-                  onOpenChange={this.onOpenChange}
-                  style={{ width: 200 }}
-                >
-                  <Menu.Item>
-                    基本设置
-                  </Menu.Item>
-                  <SubMenu key="sub1" title={<span>主要角色</span>}>
-                    <Menu.Item key="5">选择模板</Menu.Item>
-                    <Menu.Item key="6">Option 6</Menu.Item>
-                    <SubMenu key="sub2" title="Submenu">
-                      <Menu.Item key="7">Option 7</Menu.Item>
-                      <Menu.Item key="8">Option 8</Menu.Item>
-                    </SubMenu>
-                  </SubMenu>
-                  <SubMenu key="sub3" title={<span>设定</span>}>
-                    <Menu.Item key="9">魔法</Menu.Item>
-                    <Menu.Item key="10">武器</Menu.Item>
-                    <Menu.Item key="11">地域</Menu.Item>
-                    <Menu.Item key="12">其他</Menu.Item>
-                  </SubMenu>
-                  <SubMenu key="sub4" title={<span>排行榜</span>}>
-                    <Menu.Item key="13">契灵</Menu.Item>
-                    <Menu.Item key="14">武器</Menu.Item>
-                    <Menu.Item key="15">地域</Menu.Item>
-                    <Menu.Item key="16">其他</Menu.Item>
-                  </SubMenu>
-                </Menu>
-              </Layout.Sider>
               <Layout>
                 <div className="card-container">
-                  <Tabs defaultActiveKey="3" tabPosition="left">
+                  <Tabs type="card" defaultActiveKey="3" >
                     <TabPane tab="基本信息" key="1">
                       <Row style={{padding: '10px 15px'}}>
                         <Col span={18}>
@@ -347,7 +295,7 @@ class PostList extends Component {
                         <Panel
                           header={
                             <div style={{paddingRight:15}}>
-                              寒霜刃
+                              林莫锋
                               <span style={{float: 'right'}} onClick={(e) => {
                                 e.stopPropagation();
                                 this.setState({visible: true})}
