@@ -4,6 +4,7 @@ import Sider from '../SiderMenu';
 import SiderBookList from '../SiderBookList';
 import axios from 'axios';
 import styles from './style.less';
+import Header from '../../components/Header'
 import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
 import { Menu, Icon, Layout, Breadcrumb, Form, Input, Tabs, Divider, Modal, Select, Row, Col, Collapse, Button, AutoComplete, Popover, Card, Tag  } from 'antd';
 
@@ -48,38 +49,19 @@ class PostList extends Component {
       <Layout style={{flexDirection: 'row'}}>
         <Sider collapsed={this.state.collapsed}/>
         <Layout>
-          <Layout.Header className={styles.header}
-                         style={{ background: '#fff', padding: 0 }}>
-            <div className={styles.button} onClick={this.toggleCollapsed}>
-              <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
-            </div>
-            <div className={styles.headerRight}>
-              <div className={styles.button}>
-                <Icon type="mail" />
-              </div>
-              <Menu mode="horizontal" onClick={this.handleClickMenu}>
-                <Menu.SubMenu
-                  /*className={styles['ant-menu-submenu-title']}*/
-                  style={{float: 'right',}}
-                  title={<span><Icon type="user" />fdsa</span>}>
-                  <Menu.Item key="logout">
-                    Sign out
-                  </Menu.Item>
-                </Menu.SubMenu>
-              </Menu>
-            </div>
-          </Layout.Header>
+          <Header/>
           <Layout>
-            <Breadcrumb>
-              <Breadcrumb.Item><a href="">作品管理</a></Breadcrumb.Item>
-              <Breadcrumb.Item>《绝世》</Breadcrumb.Item>
-            </Breadcrumb>
             <Layout>
               <Layout>
                 <div className="card-container">
                   <Tabs defaultActiveKey="3" tabPosition="left">
-                    <TabPane tab="主要人物" key="2">
+                    <TabPane tab="主要人物" key="1" style={{height: '100%', background: '#fff', overflowY: 'auto', padding: '15px'}}>
                       <Layout.Content style={{background: '#fff', overflowY: 'auto'}}>
+
+                        <Breadcrumb style={{background: '#fff', borderBottom: '1px solid #eee', paddingLeft: 24}}>
+                          <Breadcrumb.Item><a href="">作品管理</a></Breadcrumb.Item>
+                          <Breadcrumb.Item>《绝世》</Breadcrumb.Item>
+                        </Breadcrumb>
                         <Row style={{padding: '10px 15px'}}>
                           <Col span={18}>
                             <Button size="small" style={{fontSize: 12}}>模板</Button>

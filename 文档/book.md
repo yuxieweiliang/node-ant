@@ -124,11 +124,76 @@ settings:
   set_items:              [ 排行的列表 ], #
 }
 
+
+
+[{ id: 1,type: 武器  },{ id: 2,type: 宠物  },]
+
+
+
+{
+  set_title:              武器,
+  set_introduction:       这个武器是用来干什么的，是什么制作而成的，是谁做的，谁用的。,
+  set_templates:           [
+    { set_t_name: 名称, set_t_type: text, set_t_explain: explain, },
+    { set_t_name: 介绍, set_t_type: text, set_t_explain: explain, },
+    { set_t_name: 等级, set_t_type: text, set_t_explain: explain, },
+    { set_t_name: 形态, set_t_type: array, set_t_explain: explain, },
+  ],
+  set_items: [
+   # 第一个
+   {
+      set_i_values:   [
+        # 名称
+        {
+          set_v_value:              冰雪霜华,
+          set_v_introduction:       介绍, #
+        },
+        # 介绍
+        {
+          set_v_value:              冰雪霜华试一把非常有名的魔杖，是冰雪女帝曾经使用的魔杖之一。,
+          set_v_introduction:       介绍, #
+        },
+        # 等级
+        {
+          set_v_value:              白银级,
+          set_v_introduction:       介绍, #
+        },
+        # 形态
+        {
+          set_v_value:              翡翠色天然楠木为主杖，内嵌三颗天然翡翠结晶，杖身篆刻十三道铭纹。,
+          set_v_introduction:       介绍, #
+        },
+      ]
+   },
+   # 第二个
+   {
+      set_i_values:   [
+        {
+          set_v_value:              苍冷的心跳,
+          set_v_introduction:       介绍, #
+        },
+        ……
+      ]
+   },
+   # 第三个
+   {
+      set_i_values:   [
+        {
+          set_v_value:              黎明的哀歌,
+          set_v_introduction:       介绍, #
+        },
+        ……
+      ]
+   },
+  ], #
+}
+
+
 书中的设定 - 字段 # 武器的名字，武器的介绍
 set_templates:
 {
   set_t_id:                 < 主键 >,
-  set_t_name:               名字,
+  set_t_name:               名字, # 武器
   set_t_type:               string, # ( array | string ) 数据的显示类型
   set_t_explain:            explain, # 针对当前字段的介绍，以及类型介绍等
 }
@@ -268,7 +333,22 @@ client:
 
 
 
+doc:
+{
+  id:                   <主键>,
+  title:                标题,
+  introduce:            介绍,
+}
 
+
+{
+  id:                   <主键>,
+  title:                标题,
+  type:                 类型,
+  ctrl_in:              属于, # doc.id
+  introduce:            介绍,
+  parent_id:            父节点, # 0：本身为最高节点，num：父节点的 id
+}
 
 
 
