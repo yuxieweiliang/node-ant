@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Icon, Layout, Breadcrumb, Form, Input, Tabs, Timeline, Modal, Select, Row, Col, Button,  Card  } from 'antd';
+import { Icon, Layout, Breadcrumb, Form, Input, Tabs, Timeline, Modal, Select, Row, Col, Button,  Card, Tag  } from 'antd';
 import Header from '../../components/Header'
 import Sider from '../SiderMenu';
 import styles from './style.less';
@@ -64,7 +64,7 @@ class PostList extends Component {
                       </Row>
 
                       <Row style={{padding: '10px 15px'}}>
-                        <Timeline pending="未知...">
+                        <Timeline className="time-line-root">
                           <Timeline.Item dot={<Icon type="clock-circle-o" style={{ fontSize: '16px' }} />}>
                             <Card title={<div>凝虚</div>} bordered={false} style={{ width: '100%', paddingRight: 10 }}>
                               <Timeline>
@@ -92,6 +92,14 @@ class PostList extends Component {
                                       契约
                                       <p style={{margin: 0, color: '#999'}}>契约，契灵阵中烙印契灵魂魄，不然会叛逃</p>
                                     </Timeline.Item>
+                                    <Timeline.Item>
+                                      契约<Tag style={{marginLeft: 5}}>修改</Tag>
+                                      <p style={{margin: 0, color: '#999'}}>契约，契灵阵中烙印契灵魂魄，不然会叛逃</p>
+                                    </Timeline.Item>
+
+                                    <Timeline.Item dot={<Icon type="plus-circle" style={{ fontSize: '16px' }} />}>
+                                      <Tag onClick={() => this.setState({visible: true})}>添加</Tag>
+                                    </Timeline.Item>
                                   </Timeline>
                                 </Timeline.Item>
                                 <Timeline.Item>
@@ -118,7 +126,13 @@ class PostList extends Component {
                                       契约
                                       <p style={{margin: 0, color: '#999'}}>契约，契灵阵中烙印契灵魂魄，不然会叛逃</p>
                                     </Timeline.Item>
+                                    <Timeline.Item dot={<Icon type="plus-circle" style={{ fontSize: '16px' }} />}>
+                                      <Tag>添加</Tag>
+                                    </Timeline.Item>
                                   </Timeline>
+                                </Timeline.Item>
+                                <Timeline.Item dot={<Icon type="plus-circle" style={{ fontSize: '16px' }} />}>
+                                  <Tag>添加</Tag>
                                 </Timeline.Item>
                               </Timeline>
                             </Card>
@@ -129,8 +143,44 @@ class PostList extends Component {
                            <div className="ant-timeline-item-head ant-timeline-item-head-blue"/>
                            </Popover>
                            )}/>*/}
-                          <Timeline.Item>技术测试异常 2015-09-01</Timeline.Item>
-                          <Timeline.Item>网络异常正在修复 2015-09-01</Timeline.Item>
+                          <Timeline.Item dot={<Icon type="clock-circle-o" style={{ fontSize: '16px' }} />}>
+                            <Card title={<div>凝虚</div>} bordered={false} style={{ width: '100%', paddingRight: 10 }}>
+                              <Timeline>
+                                <Timeline.Item>
+                                  <h4 style={{marginBottom: 20}}>
+                                    契约
+                                    <span style={{fontSize: 12, marginLeft: 10, color: '#666'}}>
+                                        fdsafa
+                                      </span>
+                                  </h4>
+                                  <Timeline style={{paddingLeft: 20}}>
+                                    <Timeline.Item>
+                                      感知
+                                      <p style={{margin: 0, color: '#999'}}>感知灵魂海</p>
+                                    </Timeline.Item>
+                                    <Timeline.Item>
+                                      灵雾
+                                      <p style={{margin: 0, color: '#999'}}>牵引天地灵气进入灵魂海，凝聚契约灵雾</p>
+                                    </Timeline.Item>
+                                    <Timeline.Item>
+                                      契约<Tag style={{marginLeft: 5}}>修改</Tag>
+                                      <p style={{margin: 0, color: '#999'}}>契约，契灵阵中烙印契灵魂魄，不然会叛逃</p>
+                                    </Timeline.Item>
+
+                                    <Timeline.Item dot={<Icon type="plus-circle" style={{ fontSize: '16px' }} />}>
+                                      <Tag>添加</Tag>
+                                    </Timeline.Item>
+                                  </Timeline>
+                                </Timeline.Item>
+                                <Timeline.Item dot={<Icon type="plus-circle" style={{ fontSize: '16px' }} />}>
+                                  <Tag>添加</Tag>
+                                </Timeline.Item>
+                              </Timeline>
+                            </Card>
+                          </Timeline.Item>
+                          <Timeline.Item dot={<Icon type="plus-circle" style={{ fontSize: '16px' }} />}>
+                            <Tag>添加</Tag>
+                          </Timeline.Item>
                         </Timeline>
                       </Row>
 
@@ -155,30 +205,25 @@ class PostList extends Component {
         >
           <Form onSubmit={this.handleSubmit}
                 className="ant-advanced-search-form">
-            <Row gutter={24}>
-              <Col span={12}/>
-              <Col span={12} style={{textAlign: 'right', paddingBottom: 24}}>
-                <Button size="small">
-                  新增
-                </Button>
-              </Col>
-            </Row>
-            <Row gutter={24}> {/*   style={{borderBottom: '1px solid #ccc'}}  */}
-              <Col span={12}>
-                <FormItem label={`字段名称`}>
-                  <Input placeholder="例如：武器/宠物" />
-                </FormItem>
-              </Col>
-              <Col span={12}>
-                <FormItem label={`字段类型`}>
-                  <Select>
-                    <Select.Option value="text">文字</Select.Option>
-                    <Select.Option value="select">列表</Select.Option>
-                    <Select.Option value="time">时间</Select.Option>
-                  </Select>
-                </FormItem>
-              </Col>
-            </Row>
+            <FormItem label={`名称`}>
+              <Input placeholder="例如：武器/宠物" />
+            </FormItem>
+            <FormItem label={`简介`}>
+              <Input placeholder="例如：武器/宠物" />
+            </FormItem>
+            <FormItem label={`类型`}>
+              <Select defaultValue="new">
+                <Select.Option value="new">新节点</Select.Option>
+                <Select.Option value="child">子节点</Select.Option>
+              </Select>
+            </FormItem>
+            <FormItem label={`排版`}>
+              <Select defaultValue="text">
+                <Select.Option value="text">横版</Select.Option>
+                <Select.Option value="select">竖版</Select.Option>
+                <Select.Option value="select">卡片</Select.Option>
+              </Select>
+            </FormItem>
           </Form>
         </Modal>
       </Layout>

@@ -127,7 +127,7 @@ class PostList extends Component {
       <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
     ));
     return (
-      <Layout>
+      <Layout style={{flexDirection: 'row'}}>
         <Sider/>
         <Layout>
           <Layout.Header className={styles.header}
@@ -154,8 +154,8 @@ class PostList extends Component {
           </Layout.Header>
           <Layout>
             <Breadcrumb>
-              <Breadcrumb.Item><a href="">作品管理</a></Breadcrumb.Item>
-              <Breadcrumb.Item>《绝世》</Breadcrumb.Item>
+              <Breadcrumb.Item><a href="">架构管理</a></Breadcrumb.Item>
+              <Breadcrumb.Item>新建</Breadcrumb.Item>
             </Breadcrumb>
             <Layout>
               <SiderBookList/>

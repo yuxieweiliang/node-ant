@@ -32,7 +32,7 @@ class PostList extends Component {
 
     console.log(styles);
     return (
-      <Layout>
+      <Layout style={{flexDirection: 'row'}}>
         <Sider/>
         <Layout>
           <Layout.Header className={styles.header}

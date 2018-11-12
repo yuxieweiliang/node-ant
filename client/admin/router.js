@@ -4,7 +4,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import { Menu, Icon, Layout } from 'antd';
 
 import Login from './src/Login';
-import Register from './src/Register';
+import Register from './src/Register/view';
 import UserList from './src/UserList';
 import BookNovels from './src/BookNovels'; // 小说
 import BookManagement from './src/BookManagement'; // 小说
@@ -14,6 +14,8 @@ import BookEdit from './src/BookEdit'; // 小说
 import Architecture from './src/Architecture'; // 架构
 import ArchitectureNew from './src/ArchitectureNew'; // 架构
 import ArchitectureEdit from './src/ArchitectureEdit'; // 架构
+import DicNew from './src/DicNew'; //
+import RoleList from './src/RoleList'; //
 import OtherSetting from './src/OtherSetting';
 
 const SubMenu = Menu.SubMenu;
@@ -34,6 +36,8 @@ class App extends Component {
               <Switch>
                 <Route path="/" exact component={BookNovels} />
                 <Route path="/book-novels" component={BookNovels} />
+                <Route path="/role-list" component={RoleList} />
+                <Route path="/dic-new" component={DicNew} />
                 <Route path="/book-management" component={BookManagement} />
                 <Route path="/select" component={Select} />
                 <Route path="/list" component={List} />

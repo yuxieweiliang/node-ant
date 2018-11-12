@@ -11,10 +11,17 @@
       }
     }
   }
-  .ant-timeline-item {
-    .ant-timeline-item-head-custom {
+  .time-line-root > .ant-timeline-item {
+    > .ant-timeline-item-head-custom {
       top: 50px;
     }
+    &.ant-timeline-item-last {
+      > .ant-timeline-item-head-custom {
+        top: auto;
+      }
+    }
+  }
+  .ant-timeline-item {
     &.ant-timeline-item-last {
       padding: 0;
       .ant-timeline-item-content {

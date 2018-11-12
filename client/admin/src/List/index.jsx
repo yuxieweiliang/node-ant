@@ -22,6 +22,7 @@ class PostList extends Component {
       confirmDirty: false,
       collapsed: true,
       autoCompleteResult: [],
+      newArchitecture: [{title: '名称', disable: true}]
     };
   }
 
@@ -69,7 +70,16 @@ class PostList extends Component {
                           </Col>
                           <Col span={6} style={{textAlign: 'right'}}>
                             <Button size="small" style={{fontSize: 12}}>预览</Button>
-                            <Button type="primary" size="small" style={{fontSize: 12}}>新增</Button>
+                            <Button
+                              type="primary"
+                              size="small"
+                              onClick={() => this.setState({visible: true})}
+                              style={{fontSize: 12}}>新增</Button>
+                            <Button
+                              type="primary"
+                              size="small"
+                              onClick={() => this.setState({visibleModal: true})}
+                              style={{fontSize: 12}}>新增</Button>
                           </Col>
                         </Row>
 
@@ -152,22 +162,97 @@ class PostList extends Component {
                 </Button>
               </Col>
             </Row>
-            <Row gutter={24}> {/*   style={{borderBottom: '1px solid #ccc'}}  */}
-              <Col span={12}>
-                <FormItem label={`字段名称`}>
-                  <Input placeholder="例如：武器/宠物" />
+            <FormItem label={`标题`}>
+              <Input placeholder="例如：武器/宠物" />
+            </FormItem>
+            <FormItem label={`级别`}>
+              <Select defaultValue={'text'}>
+                <Select.Option value="text">入门</Select.Option>
+                <Select.Option value="text">初级</Select.Option>
+                <Select.Option value="select">中级</Select.Option>
+                <Select.Option value="time">高级</Select.Option>
+              </Select>
+            </FormItem>
+            <FormItem label={`咒语`}>
+              <Input placeholder="例如：武器/宠物" />
+            </FormItem>
+            <FormItem label={`效果`}>
+              <Input placeholder="例如：武器/宠物" />
+            </FormItem>
+            <FormItem label={`形态`}>
+              <Input placeholder="例如：武器/宠物" />
+            </FormItem>
+
+          </Form>
+        </Modal>
+        <Modal
+          title="添加设定录入模板"
+          visible={this.state.visibleModal}
+          onOk={() => this.setState({visibleModal: false})}
+          onCancel={() => this.setState({visibleModal: false})}
+        >
+          <Form onSubmit={this.handleSubmit}
+                className="ant-advanced-search-form">
+            <FormItem label={`设定名称`}>
+              <Input placeholder="例如：武器/宠物" />
+            </FormItem>
+            <Divider/>
+            {/*<Row gutter={24}>
+              <Col span={12}/>
+              <Col span={12} style={{textAlign: 'right', paddingBottom: 24}}>
+                <Button size="small">
+                  新增
+                </Button>
+              </Col>
+            </Row>*/}
+            <Row gutter={24}>
+              <Col span={8} style={{textAlign: 'right'}}>
+                <FormItem label="字段">
+                  <div style={{textAlign: 'left', paddingLeft: 10}}>名称</div>
                 </FormItem>
               </Col>
-              <Col span={12}>
-                <FormItem label={`字段类型`}>
-                  <Select>
-                    <Select.Option value="text">文字</Select.Option>
-                    <Select.Option value="select">列表</Select.Option>
-                    <Select.Option value="time">时间</Select.Option>
+              <Col span={8} style={{textAlign: 'right'}}>
+                <FormItem label={`类型`}>
+                  文本
+                </FormItem>
+              </Col>
+              <Col span={8} style={{textAlign: 'right'}}>
+                <FormItem label={`默认值`}>
+                  无
+                </FormItem>
+              </Col>
+            </Row>
+            <Row gutter={24}>
+              <Col span={8} style={{textAlign: 'right'}}>
+                <FormItem label="字段">
+                  <Input placeholder="如: 长度/性别"/>
+                </FormItem>
+              </Col>
+              <Col span={8} style={{textAlign: 'right'}}>
+                <FormItem label={`类型`}>
+                  <Select defaultValue={'text'}>
+                    <Select.Option value="text">文本</Select.Option>
+                    <Select.Option value="list">列表</Select.Option>
+                    <Select.Option value="select">标签</Select.Option>
+                  </Select>
+                </FormItem>
+              </Col>
+              <Col span={8} style={{textAlign: 'right'}}>
+                <FormItem label={`默认值`}>
+                  <Select  placeholder="无"
+                    mode="tags"
+                    style={{ width: '100%' }}
+                    tokenSeparators={[',']}
+                  >
                   </Select>
                 </FormItem>
               </Col>
             </Row>
+            <FormItem>
+              <Button type="dashed" style={{ width: '100%' }}>
+                <Icon type="plus" /> Add field
+              </Button>
+            </FormItem>
           </Form>
         </Modal>
       </Layout>
