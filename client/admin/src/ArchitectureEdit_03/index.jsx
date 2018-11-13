@@ -5,8 +5,9 @@ import SiderBookList from '../SiderBookList';
 import axios from 'axios';
 import styles from './style.less';
 import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
-import { Menu, Icon, Layout, Breadcrumb, Form, Input, Tabs, List, Modal, Select, Row, Col, Collapse, Button, AutoComplete, Card, Tag, Affix  } from 'antd';
+import { Menu, Icon, Layout, Breadcrumb, Form, Input, Tabs, List, Modal, Select, Row, Col, Collapse, Button, AutoComplete, Card, Tag, Divider  } from 'antd';
 
+const SubMenu = Menu.SubMenu;
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
@@ -60,10 +61,14 @@ class PostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      openKeys: ['sub1'],
       confirmDirty: false,
+      collapsed: true,
       autoCompleteResult: [],
     };
   }
+  rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -99,6 +104,22 @@ class PostList extends Component {
     this.props.dispatch(Begin_GET_POSTS());
   }
 
+  onOpenChange = (openKeys) => {
+    const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+    if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      this.setState({ openKeys });
+    } else {
+      this.setState({
+        openKeys: latestOpenKey ? [latestOpenKey] : [],
+      });
+    }
+  };
+
+  toggleCollapsed = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
@@ -115,13 +136,12 @@ class PostList extends Component {
     };
     return (
       <Layout style={{flexDirection: 'row'}}>
-        <Sider/>
+        <Sider collapsed={this.state.collapsed}/>
         <Layout>
           <Layout.Header className={styles.header}
                          style={{ background: '#fff', padding: 0 }}>
-            <div className={styles.button}>
-              {/*<Icon type="menu-unfold" />*/}
-              <Icon type="menu-fold" />
+            <div className={styles.button} onClick={this.toggleCollapsed}>
+              <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
             </div>
             <div className={styles.headerRight}>
               <div className={styles.button}>
@@ -140,30 +160,62 @@ class PostList extends Component {
             </div>
           </Layout.Header>
           <Layout>
-            <Breadcrumb>
+            {/*<Breadcrumb>
               <Breadcrumb.Item><a href="">作品管理</a></Breadcrumb.Item>
               <Breadcrumb.Item>《绝世》</Breadcrumb.Item>
-            </Breadcrumb>
+            </Breadcrumb>*/}
             <Layout>
               {/*<Layout.Sider id="leftMenu" style={{background: '#fff'}}>
-                <div style={{height: 40, lineHeight: '40px', borderBottom: '1px solid #ccc'}}>共100章</div>
-                <List
-                  style={{ width: 200 }}
-                  itemLayout="horizontal"
-                  dataSource={siderData}
-                  mode="inline"
-                  renderItem={item => (
-                    <List.Item>
-                      <List.Item.Meta
-                        title={item.title}
-                      />
-                    </List.Item>
-                  )}
-                />
-              </Layout.Sider>*/}
+               <div style={{height: 40, lineHeight: '40px', borderBottom: '1px solid #ccc'}}>共100章</div>
+               <List
+               style={{ width: 200 }}
+               itemLayout="horizontal"
+               dataSource={siderData}
+               mode="inline"
+               renderItem={item => (
+               <List.Item>
+               <List.Item.Meta
+               title={item.title}
+               />
+               </List.Item>
+               )}
+               />
+               </Layout.Sider>*/}
+              {/*<Layout.Sider id="leftMenu" style={{background: '#fff'}}>
+               <Menu
+               mode="inline"
+               openKeys={this.state.openKeys}
+               onOpenChange={this.onOpenChange}
+               style={{ width: 200 }}
+               >
+               <Menu.Item>
+               基本设置
+               </Menu.Item>
+               <SubMenu key="sub1" title={<span>主要角色</span>}>
+               <Menu.Item key="5">选择模板</Menu.Item>
+               <Menu.Item key="6">Option 6</Menu.Item>
+               <SubMenu key="sub2" title="Submenu">
+               <Menu.Item key="7">Option 7</Menu.Item>
+               <Menu.Item key="8">Option 8</Menu.Item>
+               </SubMenu>
+               </SubMenu>
+               <SubMenu key="sub3" title={<span>设定</span>}>
+               <Menu.Item key="9">魔法</Menu.Item>
+               <Menu.Item key="10">武器</Menu.Item>
+               <Menu.Item key="11">地域</Menu.Item>
+               <Menu.Item key="12">其他</Menu.Item>
+               </SubMenu>
+               <SubMenu key="sub4" title={<span>排行榜</span>}>
+               <Menu.Item key="13">契灵</Menu.Item>
+               <Menu.Item key="14">武器</Menu.Item>
+               <Menu.Item key="15">地域</Menu.Item>
+               <Menu.Item key="16">其他</Menu.Item>
+               </SubMenu>
+               </Menu>
+               </Layout.Sider>*/}
               <Layout>
                 <div className="card-container">
-                  <Tabs type="card" defaultActiveKey="3" >
+                  <Tabs defaultActiveKey="3" tabPosition="left">
                     <TabPane tab="基本信息" key="1">
                       <Row style={{padding: '10px 15px'}}>
                         <Col span={18}>
@@ -274,61 +326,6 @@ class PostList extends Component {
                             </Col>
                             <Col span="8">
                               <Card
-                              hoverable
-                              style={{ width: 140, float: 'right' }}
-                              cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                            >
-                              <Card.Meta  style={{textAlign: 'center'}}
-                                title="李清柔"
-                              />
-                            </Card>
-                            </Col>
-                          </Row>
-                        </Panel>
-                        <Panel header="李清柔" key="2">
-                          {text}
-                        </Panel>
-                      </Collapse>
-                    </TabPane>
-                    <TabPane tab="排行榜" key="3">
-                      <Collapse accordion bordered={false} defaultActiveKey={['1']}>
-                        <Panel
-                          header={
-                            <div style={{paddingRight:15}}>
-                              林莫锋
-                              <span style={{float: 'right'}} onClick={(e) => {
-                                e.stopPropagation();
-                                this.setState({visible: true})}
-                              }>编辑</span>
-                            </div>
-                          } key="1">
-                          <Row>
-                            <Col span="16">
-                              <List
-                                style={{ paddingLeft: 24 }}
-                                itemLayout="horizontal"
-                                dataSource={data}
-                                renderItem={item => (
-                                  <List.Item
-                                    /*actions={[<a>×</a>]}*/
-                                    onClick={() => console.log('ffff')}>
-                                    {
-                                      item.type === 'text' ? (
-                                        item.title + item.value
-                                      ) : item.type === 'select' ? (
-                                        <div>
-                                          {item.title}
-                                          { item.value.map(_item => <Tag color="blue">{_item}</Tag>) }
-                                        </div>
-                                      ) : ''
-                                    }
-
-                                  </List.Item>
-                                )}
-                              />
-                            </Col>
-                            <Col span="8">
-                              <Card
                                 hoverable
                                 style={{ width: 140, float: 'right' }}
                                 cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
@@ -345,6 +342,78 @@ class PostList extends Component {
                         </Panel>
                       </Collapse>
                     </TabPane>
+                    <TabPane tab="排行榜" key="3">
+
+                      <Layout.Content style={{background: '#fff', overflowY: 'auto'}}>
+                        <Breadcrumb style={{background: '#fff', borderBottom: '1px solid #eee', paddingLeft: 24}}>
+                          <Breadcrumb.Item><a href="">作品管理</a></Breadcrumb.Item>
+                          <Breadcrumb.Item>《绝世》</Breadcrumb.Item>
+                        </Breadcrumb>
+                        <Row style={{padding: '10px 15px'}}>
+                          <Col span={18}>
+                            <Button size="small" style={{fontSize: 12}}>模板</Button>
+                            <Button size="small" style={{fontSize: 12}}>设置</Button>
+                          </Col>
+                          <Col span={6} style={{textAlign: 'right'}}>
+                            <Button size="small" style={{fontSize: 12}}>预览</Button>
+                            <Button
+                              type="primary"
+                              size="small"
+                              onClick={() => this.setState({visible: true})}
+                              style={{fontSize: 12}}>新增</Button>
+                            <Button
+                              type="primary"
+                              size="small"
+                              onClick={() => this.setState({visibleModal: true})}
+                              style={{fontSize: 12}}>新增</Button>
+                          </Col>
+                        </Row>
+
+
+                        <Collapse accordion bordered={false} defaultActiveKey={['1']}>
+                          <Panel
+                            header={
+                              <div style={{paddingRight:15}}>
+                                寒霜刃
+                                <span style={{float: 'right'}} onClick={(e) => {
+                                  e.stopPropagation();
+                                  this.setState({visible: true})}
+                                }>编辑</span>
+                              </div>
+                            } key="1">
+
+                            <div style={{paddingLeft: 24, display: 'flex'}}>
+                              <Tag>级别</Tag>
+                              <p>一阶</p>
+                            </div><div style={{paddingLeft: 24, display: 'flex'}}>
+                            <Tag>咒语</Tag>
+                            <p>Sed nonne merninisti licere mihi ista probare</p>
+                          </div><div style={{paddingLeft: 24, display: 'flex'}}>
+                            <Tag>效果</Tag>
+                            <p>Refert tamen, quo modo.</p>
+                          </div><div style={{paddingLeft: 24, display: 'flex'}}>
+                            <Tag>形态</Tag>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                          </div>
+                          </Panel>
+                          <Panel header="李清柔" key="2">
+                            <div style={{paddingLeft: 24, display: 'flex'}}>
+                              <Tag>级别</Tag>
+                              <p>一阶</p>
+                            </div><div style={{paddingLeft: 24, display: 'flex'}}>
+                            <Tag>咒语</Tag>
+                            <p>Sed nonne merninisti licere mihi ista probare</p>
+                          </div><div style={{paddingLeft: 24, display: 'flex'}}>
+                            <Tag>效果</Tag>
+                            <p>Refert tamen, quo modo.</p>
+                          </div><div style={{paddingLeft: 24, display: 'flex'}}>
+                            <Tag>形态</Tag>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                          </div>
+                          </Panel>
+                        </Collapse>
+                      </Layout.Content>
+                    </TabPane>
                     <TabPane tab="其他设定" key="4">
                       <p>Content of Tab Pane 3</p>
                       <p>Content of Tab Pane 3</p>
@@ -354,22 +423,22 @@ class PostList extends Component {
                 </div>
               </Layout>
               {/*<Layout.Sider id="leftMenu" style={{background: '#fff', textAlign: 'right'}}>
-                <Affix offsetTop={220} style={{display: 'flex', flexDirection: 'column'}}>
-                  <List
-                    style={{ width: 80, float: 'right' }}
-                    itemLayout="horizontal"
-                    dataSource={siderData}
-                    mode="inline"
-                    renderItem={item => (
-                      <List.Item style={{ paddingRight: 15 }}>
-                        <List.Item.Meta
-                          title={item.title}
-                        />
-                      </List.Item>
-                    )}
-                  />
-                </Affix>
-              </Layout.Sider>*/}
+               <Affix offsetTop={220} style={{display: 'flex', flexDirection: 'column'}}>
+               <List
+               style={{ width: 80, float: 'right' }}
+               itemLayout="horizontal"
+               dataSource={siderData}
+               mode="inline"
+               renderItem={item => (
+               <List.Item style={{ paddingRight: 15 }}>
+               <List.Item.Meta
+               title={item.title}
+               />
+               </List.Item>
+               )}
+               />
+               </Affix>
+               </Layout.Sider>*/}
             </Layout>
           </Layout>
         </Layout>

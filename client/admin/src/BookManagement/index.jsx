@@ -23,10 +23,9 @@ class PostList extends Component {
 
   render() {
 
-
     console.log(this.props.posts);
     return (
-      <Layout>
+      <Layout style={{flexDirection: 'row'}}>
         <Sider/>
         <Layout>
           <Layout.Header className={styles.header}

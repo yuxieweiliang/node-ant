@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Menu, Icon, Layout, Input, Row, Col, Button, Breadcrumb, Select } from 'antd';
+import { Menu, Icon, Layout, Input, Row, Col, Button, Card, Select } from 'antd';
 import Sider from '../SiderMenu';
 import SiderBookList from '../SiderBookList';
 import axios from 'axios';
 import styles from './style.less';
+import Container from '../../components/Container'
 import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
 
 class PostList extends Component {
@@ -20,83 +21,44 @@ class PostList extends Component {
   }
 
   render() {
-    const columns = [{
-      title: '用户编号',
-      dataIndex: 'id',
-      key: 'id',
-    }, {
-      title: '标题',
-      dataIndex: 'title',
-      key: 'title',
-    }];
-
     console.log(styles);
     return (
-      <Layout>
-        <Sider/>
-        <Layout>
-          <Layout.Header className={styles.header}
-                         style={{ background: '#fff', padding: 0 }}>
-            <div className={styles.button}>
-              {/*<Icon type="menu-unfold" />*/}
-              <Icon type="menu-fold" />
-            </div>
-            <div className={styles.headerRight}>
-              <div className={styles.button}>
-                <Icon type="mail" />
-              </div>
-              <Menu mode="horizontal" onClick={this.handleClickMenu}>
-                <Menu.SubMenu
-                  /*className={styles['ant-menu-submenu-title']}*/
-                  style={{float: 'right',}}
-                  title={<span><Icon type="user" />fdsa</span>}>
-                  <Menu.Item key="logout">
-                    Sign out
-                  </Menu.Item>
-                </Menu.SubMenu>
-              </Menu>
-            </div>
-          </Layout.Header>
-          <Layout>
-            <Breadcrumb>
-              <Breadcrumb.Item><a href="">作品管理</a></Breadcrumb.Item>
-              <Breadcrumb.Item>《绝世》</Breadcrumb.Item>
-            </Breadcrumb>
+      <Container {...this.props}>
+        <Card title="《 倾仙 》" bodyStyle={{padding: 0, paddingTop: 1, flex: 1}} style={{flex: 1, display: 'flex', flexDirection: 'column'}}>
+          <Layout style={{width: 1020}}>
+            <SiderBookList/>
             <Layout>
-              <SiderBookList/>
-              <Layout>
-                <Row style={{padding: '10px 15px'}}>
-                  <Col span={18}>
-                    <span>发布至</span>
-                    <Select defaultValue="lucy">
-                      <Select.Option value="jack">111111</Select.Option>
-                      <Select.Option value="lucy">111111</Select.Option>
-                      <Select.Option value="disabled">111111</Select.Option>
-                    </Select>
-                    <span>章节类型</span>
-                    <Select defaultValue="lucy">
-                      <Select.Option value="jack">111111</Select.Option>
-                      <Select.Option value="lucy">111111</Select.Option>
-                      <Select.Option value="disabled">111111</Select.Option>
-                    </Select>
-                  </Col>
-                  <Col span={6} style={{textAlign: 'right'}}>
-                    <Button type="primary" size="small" style={{fontSize: 12}}>保存</Button>
-                    <Button type="primary" size="small" style={{fontSize: 12}}>发布</Button>
-                  </Col>
-                </Row>
+              <Row style={{padding: '10px 15px', background: '#fff', borderBottom: '1px solid #ccc'}}>
+                <Col span={18}>
+                  <span>发布至</span>
+                  <Select defaultValue="lucy">
+                    <Select.Option value="jack">111111</Select.Option>
+                    <Select.Option value="lucy">111111</Select.Option>
+                    <Select.Option value="disabled">111111</Select.Option>
+                  </Select>
+                  <span>章节类型</span>
+                  <Select defaultValue="lucy">
+                    <Select.Option value="jack">111111</Select.Option>
+                    <Select.Option value="lucy">111111</Select.Option>
+                    <Select.Option value="disabled">111111</Select.Option>
+                  </Select>
+                </Col>
+                <Col span={6} style={{textAlign: 'right'}}>
+                  <Button type="primary" style={{fontSize: 12}}>保存</Button>
+                  <Button type="primary" style={{fontSize: 12}}>发布</Button>
+                </Col>
+              </Row>
 
-                <Input />
-                <Input.TextArea style={{display: 'flex', flex: 1}} />
+              <Input placeholder="作品标题" style={{height: 50, border: 'none', borderBottom: '1px solid #ccc', borderRadius: 0}} />
+              <Input.TextArea style={{display: 'flex', height: 'calc(100vh - 300px)', border: 'none', borderBottom: '1px solid #ccc', borderRadius: 0, overflowY: 'scroll', resize: 'none'}} placeholder="作品内容" rows="31" />
 
-                <Row gytter={16}>
-                  <Col span={8}>字数：</Col>
-                </Row>
-              </Layout>
+              <Row gytter={16} style={{padding: 15}}>
+                <Col span={8}>字数：</Col>
+              </Row>
             </Layout>
           </Layout>
-        </Layout>
-      </Layout>
+        </Card>
+      </Container>
     );
   }
 }
