@@ -6,25 +6,16 @@ import { Menu, Icon, Layout  } from 'antd';
 class PostList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      confirmDirty: false,
-      collapsed: true,
-      autoCompleteResult: [],
-    };
+    this.state = { };
   }
   componentWillMount() { }
 
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
   render() {
 
     return (
       <Layout.Header className={styles.header}
                      style={{ background: '#fff', padding: 0 }}>
-        <div className={styles.button} onClick={this.toggleCollapsed}>
+        <div className={styles.button} onClick={this.props.toggleCollapsed}>
           <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
         </div>
         <div className={styles.headerRight}>

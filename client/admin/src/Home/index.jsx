@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Table } from 'antd';
+import { Menu, Icon, Layout, Input, Row, Col, Button, Card, Select } from 'antd';
+import Sider from '../SiderMenu';
+import SiderBookList from '../SiderBookList';
+import axios from 'axios';
+import styles from './style.less';
 import Container from '../../components/Container'
 import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
-import styles from './style.less';
-
-
 
 class PostList extends Component {
   constructor(props) {
@@ -20,19 +21,17 @@ class PostList extends Component {
   }
 
   render() {
-    const columns = [{
-      title: '用户编号',
-      dataIndex: 'id',
-      key: 'id',
-    }, {
-      title: '标题',
-      dataIndex: 'title',
-      key: 'title',
-    }];
-
+    console.log(styles);
     return (
       <Container {...this.props}>
-        <Table rowKey="id" dataSource={this.props.posts} columns={columns} />
+        <Row gutter={10}>
+          <Col  md={12} xl={8}>
+            <Card></Card>
+          </Col>
+          <Col  md={12} xl={8}>
+            <Card></Card>
+          </Col>
+        </Row>
       </Container>
     );
   }
