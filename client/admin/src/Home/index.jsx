@@ -24,12 +24,12 @@ class PostList extends Component {
     console.log(styles);
     return (
       <Container {...this.props}>
-        <Layout.Content style={{padding: '0 15px'}}>
+        <Layout.Content style={{width: '100%'}}>
           <Row gutter={10}>
-            <Col  md={12} xl={8}>
+            <Col md={12} xl={8}>
               <Card></Card>
             </Col>
-            <Col  md={12} xl={8}>
+            <Col md={12} xl={8}>
               <Card></Card>
             </Col>
           </Row>

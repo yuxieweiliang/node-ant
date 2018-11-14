@@ -22,7 +22,6 @@ class PostList extends Component {
   }
 
   render() {
-    console.log(styles);
     return (
       <Container {...this.props}>
           <Card title="作品管理"
@@ -33,7 +32,7 @@ class PostList extends Component {
                     size="small"
                     style={{fontSize: 12}}
                     key="new-book"
-                    onClick={() => this.props.history.push('/book-new')}
+                    onClick={() => this.props.history.push('/book/new')}
                   >新建</Button>
                 ]}>
             <Table

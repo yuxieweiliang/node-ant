@@ -1,3 +1,6 @@
+/**
+ * Created by xueyufei on 2018/11/14.
+ */
 import React, { Component } from 'react';
 import { Router, Switch, Route, Redirect, Link } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
@@ -8,35 +11,28 @@ import Register from './src/Register/view';
 import Home from './src/Home';
 
 import Architecture from './src/Architecture'; // 架构
-import BookManagement from './src/BookManagement'; // 小说
-import ArchitectureNew from './src/ArchitectureNew'; // 架构
-import ArchitectureEdit from './src/ArchitectureEdit'; // 架构
+import BookManagement from './src/BookManagement'; //
+import ArchitectureNew from './src/ArchitectureNew'; //
+import ArchitectureEdit from './src/ArchitectureEdit'; //
 import Book from './src/Book'; // 小说
-import BookNew from './src/BookNew'; // 小说
-import BookEdit from './src/BookEdit'; // 小说
-import Database from './src/Database'; // 小说
-import Integral from './src/Integral'; // 小说
-import Interaction from './src/Interaction'; // 小说
-
-
+import BookNew from './src/BookNew'; //
+import BookEdit from './src/BookEdit'; //
+import Database from './src/Database'; //
+import Integral from './src/Integral'; //
+import Interaction from './src/Interaction'; //
 
 import UserList from './src/UserList';
-import BookNovels from './src/BookNovels'; // 小说
-import Select from './src/Select'; // 小说
-import List from './src/List'; // 小说
+import BookNovels from './src/BookNovels'; //
+import Select from './src/Select'; //
+import List from './src/List'; //
 import DicNew from './src/DicNew'; //
 import RoleList from './src/RoleList'; //
 import OtherSetting from './src/OtherSetting';
 
-const SubMenu = Menu.SubMenu;
 const history = createBrowserHistory();
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
 
+class Routes extends Component {
   render() {
     return (
       <Router basename="/" history={history}>
@@ -77,4 +73,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Routes;

@@ -39,7 +39,7 @@ class PostList extends Component {
                   size="small"
                   style={{fontSize: 12}}
                   key="new-book"
-                  onClick={() => this.props.history.push('/book-edit')}
+                  onClick={() => this.props.history.push('/book/edit')}
                 >创建作品</Button>
               ]}>
           <Row gytter={16} style={{padding: '10px 15px 130px 15px', width: 800, height: '100%'}}>

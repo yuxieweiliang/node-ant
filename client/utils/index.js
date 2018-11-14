@@ -1,3 +1,6 @@
+export function getPath(path) {
+  return (!!~path.indexOf(':')) ? path.split('/:')[0] : path
+}
 
 export function subscribe(ev, callback) {
   // 创建 _callbacks 对象， 除非它已经存在
@@ -36,11 +39,7 @@ export function createApi(root, common) {
  */
 export function typeOf(obj, target) {
   var _obj = Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
-
-  if (target) {
-    return _obj === target
-  }
-  return _obj
+  return target ? (_obj === target) : _obj;
 }
 
 /**

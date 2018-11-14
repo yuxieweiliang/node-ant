@@ -28,14 +28,22 @@ class PostList extends Component {
     });
   };
   render() {
-
+    const width = window.innerWidth - 120;
+    const background = 'url(/public/images/background_02.jpg)'; //  no-repeat
+    console.log(window.innerWidth);
     return (
       <Layout style={{flexDirection: 'row'}}>
         <LeftMenu {...this.props} collapsed={this.state.collapsed}/>
         <Layout>
           <Header toggleCollapsed={this.toggleCollapsed}/>
-
-          <Layout.Content className={styles.content} style={this.props.style}>
+          <Layout.Content
+            className={styles.content}
+            style={{
+              ...this.props.style,
+              background,
+              backgroundSize: `${width}px auto`
+            }}
+          >
 
             { this.props.children }
 

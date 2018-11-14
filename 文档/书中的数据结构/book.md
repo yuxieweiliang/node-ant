@@ -9,20 +9,21 @@
 角色的设定 # { b_r_s_label: 兵器, b_r_s_type: string, b_r_s_values: 苍冷的心跳 }
 role_sets:
 {
-  r_s_id:                 < 主键 >,
-  r_s_label:              标题, # 兵器 阵营：camp 武器：weapons
-  r_s_type:               string, # ( array | string ) 数据类型
-  r_s_values:             冰雪霜华, # [ 苍冷的心跳, 黎明的哀歌 ]
+  role_id:                 < 主键 >,
+  label:              标题, # 兵器 阵营：camp 武器：weapons
+  type:               string, # ( array | string ) 数据类型
+  values:             冰雪霜华, # [ 苍冷的心跳, 黎明的哀歌 ]
 }
 
 
 时间点事件：
 time_point_events:
 {
-  t_p_e_id:                 < 主键 >,
-  t_p_e_time:               2018-10-10,
-  t_p_e_title:              离家出走,
-  t_p_e_introduction:       离家出走……,
+  event_id:                 < 主键 >,
+  user:                     用户,
+  time:                     2018-10-10,
+  title:                    离家出走,
+  introduction:             离家出走……,
 }
 
 词：
@@ -55,38 +56,33 @@ word_thinks:
 
 
 
-武器：等级，形态，级别，排行，所属。
-宠物：形态，等级，名称，潜力，归属，技能，种族，种族技能。
-
-{name: '武器', labels: [1, 2, 3, 4, 5], values: [凤尾狮身虎爪, 10, null, null, null]}
-{name: '宠物', labels: [1, 2, 3, 4, 5], values: [凤尾狮身虎爪, 10, null, null, null]}
-
-[{id: 1, lable: '形态'}, {id: 2, lable: '等级'}, ]
 
 
 书籍 - 卷：
 book_volumes:
 {
-  book_v_id:                 < 主键 >,
-  book_v_title:              卷名,
-  book_v_introduction:       简介,
-  book_chapters:             [章节], # 包含那些章节
-  book_v_create_time:        创建时间,
-  book_v_update_time:        更新时间,
+  volume_id:                  < 主键 >,
+  title:                      卷名,
+  introduction:               简介,
+  chapters:                   [章节], # 包含那些章节
+  create_time:                创建时间,
+  update_time:                更新时间,
 }
+
 书籍 - 章节：
 book_chapters:
 {
-  book_c_id:                 < 主键 >,
-  book_c_title:              章节名字,
-  book_c_content:            主要内容,
-  book_c_comments:           讨论,
-  book_c_replys:             留言,
-  book_c_page:               页码,
-  book_c_create_time:        创建时间,
-  book_c_update_time:        更新时间,
+  chapter_id:                 < 主键 >,
+  title:                      章节名字,
+  content:                    主要内容,
+  comments:                   讨论,
+  replys:                     留言,
+  page:                       页码,
+  create_time:                创建时间,
+  update_time:                更新时间,
 }
 
+留言：
 comments:
 {
   comment_id:               < 主键 >,
@@ -95,6 +91,7 @@ comments:
   comment_author:           发言人id,
 }
 
+回复：
 replys:
 {
   reply_id:               < 主键 >,
@@ -107,19 +104,11 @@ replys:
 排行榜：
 rankings:
 {
-  rankings_id:             < 主键 >,
-  rankings_title:          名字,
-  rankings_content:        主体,
+  rank_id:              < 主键 >,
+  title:                    名字,
+  list:                     主体,
 }
 
-排行榜详细信息：
-rankings_details:
-{
-  rankings_details_id:       < 主键 >,
-  rankings_details_name:     名字,
-  rankings_details_value:    值,
-  rankings_details_index:    排行,
-}
 
 客户端：
 client:
@@ -132,33 +121,7 @@ client:
 
 
 
-sets:
-{
-  id:                   <主键>,
-  title:                标题,
-  introduce:            介绍,
-}
 
-字典：
-dictionaries:
-{
-  id:                   <主键>,
-  title:                标题,
-  type:                 类型,
-  ctrl_in:              属于, # doc.id
-  introduce:            介绍,
-  parent_id:            父节点, # 0：本身为最高节点，num：父节点的 id
-}
-
-sets: {
-  title: 功法层次,
-  dictionaries: [
-     {_id: 1, title: 名称, introduce: '', type: '', parent_id: null},
-     {_id: 2, title: 重量, introduce: '', type: '', parent_id: null},
-     {_id: 3, title: 长短, introduce: '', type: '', parent_id: 2},
-     {_id: 4, title: 粗细, introduce: '', type: '', parent_id: null},
-   ]
-}
 
 
 

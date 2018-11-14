@@ -21,7 +21,8 @@ module.exports = function(publicPath) {
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.es6', '.less'],
       alias: {
-        moment: "moment/min/moment-with-locales.min.js"
+        moment: "moment/min/moment-with-locales.min.js",
+        '@utils': path.resolve(process.cwd(), 'client', 'utils')
         //'type': path.resolve(rootDir, './lib/jquery.min.js')
       }
     },
