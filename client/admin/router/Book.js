@@ -20,7 +20,7 @@ function NewBook({ match }) {
 }
 
 export default function(option) {
-  console.log(option);
+  // console.log(option);
   return (
     <Switch>
       <Route path={option.match.path} exact component={Book} />

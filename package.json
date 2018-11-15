@@ -13,7 +13,8 @@
     "start": "cross-env NODE_ENV=development nodemon index.js",
     "create:page": "set NODE_ENV=development && node tool/createPage",
     "mongo": "mongod --dbpath ./db",
-    "initpg": "node ./tool/postgresSql/initdb"
+    "init:pg": "node ./tool/pg",
+    "initpg": "node ./tool/initpg"
   },
   "author": "",
   "license": "ISC",

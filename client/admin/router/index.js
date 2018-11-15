@@ -3,7 +3,7 @@ import { Router, Switch, Route, Redirect, Link } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { Menu, Icon, Layout } from 'antd';
 
-import Login from '../src/Login';
+import Login from '../src/Login/view';
 import Register from '../src/Register/view';
 import Home from '../src/Home';
 

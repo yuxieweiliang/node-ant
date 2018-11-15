@@ -6,7 +6,7 @@ import SiderBookList from '../SiderBookList';
 import axios from 'axios';
 import styles from './style.less';
 import Container from '../../components/Container'
-import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
+import { RECEIVE_LOADING } from '../../reducers/app/models';
 
 class PostList extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class PostList extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(Begin_GET_POSTS());
+    this.props.dispatch({type: RECEIVE_LOADING, data: {user: 'ffffff'}});
   }
 
   render() {

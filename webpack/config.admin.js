@@ -59,14 +59,14 @@ config.devServer = {
   }
 };
 
+/**
+ * 添加 数据别名
+ * @type {string}
+ */
+config.resolve.alias['@reducers'] = path.resolve(process.cwd(), 'client', 'admin', 'reducers');
 
 
-
-
-
-
-
-
+console.log(config);
 /*files.map(item => {
   const _item = item === 'home' ? 'index':  item;
   config.entry[_item] = method.assemblyPath(viewPath, `${item}`);

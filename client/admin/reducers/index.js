@@ -1,65 +1,16 @@
 import { combineReducers } from 'redux'
+import { all, fork, takeEvery, takeLatest } from 'redux-saga/effects';
+import { app,  RECEIVE_LOADING } from './app/models'
 
-// actions
-export const RECEIVE_USERS = 'RECEIVE_USERS';
-export const FETCH_USERS_ERROR = 'FETCH_USERS_ERROR';
-export const RECEIVE_POSTS = 'RECEIVE_POPTS';
-export const FETCH_POSTS_ERROR = 'FETCH_USERS_ERROR';
-export const BEGIN_GET_POSTS = 'BEGIN_GET_POSTS';
-
-// action creators
-export function GET_USERS(users) {
-	return { type: RECEIVE_USERS, users }
+export default {
+  reducers: combineReducers({
+    app: app.reducer
+  }),
+  rootSaga: function* () {
+    yield all([
+      // fork(() => takeLatest(RECEIVE_LOADING, showPostsAsync)),  // 可以始用fork
+      takeLatest(RECEIVE_LOADING, app.loading), // 也可以直接始用
+      // fork(watchGetBook),
+    ]);
+  }
 }
-
-export function GET_ERROR(error) {
-	return { type: FETCH_USERS_ERROR, error }
-}
-
-export function GET_POSTS(posts) {
-    return { type: RECEIVE_POSTS, posts }
-}
-
-export function Begin_GET_POSTS() {
-    return { type: BEGIN_GET_POSTS }
-}
-
-export function GET_POSTS_ERROR(error) {
-	return { type: FETCH_POSTS_ERROR, error }
-}
-
-// reducer
-const initialState = {
-	fetched: false, 
-	users: [{
-		key: '1',
-		name: '张三',
-		email: 'zhangsan@126.com'
-    }],
-    posts: [{
-        key: '1',
-        id: '1',
-        title: 'test'
-    }],
-	error: null
-};
-
-const appReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case FETCH_USERS_ERROR: {
-            return {...state, error: action.error};
-        }
-        case RECEIVE_USERS: {
-            return {...state, fetched: true, users: action.users};
-        }
-        case FETCH_POSTS_ERROR: {
-            return {...state, error: action.error};
-        }
-        case RECEIVE_POSTS: {
-            return {...state, fetched: true, posts: action.posts};
-        }
-    }
-    return state;
-};
-
-export default appReducer

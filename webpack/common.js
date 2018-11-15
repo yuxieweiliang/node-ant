@@ -7,6 +7,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin'); // 清理
 const modules = require("./module");
 
 
+
 // 项目根目录,请确保命令在根目录执行 sails-webpack2
 module.exports = function(publicPath) {
   return {

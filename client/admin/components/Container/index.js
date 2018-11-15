@@ -30,7 +30,7 @@ class PostList extends Component {
   render() {
     const width = window.innerWidth - 120;
     const background = 'url(/public/images/background_02.jpg)'; //  no-repeat
-    console.log(window.innerWidth);
+    // console.log(window.innerWidth);
     return (
       <Layout style={{flexDirection: 'row'}}>
         <LeftMenu {...this.props} collapsed={this.state.collapsed}/>

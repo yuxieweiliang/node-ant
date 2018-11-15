@@ -17,7 +17,7 @@ function NewArchitecture({ match }) {
 }
 
 export default function(option) {
-  console.log(option);
+  // console.log(option);
   return (
     <Switch>
       <Route path={option.match.path} exact component={Architecture} />

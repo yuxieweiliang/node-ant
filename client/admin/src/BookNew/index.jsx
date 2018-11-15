@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styles from './style.less';
-import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
 import { Menu, Icon, Layout, Card, Form, Input, Select, Row, Col, Checkbox, Button } from 'antd';
 import Container from '../../components/Container'
-import Step01 from './index_01'
-import Step02 from './index_02'
+import { newBook, getBook } from '@reducers/book/sagas';
+import rootSaga from '../../sagas'
+import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
+import Step01 from './Step01'
+import Step02 from './Step02'
 
 
 class PostList extends Component {
@@ -19,6 +21,8 @@ class PostList extends Component {
 
   componentWillMount() {
     // this.props.dispatch(Begin_GET_POSTS());
+    // this.props.dispatch(rootSaga());
+    // this.props.dispatch(newBook());
   }
 
   renderStep() {
@@ -27,6 +31,9 @@ class PostList extends Component {
       case 2: return <Step02/>;
       default: return <Step01/>;
     }
+  }
+  newBook() {
+
   }
   render() {
     return (
@@ -48,8 +55,6 @@ class PostList extends Component {
 
           </Row>
         </Card>
-
-
       </Container>
     );
   }

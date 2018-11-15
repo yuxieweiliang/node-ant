@@ -48,7 +48,7 @@ class PostList extends Component {
     }
 
     componentWillMount() {
-        this.props.dispatch(Begin_GET_POSTS());
+        // this.props.dispatch(Begin_GET_POSTS());
     }
 
     render() {

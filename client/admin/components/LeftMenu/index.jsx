@@ -45,7 +45,7 @@ class Sider extends Component {
   };
   render() {
     let rootPath = this.props.match.path.split('/')[1];
-    console.log(rootPath);
+    // console.log(rootPath);
     // console.log('this', this.state.path[this.props.location.pathname], this.props.location.pathname);
     return (
       <div id="leftMenu">

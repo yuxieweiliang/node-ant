@@ -3,19 +3,19 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga'
-import rootSaga from './sagas'
-import reducers from './reducers'
+// import rootSaga from './sagas'
+import sagas from './reducers'
 import App from './router'
 
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
-  reducers,
+  sagas.reducers,
   applyMiddleware(sagaMiddleware)
 );
 
-sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(sagas.rootSaga);
 // const action = type => store.dispatch({type});
 
 ReactDOM.render(
