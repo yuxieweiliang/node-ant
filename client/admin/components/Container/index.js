@@ -8,13 +8,15 @@ import LeftMenu from '../LeftMenu';
 import Header from '../Header'
 import styles from './style.less';
 
-
-import { Table } from 'antd';
-
 class PostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      /**
+       * 菜单栏
+       * false: 展开
+       * true:  收起
+       */
       collapsed: false
     };
   }
@@ -46,6 +48,12 @@ class PostList extends Component {
   componentDidMount() {
     this.props.dispatch({type: 'app/loading', payload: false})
   }
+
+  /**
+   * 菜单栏 切换
+   * false: 展开
+   * true:  收起
+   */
   toggleCollapsed = () => {
     console.log(this.state.collapsed);
     this.setState({
@@ -53,9 +61,9 @@ class PostList extends Component {
     });
   };
   render() {
-    const width = window.innerWidth - 120;
-    const background = 'url(/public/images/background_02.jpg)'; //  no-repeat
-    console.log('this.props.children', this.props.children);
+    const width = window.innerWidth - 120; // 背景图片的大小
+    const background = 'url(/public/images/background_02.jpg)'; // 背景图片
+
     return (
       <Layout style={{flexDirection: 'row'}}>
         <LeftMenu {...this.props} collapsed={this.state.collapsed}/>
