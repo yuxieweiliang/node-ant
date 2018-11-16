@@ -3,38 +3,39 @@
  */
 import { call, put, all, fork, takeEvery, takeLatest } from 'redux-saga/effects';
 import Immutable from 'seamless-immutable';
-import { postBook, getBooks } from './server'
-import book from '../../../api/book'
-// LOGIN
-export const POST_BOOKS = 'BOOKS: [ POST ]';
-export const BEGIN_POST_BOOKS = 'BOOKS: [ POST ] -> BEGIN';
-export const POST_BOOKS_ERROR = 'BOOKS: [ POST ] -> ERROR';
-export const POST_BOOKS_SURE = 'BOOKS: [ POST ] -> SURE';
-export const GET_BOOKS = 'BOOKS: [ GET ]';
-export const BEGIN_GET_BOOKS = 'BOOKS: [ GET ] -> BEGIN';
-export const GET_BOOKS_ERROR = 'BOOKS: [ GET ] -> ERROR';
-export const GET_BOOKS_SURE = 'BOOKS: [ GET ] -> SURE';
+import { postBook, getBooks, getBookById } from './server'
 
 // reducer
 export default {
+  namespace: 'book',
   state: Immutable({
-    login: null,
+    // 【新建】单本书
+    newBook: {},
+
+    // 【详情】单本书
     book: {},
+
+    // 【列表】书
     bookList: [],
   }),
-  subscribe: {
-    setupHistory() {
-      console.log('book setupHistory');
-    }
-  },
   reducers: {
-    beginLogin(state, action) {
-      return state;
+    new_book(state, action) {
+      return state.meage({newBookLoading: true});
     },
   },
   *createNewBook( option ) {
     try {
+      yield put({type: 'new_book', payload: false});
       const response = yield call(postBook, option);
+      console.log('////////', option);
+      // yield put({type: RECEIVE_USERS, data: response.data}); BEGIN_POST_BOOKS
+    } catch(e) {
+      // yield put({type: FETCH_USERS_ERROR, data: e});
+    }
+  },
+  *getBookById( option ) {
+    try {
+      const response = yield call(getBookById, option);
       console.log('////////', option);
       // yield put({type: RECEIVE_USERS, data: response.data});
     } catch(e) {

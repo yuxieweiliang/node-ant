@@ -18,13 +18,33 @@ class PostList extends Component {
       collapsed: false
     };
   }
-  shouldComponentUpdate(nextProps, nextState) {
+  /*componentWillUpdate(nextprops){
+    console.log('common/showLoading', nextprops);
+    if (nextprops.location.pathname !== this.props.location.pathname) {
+      this.props.dispatch({
+        type:'common/showLoading'
+      })
+    }
+  }
+  componentDidUpdate(nextprops){
+    console.log('common/hideLoading', nextprops);
+    if(this.props.common.loading===true){
+      this.props.dispatch({
+        type:'common/hideLoading'
+      })
+    }
+  }*/
+
+  /*shouldComponentUpdate(nextProps, nextState) {
     const { loading } = this.props;
     console.log(nextProps, nextState);
     return true;
-  }
+  }*/
   componentWillMount() {
-    this.props.dispatch({type: 'loading', payload: true})
+    this.props.dispatch({type: 'app/loading', payload: true})
+  }
+  componentDidMount() {
+    this.props.dispatch({type: 'app/loading', payload: false})
   }
   toggleCollapsed = () => {
     console.log(this.state.collapsed);

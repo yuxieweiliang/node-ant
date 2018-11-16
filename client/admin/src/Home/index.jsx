@@ -17,10 +17,10 @@ class PostList extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch({type: 'loading', data: {user: 'ffffff'}});
+    // this.props.dispatch({type: 'ffffffff', data: {user: 'ffffff'}});
   }
   onClick = () => {
-    this.props.dispatch({type: 'loading', data: 'mmmmmmmmmm'})
+    this.props.dispatch({type: 'architecture/RECEIVE_ARCHITECTURES'})
   };
 
   render() {

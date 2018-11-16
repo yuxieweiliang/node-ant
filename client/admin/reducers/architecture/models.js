@@ -4,31 +4,19 @@
 import { call, put, all, fork, takeEvery, takeLatest } from 'redux-saga/effects';
 import Immutable from 'seamless-immutable';
 import { postArchitecture, getArchitectures, getArchitectureById } from './server'
-import book from '../../../api/book'
-// LOGIN
-export const RECEIVE_LOADING = 'RECEIVE_LOADING';
-export const FETCH_USERS_ERROR = 'FETCH_USERS_ERROR';
-export const RECEIVE_USERS = 'RECEIVE_USERS';
-export const CHANGE_INPUT = 'CHANGE_INPUT';
-export const types = {
-  // POST BOOK
-  POST_BOOKS: 'BOOKS: [ POST ]',
-  BEGIN_POST_BOOKS: 'BOOKS: [ POST ] -> BEGIN',
-  POST_BOOKS_ERROR: 'BOOKS: [ POST ] -> ERROR',
-  POST_BOOKS_SURE: 'BOOKS: [ POST ] -> SURE',
-  // GET BOOK
-  GET_BOOKS: 'BOOKS: [ GET ]',
-  BEGIN_GET_BOOKS: 'BOOKS: [ GET ] -> BOOKS',
-  GET_BOOKS_ERROR: 'BOOKS: [ GET ] -> ERROR',
-  GET_BOOKS_SURE: 'BOOKS: [ GET ] -> SURE',
-};
 
 // reducer
 export default {
+  namespace: 'architecture',
   state: Immutable({
-    login: null,
-    book: {},
-    bookList: [],
+    // 【新建】框架
+    newArchitecture: {},
+
+    // 【详情】框架
+    architecture: {},
+
+    // 【列表】框架
+    architectureList: [],
   }),
   reducers: {
     beginLogin(state, action) {
@@ -37,18 +25,21 @@ export default {
   },
   *createNewBook( option ) {
     try {
+      yield put({type: 'app/loading', payload: true});
       const response = yield call(postArchitecture, option);
-      console.log('////////', option);
+      yield put({type: 'app/loading', payload: false});
       // yield put({type: RECEIVE_USERS, data: response.data});
     } catch(e) {
-      // yield put({type: FETCH_USERS_ERROR, data: e});
+      yield put({type: 'app/loading', payload: false});
     }
   },
-  *login() {
+  *getArchitectures() {
     try {
-      const response = yield call(getArchitectures, url, {})
+      yield put({type: 'app/loading', payload: true});
+      const response = yield call(postArchitecture, option);
+      yield put({type: 'app/loading', payload: false});
     } catch(e) {
-      // yield put({type: FETCH_USERS_ERROR, data: e});
+      yield put({type: 'app/loading', payload: false});
     }
   }
 };

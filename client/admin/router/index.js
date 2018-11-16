@@ -26,7 +26,7 @@ import List from '../src/List'; //
 
 class App extends Component {
   componentWillMount() {
-    this.props.dispatch({type: 'loading'});
+    // this.props.dispatch({type: 'loading'});
     console.log('this.props: ', this.props)
   }
   render() {
