@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import styles from './style.less';
 import { Menu, Icon, Layout, Card, Form, Input, Select, Row, Col, Checkbox, Button } from 'antd';
 import Container from '../../components/Container'
-import { newBook, getBook } from '@reducers/book/sagas';
-import rootSaga from '../../sagas'
+// import { newBook, getBook } from '@reducers/book/sagas';
 import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
 import Step01 from './Step01'
 import Step02 from './Step02'

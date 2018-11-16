@@ -18,9 +18,14 @@ class PostList extends Component {
       collapsed: false
     };
   }
-
-  componentWillMount() { }
-
+  shouldComponentUpdate(nextProps, nextState) {
+    const { loading } = this.props;
+    console.log(nextProps, nextState);
+    return true;
+  }
+  componentWillMount() {
+    this.props.dispatch({type: 'loading', payload: true})
+  }
   toggleCollapsed = () => {
     console.log(this.state.collapsed);
     this.setState({
@@ -30,7 +35,7 @@ class PostList extends Component {
   render() {
     const width = window.innerWidth - 120;
     const background = 'url(/public/images/background_02.jpg)'; //  no-repeat
-    // console.log(window.innerWidth);
+    console.log('this.props.children', this.props.children);
     return (
       <Layout style={{flexDirection: 'row'}}>
         <LeftMenu {...this.props} collapsed={this.state.collapsed}/>

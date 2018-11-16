@@ -9,7 +9,7 @@ import axios from '@utils/axios';
  * @param data
  * @returns {Promise<T>}
  */
-export function postBook(url, data) {
+export function postArchitecture(url, data) {
   return axios.post(url, data)
 }
 
@@ -18,7 +18,7 @@ export function postBook(url, data) {
  * @param url
  * @returns {Promise<T>}
  */
-export function getBooks(url) {
+export function getArchitectures(url) {
   return  axios.get('book');
 }
 
@@ -27,7 +27,7 @@ export function getBooks(url) {
  * @param book_id
  * @returns {Promise<T>}
  */
-export function getBookById(book_id = '121212') {
+export function getArchitectureById(book_id = '121212') {
   const data = { params: { book_id } };
   return axios.get('book', data).then(res => console.log(res));
 }

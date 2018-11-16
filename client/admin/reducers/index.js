@@ -1,15 +1,45 @@
 import { combineReducers } from 'redux'
-import { all, fork, takeEvery, takeLatest } from 'redux-saga/effects';
-import { app,  RECEIVE_LOADING } from './app/models'
+import { all, fork, take, takeEvery, takeLatest } from 'redux-saga/effects';
+import app from './app/models'
+import book, { POST_BOOKS, GET_BOOKS } from './book/models'
+
+function createReducers(app) {
+  const { state, reducers } = app;
+  return (store = state, action) => (
+    reducers[action.type]
+      ? reducers[action.type](store, action)
+      : store
+  );
+}
+
+function historyListen(history) {
+  history.listen(function(route) {
+    if(route.pathname === '/') {
+      let sub = app.subscribe;
+      if(sub) {
+        for (let key in sub) {
+          sub[key]()
+        }
+      }
+    }
+    else if(route.pathname === '/book') {}
+    else  if(route.pathname === '/architecture') {}
+  });
+}
 
 export default {
   reducers: combineReducers({
-    app: app.reducer
+    app: createReducers(app),
+    book: createReducers(book),
   }),
-  rootSaga: function* () {
+  rootSaga: function* (history) {
+    historyListen(history);
     yield all([
-      // fork(() => takeLatest(RECEIVE_LOADING, showPostsAsync)),  // 可以始用fork
-      takeLatest(RECEIVE_LOADING, app.loading), // 也可以直接始用
+      // takeLatest('RECEIVE_LOADING', app.loading),
+      // takeLatest('RECEIVE_LOADING', app.login),
+      takeLatest(POST_BOOKS, book.createNewBook),
+      takeLatest(GET_BOOKS, book.getBookById),
+      // takeLatest('changeRoute', app.login, history),
       // fork(watchGetBook),
     ]);
   }

@@ -66,7 +66,7 @@ config.devServer = {
 config.resolve.alias['@reducers'] = path.resolve(process.cwd(), 'client', 'admin', 'reducers');
 
 
-console.log(config);
+// console.log(config);
 /*files.map(item => {
   const _item = item === 'home' ? 'index':  item;
   config.entry[_item] = method.assemblyPath(viewPath, `${item}`);

@@ -7,9 +7,9 @@ export default {
     var data = {
       aa: 'first',
       bb: 'last'
-    }
+    };
 
-    console.log('get all patient')
+    console.log('get all patient');
 
     return data
   }
