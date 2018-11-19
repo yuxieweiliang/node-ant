@@ -3,64 +3,47 @@ import { connect } from 'react-redux';
 import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
 import { Menu, Icon, Layout, Radio, Form, Input, Select, Row, Col, Checkbox, Button } from 'antd';
 const FormItem = Form.Item;
-import { bookType } from './data'
+
+const Option = Select.Option;
+const formItemLayout = {
+  labelCol: { xs: { span: 24 }, sm: { span: 8 }, },
+  wrapperCol: { xs: { span: 24 }, sm: { span: 16 },},
+};
 
 
 class PostList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      website: '中文网',
-      classify: 20001,
-      type: '独家首发',
-    };
-  }
-
-  componentWillMount() {
-    // this.props.dispatch(Begin_GET_POSTS());
-  }
+  componentWillMount() { }
   onWebsiteChange = (e) => {
-    this.setState({website: e.target.value});
+    this.props.dispatch({ type: 'book/websiteChange',payload: e.target.value });
   };
   onNameChange = (e) => {
-    this.setState({name: e.target.value});
+    this.props.dispatch({ type: 'book/nameChange',payload: e.target.value });
   };
-  onClassifySelect = (classify, option) => {
-    // console.log(option);
-    bookType.map((item, i) => {
-      if(item.label === classify) {
-        this.setState({
-          bookSubType: bookType[i].children
-        });
-      }
-    });
-    this.setState({classify});
+  onClassifySelect = (classify) => {
+    this.props.dispatch({ type: 'book/bookSubTypeChange',payload: classify });
   };
-  onClassifySubSelect = (classifySub, option) => {
-    this.setState({classifySub});
+  onClassifySubSelect = (classifySub) => {
+    this.props.dispatch({ type: 'book/classifySubChange',payload: classifySub });
   };
   onTypeChange = (e) => {
-    this.setState({type: e.target.value});
+    this.props.dispatch({ type: 'book/typeChange',payload: e.target.value });
   };
   onIntroductionChange = (e) => {
-    this.setState({introduction: e.target.value});
+    this.props.dispatch({ type: 'book/introductionChange',payload: e.target.value });
   };
   onTitleMessageChange = (e) => {
-    this.setState({title_message: e.target.value});
+    this.props.dispatch({ type: 'book/titleMessageChange',payload: e.target.value });
   };
+
+  createOption = (option) => (
+    option && option.map((item, key) => (
+      <Option key={key} value={item.label} >{ item.value }</Option>
+    ))
+  );
+
   render() {
-    const { website, classify, bookSubType, type } = this.state;
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
-      },
-    };
-    // console.log(this.state);
+    const { website, classify, classifySub, type, bookRootType, bookSubType } = this.props;
+    console.log(this.props);
     const children = [];
     for (let i = 10; i < 36; i++) {
       children.push(<Select.Option key={i.toString(36) + i}>{i.toString(36) + i}</Select.Option>);
@@ -75,7 +58,7 @@ class PostList extends Component {
           </Radio.Group>
         </FormItem>
 
-        <FormItem {...formItemLayout} label="作品名称">
+        <FormItem {...formItemLayout} label="作品名称"  placeholder="请输入作品名称">
           <Input onChange={this.onNameChange} />
         </FormItem>
 
@@ -83,30 +66,12 @@ class PostList extends Component {
           <Row gutter={10}>
             <Col span="6">
               <Select value={classify} onSelect={this.onClassifySelect}>
-                {
-                  bookType.map((item, key) => (
-                    <Select.Option
-                      key={key}
-                      value={item.label}
-                    >
-                      {item.value}
-                    </Select.Option>
-                  ))
-                }
+                { this.createOption(bookRootType) }
               </Select>
             </Col>
             <Col span="18">
-              <Select placeholder="请先选择分类" onSelect={this.onClassifySubSelect}>
-                {
-                  bookSubType && bookSubType.map((item, key) => (
-                    <Select.Option
-                      key={key}
-                      value={key}
-                    >
-                      {item.value}
-                    </Select.Option>
-                  ))
-                }
+              <Select value={classifySub} onSelect={this.onClassifySubSelect}>
+                { this.createOption(bookSubType) }
               </Select>
             </Col>
           </Row>
@@ -150,12 +115,5 @@ class PostList extends Component {
   }
 }
 
-const mapStateToProps  = (state) => {
-  console.log(state);
-  return ({
-    posts: state.posts
-  })
-};
-
 const WrappedPostListnForm = Form.create()(PostList);
-export default connect(mapStateToProps)(WrappedPostListnForm);
+export default PostList;

@@ -31,7 +31,6 @@ function createReducers(app) {
   });
 }*/
 
-
 export default {
   reducers: combineReducers({
     app: createReducers(app),
@@ -44,7 +43,7 @@ export default {
       takeLatest('app/RECEIVE_LOGIN', app.login),
       takeLatest('app/RECEIVE_LOGOUT', app.logout),
       takeLatest('book/POST_BOOKS', book.createNewBook),
-      takeLatest('book/GET_BOOKS', book.getBookById),
+      takeLatest('book/RECEIVE_BOOK_LIST', book.getWorksByAuthorId),
       takeLatest('architecture/RECEIVE_ARCHITECTURES', architecture.getArchitectures),
       // takeLatest('changeRoute', app.login, history),
       // fork(watchGetBook),

@@ -23,6 +23,16 @@ export function getBooks(url) {
 }
 
 /**
+ * 根据作者的 ID， 获取 作品列表
+ * @param book_id
+ * @returns {Promise<T>}
+ */
+export function getWorksByAuthorId(book_id = '121212') {
+  const data = { params: { book_id } };
+  return axios.get('book', data).then(res => console.log(res));
+}
+
+/**
  * 根据书本的ID，获取书的详细信息
  * @param book_id
  * @returns {Promise<T>}

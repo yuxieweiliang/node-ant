@@ -6,7 +6,6 @@ import SiderBookList from '../SiderBookList';
 import axios from 'axios';
 import styles from './style.less';
 import Container from '../../components/Container'
-import { RECEIVE_ARCHITECTURES } from '../../reducers/architecture/models';
 import { columns, data } from './data'
 
 class PostList extends Component {
@@ -18,7 +17,7 @@ class PostList extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch({type: RECEIVE_ARCHITECTURES});
+    this.props.dispatch({type: 'architecture/RECEIVE_ARCHITECTURES'});
   }
 
   render() {

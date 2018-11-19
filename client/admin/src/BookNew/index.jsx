@@ -25,14 +25,17 @@ class PostList extends Component {
 
   renderStep() {
     switch(this.state.step) {
-      case 1: return <Step01/>;
-      case 2: return <Step02/>;
-      default: return <Step01/>;
+      case 1: return <Step01 {...this.props.newBook} {...this.props}/>;
+      case 2: return <Step02 {...this.props.newBook} {...this.props}/>;
+      default: return <Step01 {...this.props.newBook} {...this.props}/>;
     }
   }
-  newBook() {
-
-  }
+  createNewBook = () => {
+    const { newBook } = this.props;
+    console.log(newBook);
+    return;
+    this.props.history.push('/book/edit')
+  };
   render() {
     return (
       <Container {...this.props}>
@@ -44,7 +47,7 @@ class PostList extends Component {
                   size="small"
                   style={{fontSize: 12}}
                   key="new-book"
-                  onClick={() => this.props.history.push('/book/edit')}
+                  onClick={ this.createNewBook }
                 >创建作品</Button>
               ]}>
           <Row gytter={16} style={{padding: '10px 15px 130px 15px', width: 800, height: '100%'}}>
@@ -58,9 +61,11 @@ class PostList extends Component {
   }
 }
 
-const mapStateToProps  = (state) => ({
-  posts: state.posts
-});
+const mapStateToProps  = (state) => {
+  return ({
+    ...state.book
+  })
+};
 
 const WrappedPostListnForm = Form.create()(PostList);
 export default connect(mapStateToProps)(WrappedPostListnForm);

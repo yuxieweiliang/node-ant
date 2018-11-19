@@ -20,6 +20,8 @@ class PostList extends Component {
     // this.props.dispatch({type: 'ffffffff', data: {user: 'ffffff'}});
   }
   onClick = () => {
+
+
     this.props.dispatch({type: 'architecture/RECEIVE_ARCHITECTURES'})
   };
 

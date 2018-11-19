@@ -6,7 +6,6 @@ import SiderBookList from '../SiderBookList';
 import axios from 'axios';
 import styles from './style.less';
 import Container from '../../components/Container'
-import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
 import { columns, data } from './data'
 
 class PostList extends Component {
@@ -18,7 +17,7 @@ class PostList extends Component {
   }
 
   componentWillMount() {
-    // this.props.dispatch(Begin_GET_POSTS());
+    this.props.dispatch({type: 'book/RECEIVE_BOOK_LIST'});
   }
 
   render() {
