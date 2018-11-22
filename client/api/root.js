@@ -1,16 +1,12 @@
 import config from '../config/config'
 import { createApi } from '../utils'
 
-
 /**
  * 公共api
  */
 const _system = createApi(config.api, 'system');
 const _user = createApi(config.api, 'user');
 const _book = createApi(config.api, 'book');
-
-
-
 
 export const system = {
   login: _system('login'),

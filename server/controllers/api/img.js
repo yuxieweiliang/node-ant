@@ -28,7 +28,7 @@ var updateImg = async (ctx) => {
   var dataBuffer = new Buffer(base64Data, 'base64');
   var save = await saveImg(dataBuffer);
 
-  console.log(save);
+  // console.log(save);
   ctx.body = JSON.stringify({
     data:  '保存失败！'
   });
@@ -54,7 +54,7 @@ var updateImg2 = async (ctx) => {
     var file = files.file;
     const reader = fs.createReadStream(file.path);
 
-    console.log(os.tmpdir(), file.path);
+    // console.log(os.tmpdir(), file.path);
 
     const stream = fs.createWriteStream('fdsafdsa.jpeg');
     reader.pipe(stream);

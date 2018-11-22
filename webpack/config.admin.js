@@ -33,6 +33,7 @@ let plugins = new HtmlWebpackPlugin({
 config.plugins.push(plugins);
 
 config.devServer = {
+  // publicPath: '/public',  //静态资源的根路径
   // index: '',
   historyApiFallback: true,
   // host: '127.0.0.1',
@@ -41,6 +42,7 @@ config.devServer = {
   hot: true,
   inline: true,
   progress: true,
+  // contentBase: path.join(__dirname, 'app/build'),  //不是很清楚，但是总觉这个属性应该适合热替换有关，应该是服务器监听的资源的目录
   proxy: {
     context: ['*'],
     target: "http://localhost:8080/",
@@ -57,14 +59,14 @@ config.devServer = {
   }
 };
 
+/**
+ * 添加 数据别名
+ * @type {string}
+ */
+config.resolve.alias['@reducers'] = path.resolve(process.cwd(), 'client', 'admin', 'reducers');
 
 
-
-
-
-
-
-
+// console.log(config);
 /*files.map(item => {
   const _item = item === 'home' ? 'index':  item;
   config.entry[_item] = method.assemblyPath(viewPath, `${item}`);

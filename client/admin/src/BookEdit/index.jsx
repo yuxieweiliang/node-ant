@@ -17,11 +17,10 @@ class PostList extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(Begin_GET_POSTS());
+    // this.props.dispatch(Begin_GET_POSTS());
   }
 
   render() {
-    console.log(styles);
     return (
       <Container {...this.props}>
         <Card title="《 倾仙 》" bodyStyle={{padding: 0, paddingTop: 1, flex: 1}} style={{flex: 1, display: 'flex', flexDirection: 'column'}}>

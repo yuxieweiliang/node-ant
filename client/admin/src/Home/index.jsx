@@ -5,8 +5,8 @@ import Sider from '../SiderMenu';
 import SiderBookList from '../SiderBookList';
 import axios from 'axios';
 import styles from './style.less';
-import Container from '../../components/Container'
-import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
+import Container from '../../components/Container';
+import { RECEIVE_LOADING, CHANGE_INPUT } from '../../reducers/app/models';
 
 class PostList extends Component {
   constructor(props) {
@@ -17,19 +17,25 @@ class PostList extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(Begin_GET_POSTS());
+    // this.props.dispatch({type: 'ffffffff', data: {user: 'ffffff'}});
   }
+  onClick = () => {
+
+
+    this.props.dispatch({type: 'architecture/RECEIVE_ARCHITECTURES'})
+  };
 
   render() {
-    console.log(styles);
+    console.log('styles', styles);
     return (
       <Container {...this.props}>
-        <Layout.Content style={{padding: '0 15px'}}>
+        <Layout.Content style={{width: '100%'}}>
+          <Button onClick={this.onClick}>点击</Button>
           <Row gutter={10}>
-            <Col  md={12} xl={8}>
+            <Col md={12} xl={8}>
               <Card></Card>
             </Col>
-            <Col  md={12} xl={8}>
+            <Col md={12} xl={8}>
               <Card></Card>
             </Col>
           </Row>

@@ -115,7 +115,7 @@ export const bookType = [{
       {value: '末世危机',}
     ]
   },{
-    label: 20050,
+    label: 20060,
     value: '体育',
     children: [
       {value: '体育赛事',},
@@ -123,7 +123,7 @@ export const bookType = [{
       {value: '足球运动',}
     ]
   },{
-    label: 20050,
+    label: 20070,
     value: '二次元',
     children: [
       {value: '原生幻想',},
@@ -133,7 +133,7 @@ export const bookType = [{
       {value: '青春日常',}
     ]
   },{
-    label: 20050,
+    label: 20080,
     value: '现实',
     children: [
       {value: '爱情婚姻',},
@@ -145,7 +145,7 @@ export const bookType = [{
       {value: '青春文学',}
     ]
   },{
-    label: 20050,
+    label: 20090,
     value: '短片',
     children: [
       {value: '影视剧本',},

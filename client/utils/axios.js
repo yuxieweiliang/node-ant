@@ -1,19 +1,20 @@
 import axios from 'axios';
+import config from '../config/config'
 
 
-// "Authorization": "Bearer fdsafdsafdsa"
-function createAxios() {
+function createAjax() {
   const token = JSON.parse(localStorage.getItem("token"));
   const option = { "Content-Type": "application/json;charset=UTF-8", };
 
+  // "Authorization": "Bearer ******"
   if(token) option.Authorization = `${token.token_type} ${token.access_token}`;
 
   return axios.create({
-    baseURL: 'http://localhost:4000/api/',
+    baseURL: `${config.api}/api/`,
     timeout: 2000,
     // headers: {'X-Custom-Header': 'foobar'}
     headers: option
   })
 }
 
-export default createAxios();
+export default createAjax();

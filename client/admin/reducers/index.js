@@ -1,65 +1,52 @@
 import { combineReducers } from 'redux'
+import { all, fork, take, takeEvery, takeLatest } from 'redux-saga/effects';
+import app from './app/models'
+import book from './book/models'
+import architecture from './architecture/models'
 
-// actions
-export const RECEIVE_USERS = 'RECEIVE_USERS';
-export const FETCH_USERS_ERROR = 'FETCH_USERS_ERROR';
-export const RECEIVE_POSTS = 'RECEIVE_POPTS';
-export const FETCH_POSTS_ERROR = 'FETCH_USERS_ERROR';
-export const BEGIN_GET_POSTS = 'BEGIN_GET_POSTS';
-
-// action creators
-export function GET_USERS(users) {
-	return { type: RECEIVE_USERS, users }
+function createReducers(app) {
+  const { namespace, state, reducers } = app;
+  return (store = state, action) => {
+    const [first, second] = action.type.split('/');
+    return (
+      (first === namespace && reducers[second])
+        ? reducers[second](store, action)
+        : store
+    )
+  };
 }
 
-export function GET_ERROR(error) {
-	return { type: FETCH_USERS_ERROR, error }
-}
-
-export function GET_POSTS(posts) {
-    return { type: RECEIVE_POSTS, posts }
-}
-
-export function Begin_GET_POSTS() {
-    return { type: BEGIN_GET_POSTS }
-}
-
-export function GET_POSTS_ERROR(error) {
-	return { type: FETCH_POSTS_ERROR, error }
-}
-
-// reducer
-const initialState = {
-	fetched: false, 
-	users: [{
-		key: '1',
-		name: '张三',
-		email: 'zhangsan@126.com'
-    }],
-    posts: [{
-        key: '1',
-        id: '1',
-        title: 'test'
-    }],
-	error: null
-};
-
-const appReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case FETCH_USERS_ERROR: {
-            return {...state, error: action.error};
+/*function historyListen(history) {
+  history.listen(function(route) {
+    if(route.pathname === '/') {
+      let sub = app.subscribe;
+      if(sub) {
+        for (let key in sub) {
+          sub[key]()
         }
-        case RECEIVE_USERS: {
-            return {...state, fetched: true, users: action.users};
-        }
-        case FETCH_POSTS_ERROR: {
-            return {...state, error: action.error};
-        }
-        case RECEIVE_POSTS: {
-            return {...state, fetched: true, posts: action.posts};
-        }
+      }
     }
-    return state;
-};
+    else if(route.pathname === '/book') {}
+    else  if(route.pathname === '/architecture') {}
+  });
+}*/
 
-export default appReducer
+export default {
+  reducers: combineReducers({
+    app: createReducers(app),
+    book: createReducers(book),
+    architecture: createReducers(architecture),
+  }),
+  rootSaga: function* (history) {
+    // historyListen(history);
+    yield all([
+      takeLatest('app/RECEIVE_LOGIN', app.login),
+      takeLatest('app/RECEIVE_LOGOUT', app.logout),
+      takeLatest('book/POST_BOOKS', book.createNewBook),
+      takeLatest('book/RECEIVE_BOOK_LIST', book.getWorksByAuthorId),
+      takeLatest('architecture/RECEIVE_ARCHITECTURES', architecture.getArchitectures),
+      // takeLatest('changeRoute', app.login, history),
+      // fork(watchGetBook),
+    ]);
+  }
+}

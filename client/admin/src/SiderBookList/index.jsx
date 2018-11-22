@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom';
 import { List, Icon, Button, Layout } from 'antd';
 
 class Sider extends Component {
@@ -7,10 +6,10 @@ class Sider extends Component {
     super(props);
     this.state = {
       list: [
-        {title: '架构 1',},
-        {title: '架构 2',},
-        {title: '架构 3',},
-        {title: '架构 4',},
+        {title: '第一章 1',},
+        {title: '第二章 2',},
+        {title: '第三章 3',},
+        {title: '第四章 4',},
       ]
     };
   }
@@ -29,7 +28,7 @@ class Sider extends Component {
           renderItem={item => (
             <List.Item  style={{paddingLeft: 24}}>
               <List.Item.Meta
-                title={<a href="https://ant.design">{item.title}</a>}
+                title={<a href="#FFFF">{item.title}</a>}
               />
             </List.Item>
           )}
