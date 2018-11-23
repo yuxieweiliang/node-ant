@@ -1,46 +1,12 @@
 import React from 'react';
-import mongoose from 'mongoose';
 import _ from 'lodash';
-import ReactServer from 'react-dom/server'
-import BookPage from '../../../src/page/book'
-import queryString from 'query-string'
+import queryString from 'query-string';
+import userSql from '../../sql/user';
 
-const User = mongoose.model('User')
 /**
  * 书籍
  */
-var getUser = async (ctx) => {
-  let data = JSON.parse(ctx.request.body);
-  let params = ctx.request.query || ctx.query;
-  let users = await  User.find({'account.username': data.username });
-  let message = null;
 
-  if(_.isEmpty(users)) {
-    message = '用户不存在'
-  } else {
-    message = users;
-  }
-  ctx.body = JSON.stringify({
-    data: message
-  });
-};
-
-
-var postUser = async ctx => {
-  let data = JSON.parse(ctx.request.body);
-  let params = ctx.request.query || ctx.query;
-  let users = await  User.find({'account.username': data.username })
-  let message = null;
-
-  if(_.isEmpty(users)) {
-    let createUser = await User.create({ account: data});
-    message = (_.isEmpty(createUser) ? '用户创建失败！' : '用户创建成功！');
-  } else {
-    message = '用户已存在。';
-  }
-
-  ctx.body = JSON.stringify({message});
-};
 var updateUser = async ctx => {
   let data = JSON.parse(ctx.request.body);
   let params = ctx.request.query || ctx.query;
@@ -50,7 +16,7 @@ var updateUser = async ctx => {
   if(_.isEmpty(users)) {
     message = '用户不存在'
   } else {
-    let update = await User.update({_id: doc[0]._id}, {'account.password': data.password}, {safe: true})
+    let update = await User.update({_id: doc[0]._id}, {'account.password': data.password}, {safe: true});
     if(_.isEmpty(users)) {
       message = '更新失败！'
     } else {
@@ -67,7 +33,7 @@ var updateUser = async ctx => {
 
 var deleteUser = async ctx => {
   let data = JSON.parse(ctx.request.body);
-  let params = ctx.request.query || ctx.query
+  let params = ctx.request.query || ctx.query;
   let users = await  User.find({'account.username': data.username });
   let message = null;
 
@@ -89,8 +55,28 @@ var deleteUser = async ctx => {
 };
 
 module.exports = {
-  'GET /api/user': getUser,
-  'POST /api/user': postUser,
+  'POST /api/user': async ctx => {
+    let data = ctx.request.body;
+    let params = ctx.request.query || ctx.query;
+
+    let createUser = await ctx.pg.save(userSql.createUser(data));
+    console.log('/////////', createUser);
+
+    ctx.body = JSON.stringify({...createUser});
+  },
+  'GET /api/user': async (ctx) => {
+    // let data = JSON.parse(ctx.request.body);
+    let params = ctx.request.query || ctx.query;
+    let message = null;
+
+    console.log('/////////////////////////////////////////////', ctx.session.user, ctx.session.data);
+    /*if(_.isEmpty(users)) {
+     message = '用户不存在'
+     } else {
+     message = users;
+     }*/
+    ctx.body = '用户不存在';
+  },
   'POST /api/user_update': updateUser,
   'POST /api/user_delete': deleteUser,
 };

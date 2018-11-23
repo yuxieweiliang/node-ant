@@ -1,16 +1,17 @@
 import React from 'react'
 import mongoose from 'mongoose';
 
-const book = mongoose.model('Book')
+// const book = mongoose.model('Book');
+const book = '';
 
 var get_book = async (ctx, next) => {
   let postdata = '';
-  let params = ctx.request.query || ctx.query || func.getParams(ctx.request.url) || func.getParams(ctx.req._parsedUrl.query)
+  let params = ctx.request.query || ctx.query || func.getParams(ctx.request.url) || func.getParams(ctx.req._parsedUrl.query);
 
   /*
   */
   // 从数据库中查找
-  console.log(ctx.request.body)
+  console.log(ctx.request.body);
   var getBook = function() {
     return new Promise((resolve, reject) => {
       book.find({name: 'book'}, function(err, doc) {
@@ -22,10 +23,10 @@ var get_book = async (ctx, next) => {
       })
     })
   };
-  var books = await getBook()
+  var books = await getBook();
   ctx.body = JSON.stringify(books);
 };
 
 module.exports = {
-  'get /doc/book': get_book,
+  'GET /doc/book': get_book,
 };

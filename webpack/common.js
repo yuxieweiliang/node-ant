@@ -1,146 +1,66 @@
-
-//前置webpack以及相关插件
 const webpack = require('webpack');
+const fs = require('fs');
+const path = require('path');
+// 合并webpack配置
+const merge = require('webpack-merge');
+const CleanWebpackPlugin = require('clean-webpack-plugin'); // 清理
+const modules = require("./module");
 
-//处理html模板
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-// 获取入口文件的
-const getEntries = require('../../tool/var/fileList.js');
 
 
-module.exports = function(projectRoot, env) {
-
-  // 入口起点
-  let entries = {
-    // 全局 公用 libs
-    vender: [
-      'react',
-      'react-dom',
-      'redux',
-      'react-redux',
-      'normalize.css',
-      'jquery',
-      'moment',
-      'lodash',
-      'font-awesome-loader'
-    ]
-  };
-
-  // 获取入口文件
-  getEntries(`${projectRoot}/src/index.jsx`, (item) => {
-
-    // 以文件夹的名称作为 页面的名称
-    let name = item.split('/').splice(-1)[0].split('.')[0];
-
-    // 赋值给入口对象
-    entries[name] = item;
-
-  });
-
-  // 处理最终输出的html 页面
-  let pages = [];
-  let tpl = `${projectRoot}/src/index.html`; // 模板的路径
-  let chunks = Object.keys(entries); // 所有的 chunk
-
-  for (let name of chunks) {
-    // 当 name 为 公共libs时
-    if (name === 'vender') continue;
-    // 加载html模板
-    let conf = {
-      filename: `${name}.html`,
-      template: tpl,
-      showErrors: true,
-      chunks: chunks,
-      inject: true
-    };
-
-    // 生产环境下，处理页面中的注释 与 空白
-    if (env === 'pro') {
-      conf['minify'] = {
-        removeComments: true,
-        collapseWhitespace: true,
-      };
-    }
-    pages.push(new HtmlWebpackPlugin(conf));
-  }
-
+// 项目根目录,请确保命令在根目录执行 sails-webpack2
+module.exports = function(publicPath) {
   return {
-
-    resolve: {
-      extensions: ['.scss', '.js', '.jsx', '.htm', '.json', '.html', '.es6'],
-      modules: ['node_modules']
-    },
-    entry: entries,
+    entry: {},
     output: {
-      filename: 'js/[name].js',
-      path: `${projectRoot}/assets/web/`,
-      publicPath: '/',
-      sourceMapFilename: '[name].map'
+      path: publicPath, // 也可以使用 publicPath
+      filename: '[name].build.js',
+      chunkFilename: '[name].[chunkhash:5].chunk.js'
     },
-    module: {
-      rules: [
-
-        // 处理 js,es6 / jsx
-        {
-          test: /\.(js|es6|jsx)$/,
-          use: ['react-hot-loader', 'babel-loader', 'eslint-loader'],
-          exclude: /node_modules/
-        },
-
-        // 处理 html
-        {
-          test: /\.(htm|html)$/,
-          use: 'html-withimg-loader'
-        },
-
-        // 处理 json
-        {
-          test: /\.json$/,
-          use: 'json-loader'
-        },
-
-        // 处理视频与音频文件
-        {
-          test: /\.(mpeg|mp4|webm|ogv|wav|mp3|flv)$/,
-          use: 'file-loader?limit=4192&name=[path][name].[ext]'
+    module: modules,
+    resolve: {
+      modules: ['node_modules'],
+      extensions: ['.js', '.jsx', '.es6', '.less'],
+      alias: {
+        moment: "moment/min/moment-with-locales.min.js",
+        '@utils': path.resolve(process.cwd(), 'client', 'utils')
+        //'type': path.resolve(rootDir, './lib/jquery.min.js')
+      }
+    },
+    /**
+     * 配置外部访问的公共代码
+     */
+    externals: {
+      window: 'window'
+    },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendors",
+            chunks: 'all',
+            priority: -10 // 优先
+          },
+          // 首先: 打包node_modules中的文件
+          common: {
+            test: /[\\/]src[\\/]/,
+            name: "commons",
+            chunks: "all",
+            minSize: 1,
+            priority: 10
+          },
         }
-      ]
+      }
     },
-
     plugins: [
-
-      // 全局 React相关
-      new webpack.ProvidePlugin({
-        'React': 'react',
-        'window.React': 'react',
-
-        'jQuery': 'jquery',
-        'window.jQuery': 'jquery',
-
-        '$': 'jquery',
-        'window.$': 'jquery',
-
-        'ReactDom': 'react-dom',
-        'window.ReactDom': 'react-dom',
-
-        'moment': 'moment',
-        'window.moment': 'moment',
-
-        '_': 'lodash',
-        'window._': 'lodash',
-
-        'Redux': 'redux',
-        'window.Redux': 'redux',
-
-        'PropTypes': 'prop-types',
-        'window.PropTypes': 'prop-types',
-
-        'ReactRedux': 'react-redux',
-        'window.ReactRedux': 'react-redux'
-      })
-
-      // 将模版页面的处理 合并到 webpack的插件中
-    ].concat(pages)
+      new CleanWebpackPlugin(['./dist/'], {
+        verbose: true,
+        dry: false,
+      }),
+      new webpack.optimize.MinChunkSizePlugin({
+        minChunkSize: 10000 // Minimum number of characters
+      }),
+    ]
   };
 };
