@@ -1,11 +1,73 @@
-"# ladder-stack" 
+> # start
 
-# 当前请求的发送地址
-request.headers.referer
+
+### 启动作者端
+npm run dev:admin
+
+ ### 启动读者端
+npm run dev:web
+
+ ### 启动app端
+npm run dev:app
+
+### 创建数据库
+npm run initpg
+
+### 启动服务端
+npm start
+
+作者端前后端分离，读者端服务端渲染，app使用RN，只开发api。
+
+- client: 客户端
+  - admin: 作者端
+    - components: 组件
+    - reducers: 数据 store
+    - router: 路由
+    - src: 页面
+    - style: 公共样式
+    - views: 公共模板
+  - api: api
+  - app: app
+  - config: 配置
+  - utils: 工具函数
+  - web: 读者端
+
+- public: 公共资源
+  - images: 图片
+
+- server: 服务端
+  - controllers: API
+  - database: 数据库
+  - docs: 文档
+  - middleware: 中间件
+  - Schema: GraphQL
+  - socket: socket
+  - sql: API 使用到的sql
+  - webpack: react 服务端渲染配置
+
+- tool: 工具
+  - config: 数据库配置（创建数据库时）
+  - createPage: 创建自定义组件默认内容
+  - PG_SQL: 创建数据库表格SQL语句
+  - 数据库: 数据库设计 & 输出API格式实例
+
+
+> ### 页面路由
+/login # 登陆
+/register # 注册
+/book # 书籍列表
+  /book/new # 新建
+  /book/edit # 编辑
+/architecture # 架构列表
+  /architecture/new # 新建
+  /architecture/edit # 编辑
+/database
+/setting
+
+
+### 其他
 
 https://github.com/reactjs/express-react-views
-
-
 
 网站:
 设定：
