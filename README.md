@@ -54,15 +54,25 @@ npm start
 
 
 # 页面路由
+
   /login # 登陆
+
   /register # 注册
+
   /book # 书籍列表
+
     /book/new # 新建
+
     /book/edit # 编辑
+
   /architecture # 架构列表
+
     /architecture/new # 新建
+
     /architecture/edit # 编辑
+
   /database
+
   /setting
 
 
