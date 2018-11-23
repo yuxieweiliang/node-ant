@@ -1,23 +1,24 @@
-> # start
+# start
 
 
-### 启动作者端
+> ### 启动作者端
 npm run dev:admin
 
- ### 启动读者端
+> ### 启动读者端
 npm run dev:web
 
- ### 启动app端
+> ### 启动app端
 npm run dev:app
 
-### 创建数据库
+> ### 创建数据库
 npm run initpg
 
-### 启动服务端
+> ### 启动服务端
 npm start
 
 作者端前后端分离，读者端服务端渲染，app使用RN，只开发api。
 
+# 项目架构
 - client: 客户端
   - admin: 作者端
     - components: 组件
@@ -52,7 +53,7 @@ npm start
   - 数据库: 数据库设计 & 输出API格式实例
 
 
-> ### 页面路由
+# 页面路由
 /login # 登陆
 /register # 注册
 /book # 书籍列表
@@ -65,7 +66,7 @@ npm start
 /setting
 
 
-### 其他
+# 其他
 
 https://github.com/reactjs/express-react-views
 
