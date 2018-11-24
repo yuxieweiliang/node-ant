@@ -1,6 +1,9 @@
 # start
 
 
+> ### 加载依赖
+npm install
+
 > ### 启动作者端
 npm run dev:admin
 

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Router, Switch, Route, Redirect, Link } from 'react-router-dom';
 import { Menu, Icon, Layout } from 'antd';
 
-import Login from '../src/Login/view';
-import Register from '../src/Register/view';
+import Login from '../src/Login';
+import Register from '../src/Register';
 import Home from '../src/Home';
 
 import Architecture from './Architecture'; // 架构

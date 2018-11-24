@@ -101,7 +101,7 @@ OAuth2Provider.prototype = new EventEmitter();
  * @param token_options
  */
 OAuth2Provider.prototype.generateAccessToken = function(user_id, client_id, extra_data, token_options) {
-  token_options = token_options || {}
+  token_options = token_options || {};
   var out = _extend(token_options, {
     access_token: this.serializer.stringify([user_id, client_id, +new Date, extra_data]),
     refresh_token: null,
@@ -123,6 +123,7 @@ OAuth2Provider.prototype.login = function() {
     const authorization = ctx.req.headers.authorization;
     let data, atok, user_id, client_id, grant_date, extra_data;
 
+    console.log('----------');
     /**
      * 获取 access_token || authorization
      * 1、 www.xxx.com ? access_token = xxxxxxxxx
@@ -133,6 +134,7 @@ OAuth2Provider.prototype.login = function() {
     } else if((authorization || '').indexOf('Bearer ') === 0) {
       atok = authorization.replace('Bearer', '').trim();
     } else {
+      console.log('----------');
       return await next();
     }
     /**

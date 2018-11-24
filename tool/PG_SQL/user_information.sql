@@ -7,7 +7,7 @@
 *  CACHE 缓存
 */
 CREATE SEQUENCE if NOT EXISTS public.users_user_information_id_seq
- INCREMENT 2
+ INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
  START 1
@@ -16,27 +16,26 @@ CREATE SEQUENCE if NOT EXISTS public.users_user_information_id_seq
 /**
 *  创建用户表
   user_id:                  < 主键 >,
-  user_sex:                 性别,
-  user_name:                实名, #【真是姓名】
-  user_pseudonym:           笔名, # 签名 署名
-  user_birthday:            生日,
-  user_nickname:            昵称, #【昵称】
-  user_collect_books:       [收藏的书], #
-  user_follow_authors:      [关注的作者], #
-  user_role:                角色, # 普通用户，作家，编辑，管理员，小组成员
-  user_auth:                权限, #
+  sex:                      性别,
+  name:                     实名, #【真是姓名】
+  pseudonym:                笔名, # 签名 署名
+  birthday:                 生日,
+  nickname:                 昵称, #【昵称】
+  collect_books:            [收藏的书], #
+  follow_authors:           [关注的作者], #
+  role:                     角色, # 普通用户，作家，编辑，管理员，小组成员
+  auth:                     权限, #
 */
 CREATE TABLE if NOT EXISTS public.user_information (
-  user_id                 SERIAL        NOT NULL PRIMARY KEY,
-  user_sex                enum_sex      DEFAULT NULL,
-  user_name               varchar(13)   DEFAULT NULL,
-  user_birthday           varchar(13)   DEFAULT NULL,
-  user_nickname           varchar(13)   DEFAULT NULL,
-  user_pseudonym          varchar(16)   DEFAULT NULL,
-  user_collect_books      varchar(13)   DEFAULT NULL,
-  user_follow_authors     varchar(13)   DEFAULT NULL,
-  user_role               varchar(13)   DEFAULT NULL,
-  user_auth               enum_type     DEFAULT NULL
+  user_id            SERIAL        NOT NULL PRIMARY KEY,
+  sex                enum_sex      DEFAULT NULL,
+  nickname           varchar(13)   DEFAULT NULL,
+  birthday           varchar(13)   DEFAULT NULL,
+  pseudonym          varchar(16)   DEFAULT NULL,
+  collect_books      varchar(13)   DEFAULT NULL,
+  follow_authors     varchar(13)   DEFAULT NULL,
+  role               varchar(13)   DEFAULT NULL,
+  auth               enum_type     DEFAULT NULL
 ) WITH (OIDS = FALSE);
 ALTER SEQUENCE public.users_user_information_id_seq OWNED BY user_information.user_id;
 

@@ -19,6 +19,8 @@ function addMapping(router, mapping) {
     // 解析类型已经API地址
     let [method, path] = string.replace(/\s+/g, ' ').trim().toLowerCase().split(' ');
     if(type[method] && router[type[method]]) {
+
+      console.log(type[method], path);
       createRouter(type[method], path, mapping[string]);
     }
   }
@@ -65,7 +67,7 @@ function addControllers(router, dirs) {
 
 module.exports = function(app) {
   const ctrl_dirs = path.join(process.cwd(), './server/controllers/');
-  const unless = { ext: ['css'], path: [/\/register/, /\/login/,  /\/register/, /\/oauth2.0/,] };
+  const unless = { ext: ['css'], path: [/\/register/, /\/login/, /\/oauth2.0/,] };
 
   /**
    * 读取/server/containers 下的所有文件
@@ -79,6 +81,7 @@ module.exports = function(app) {
    * 检查login ： 检查是否登陆
    */
   app.use(oAuth2.oauth().unless(unless));
+
   app.use(oAuth2.login().unless(unless));
 
   /**

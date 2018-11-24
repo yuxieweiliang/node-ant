@@ -40,8 +40,9 @@ export default {
   rootSaga: function* (history) {
     // historyListen(history);
     yield all([
-      takeLatest('app/RECEIVE_LOGIN', app.login),
-      takeLatest('app/RECEIVE_LOGOUT', app.logout),
+      takeLatest('app/LOGIN', app.login),
+      takeLatest('app/LOGOUT', app.logout),
+      takeLatest('app/REGISTER', app.register),
       takeLatest('book/POST_BOOKS', book.createNewBook),
       takeLatest('book/RECEIVE_BOOK_LIST', book.getWorksByAuthorId),
       takeLatest('architecture/RECEIVE_ARCHITECTURES', architecture.getArchitectures),

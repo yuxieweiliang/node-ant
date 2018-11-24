@@ -60,30 +60,47 @@ class PostList extends Component {
       collapsed: !this.state.collapsed,
     });
   };
+  /**
+   * 导航栏
+   * key: login | logout
+   */
+  onMenuClick = (option) => {
+    if(option.key === 'login') {
+      this.props.history.push(option.key)
+    }
+  };
   render() {
+    const { match } = this.props;
     const width = window.innerWidth - 120; // 背景图片的大小
     const background = 'url(/public/images/background_02.jpg)'; // 背景图片
 
-    return (
-      <Layout style={{flexDirection: 'row'}}>
-        <LeftMenu {...this.props} collapsed={this.state.collapsed}/>
-        <Layout>
-          <Header toggleCollapsed={this.toggleCollapsed}/>
-          <Layout.Content
-            className={styles.content}
-            style={{
-              ...this.props.style,
-              background,
-              backgroundSize: `${width}px auto`
-            }}
-          >
+    switch(match.url) {
+      case '/login':
+      case '/register': return (this.props.children);
+      default:  return (
+        <Layout style={{flexDirection: 'row'}}>
+          <LeftMenu {...this.props} collapsed={this.state.collapsed}/>
+          <Layout>
+            <Header
+              toggleCollapsed={this.toggleCollapsed}
+              onMenuClick={this.onMenuClick}
+            />
+            <Layout.Content
+              className={styles.content}
+              style={{
+                ...this.props.style,
+                background,
+                backgroundSize: `${width}px auto`
+              }}
+            >
 
-            { this.props.children }
+              { this.props.children }
 
-          </Layout.Content>
+            </Layout.Content>
+          </Layout>
         </Layout>
-      </Layout>
-    );
+      );
+    }
   }
 }
 

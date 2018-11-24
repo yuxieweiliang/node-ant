@@ -13,10 +13,10 @@ let sql = {
   isRegister(username) {
     return this.login(username);
   },
-  findOneUser(username) {
+  findOneUser(user_id) {
     return {
       text: `SELECT * FROM user_information WHERE user_id = $1`,
-      values: [username]
+      values: [user_id]
     }
   },
   createUser(username, password) {
@@ -32,7 +32,7 @@ module.exports = {
     let body = ctx.request.body;
     let params = ctx.request.query || ctx.query;
 
-
+    console.log('create_token: ', params);
     if(!params.username || !params.password) {
       ctx.body = {
         data: null,
@@ -44,18 +44,25 @@ module.exports = {
 
     const data = await ctx.pg.findOne(sql.login(params.username));
     console.log('create_token: ', data);
-    const userInfo = await ctx.pg.findOne(sql.findOneUser(data.data.user_id));
-    const user = data.data;
+    // const userInfo = await ctx.pg.findOne(sql.findOneUser(data.data.user_id));
+    // const user = data.data;
 
-    console.log('create_token: ', userInfo);
-    if(!data.data) {
-      ctx.body = data;
-      return;
+    if(data.data) {
+      ctx.body = {
+        data: true,
+        error: null,
+        state: 0
+      };
+    } else {
+      ctx.body = {
+        data: false,
+        error: data.error,
+        state: 1
+      };
     }
 
-
     // create_token
-    oAuth2.emit('create_token', user.user_id, user.username, function(data) {
+    /*oAuth2.emit('create_token', user.user_id, user.username, function(data) {
       ctx.session[params.username] = data;
       ctx.session.user = {...user, ...userInfo.data};
       ctx.body = {
@@ -63,7 +70,7 @@ module.exports = {
         error: null,
         state: 0
       };
-    });
+    });*/
 
     /*oAuth2.emit('create_access_token', body.username, body.password, function(data) {
       ctx.session[body.username] = body.username;
@@ -89,8 +96,10 @@ module.exports = {
    *  user_auth 权限 'Readers', 'Author', 'Administrators', 'Group_Admin', 'Root'
    */
   'POST /api/system/register': async (ctx, next) => {
-    let { username, password } = ctx.request.body;
+    let { username, password } = ctx.request.body.data;
 
+
+    console.log('register: ', ctx.request.body);
     const res = await ctx.pg.find(sql.isRegister(username));
 
     if(res.data) {

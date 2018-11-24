@@ -22,13 +22,16 @@ class PostList extends Component {
           <div className={styles.button}>
             <Icon type="mail" />
           </div>
-          <Menu mode="horizontal" onClick={this.handleClickMenu}>
+          <Menu mode="horizontal" onClick={this.props.onMenuClick}>
             <Menu.SubMenu
               /*className={styles['ant-menu-submenu-title']}*/
               style={{float: 'right',}}
               title={<span><Icon type="user" />fdsa</span>}>
+              <Menu.Item key="login">
+                登陆
+              </Menu.Item>
               <Menu.Item key="logout">
-                Sign out
+                退出
               </Menu.Item>
             </Menu.SubMenu>
           </Menu>

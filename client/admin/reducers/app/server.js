@@ -3,10 +3,14 @@
  */
 import axios from '@utils/axios';
 
-export function logout() {
-  return axios.get('logout')
+export function register(data) {
+  return axios.post('system/register', { data })
 }
 
-export function login(data) {
-  return axios.post('login', { data })
+export function login(params) {
+  return axios.get('system/login', { params })
+}
+
+export function logout(params) {
+  return axios.get('logout', { params })
 }

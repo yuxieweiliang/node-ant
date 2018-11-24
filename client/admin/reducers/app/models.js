@@ -1,7 +1,7 @@
 /**
  * Created by xueyufei on 2018/11/15.
  */
-import { login, logout } from './server'
+import { register, login, logout } from './server'
 import { call, put, all, fork, takeEvery, takeLatest } from 'redux-saga/effects';
 import Immutable from 'seamless-immutable';
 
@@ -28,10 +28,25 @@ export default {
       return state.merge({loading: action.payload});
     },
   },
-  *login() {
+  *register(action) {
+    console.log(action);
     try {
       yield put({type: 'app/loading', payload: true});
-      const response = yield call(login, url, {});
+
+      const response = yield call(register, action.payLoad);
+      console.log(response);
+      yield put({type: 'app/loading', payload: false});
+    } catch(e) {
+      yield put({type: 'app/loading', payload: false});
+    }
+  },
+  *login(action) {
+    console.log(action);
+    try {
+      yield put({type: 'app/loading', payload: true});
+
+      const response = yield call(login, action.payLoad);
+      console.log(response);
       yield put({type: 'app/loading', payload: false});
     } catch(e) {
       yield put({type: 'app/loading', payload: false});
