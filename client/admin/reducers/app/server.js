@@ -4,7 +4,7 @@
 import axios from '@utils/axios';
 
 export function register(data) {
-  return axios.post('system/register', { data })
+  return axios.post('system/register', data)
 }
 
 export function login(params) {

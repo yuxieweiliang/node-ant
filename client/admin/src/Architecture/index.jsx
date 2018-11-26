@@ -31,7 +31,7 @@ class PostList extends Component {
                   size="small"
                   style={{fontSize: 12}}
                   key="new-book"
-                  onClick={() => this.props.history.push('/book/new')}
+                  onClick={() => this.props.history.push('/architecture/new')}
                 >新建</Button>
               ]}>
           <Table
@@ -46,7 +46,7 @@ class PostList extends Component {
 }
 
 const mapStateToProps  = (state) => ({
-  posts: state.posts
+  ...state.architecture
 });
 
 export default connect(mapStateToProps)(PostList);

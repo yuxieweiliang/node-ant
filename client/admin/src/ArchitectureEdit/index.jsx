@@ -109,10 +109,28 @@ class PostList extends Component {
     };
     return (
     <Container {...this.props}>
-      <Layout.Content className="card-container" style={{width: 1000}}>
+      <Card title={
+        <Button
+          size="small"
+          style={{fontSize: 12}}
+          onClick={() => this.props.history.go(-1)}
+        >
+          上一步
+        </Button>
+      }
+            style={{width: 1020, flex: 1}}
+            extra={[/*<Button type="primary" size="small" style={{fontSize: 12}}>保存</Button>,*/
+              <Button
+                type="primary"
+                size="small"
+                style={{fontSize: 12}}
+                key="new-architecture"
+                onClick={() => this.submit()}
+              >创建架构</Button>
+            ]}>
         <Tabs defaultActiveKey="1" tabPosition="left">
           <TabPane tab="基本信息" key="1">
-            <Row style={{padding: '10px 15px'}}>
+            {/*<Row style={{padding: '10px 15px'}}>
               <Col span={18}>
                 fdsa
               </Col>
@@ -120,7 +138,7 @@ class PostList extends Component {
                 <Button type="primary" size="small" style={{fontSize: 12}}>保存</Button>
                 <Button type="primary" size="small" style={{fontSize: 12}}>发布</Button>
               </Col>
-            </Row>
+            </Row>*/}
             <Row gytter={16}>
               <Col span="18">
                 <Form onSubmit={this.handleSubmit}>
@@ -210,7 +228,7 @@ class PostList extends Component {
                             ) : item.type === 'select' ? (
                               <div>
                                 {item.title}
-                                { item.value.map(_item => <Tag color="blue">{_item}</Tag>) }
+                                { item.value.map((_item, key) => <Tag color="blue" key={key}>{_item}</Tag>) }
                               </div>
                             ) : ''
                           }
@@ -315,7 +333,10 @@ class PostList extends Component {
             <p>Content of Tab Pane 3</p>
           </TabPane>
         </Tabs>
-      </Layout.Content>
+      </Card>
+      {/*<Layout.Content className="card-container" style={{width: 1000}}>
+
+      </Layout.Content>*/}
       <Modal
         title="添加字段"
         visible={this.state.visible}

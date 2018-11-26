@@ -23,10 +23,17 @@ export default {
       return state;
     },
   },
-  *createNewBook( option ) {
+  *createNewBook( { payload } ) {
+    let option = {
+      name: payload.name,
+      author: payload.author,
+      type: payload.type,
+      background: payload.background,
+      editor: payload.editor,
+    };
     try {
       yield put({type: 'app/loading', payload: true});
-      const response = yield call(postArchitecture, option);
+      const result = yield call(postArchitecture, option);
       yield put({type: 'app/loading', payload: false});
       // yield put({type: RECEIVE_USERS, data: response.data});
     } catch(e) {
@@ -34,6 +41,24 @@ export default {
     }
   },
   *getArchitectures() {
+    try {
+      yield put({type: 'app/loading', payload: true});
+      console.log('--------------getArchitectures')
+      const response = yield call(getArchitectures);
+      yield put({type: 'app/loading', payload: false});
+    } catch(e) {
+      yield put({type: 'app/loading', payload: false});
+    }
+  },
+  *postArchitectures({ payload }) {
+    console.log('--------------getArchitectures', payload)
+    let option = {
+      name: payload.name || '架构名称',
+      author: payload.author || '作者',
+      type: payload.type || '类型',
+      background: payload.background || '背景',
+      editor: payload.editor || '编辑',
+    };
     try {
       yield put({type: 'app/loading', payload: true});
       const response = yield call(postArchitecture, option);

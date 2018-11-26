@@ -28,39 +28,21 @@ module.exports = {
    * 添加书
    * @returns {Promise.<void>}
    */
-  'POST /api/architecture': async function(ctx) {
-    let defaultValue = {
-      book_name: null,
-      book_author: null,
-      book_signature: null,
-      book_editor: null,
-      book_role: null,
-      book_settings: null,
-    };
-    let body = Object.assign(defaultValue, ctx.request.body);
-    let params = ctx.request.query || ctx.query;
-
-
-    const data = await ctx.pg.find_01(sql.createBook([...Object.values(body)]));
-
-    console.log(data);
-
-    // author 需要获取 userId  , 可以从token 中获取
-    ctx.body = JSON.stringify({
-      data: '创建成功'
-    });
+  'POST /api/architecture/new': async function(ctx) {
+    let body = ctx.request.body;
+    console.log(body);
+    const sql = ctx.sql.save('architectures', body)
+    ctx.body = await ctx.pg.query(sql);
     // const findBook = await book.find({title: data.title});
-    console.log(findBook);
   },
   /**
    * 获取自己的书
    * @returns {Promise.<void>}
    */
   'GET /api/architecture': async function(ctx)  {
-    let postData = '';
-    let params = ctx.request.query || ctx.query;
-
-    const data = await ctx.pg.findOne(sql.findBookById('xueyuffei'));
+    let { author, page, size } = ctx.request.query;
+    let sql = ctx.sql.select('architectures', { author }, undefined, ` limit ${size || 10} offset ${page || 0}`);
+    const data = await ctx.pg.findOne(sql);
 
     console.log('--------', data.rows);
     // ctx.body = JSON.stringify(data);

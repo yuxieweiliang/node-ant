@@ -5,21 +5,19 @@ import axios from '@utils/axios';
 
 /**
  * 新建书本
- * @param url
  * @param data
  * @returns {Promise<T>}
  */
-export function postArchitecture(url, data) {
-  return axios.post(url, data)
+export function postArchitecture(data) {
+  return axios.post('architecture/new', data)
 }
 
 /**
  * 获取书的列表
- * @param url
  * @returns {Promise<T>}
  */
-export function getArchitectures(url) {
-  return  axios.get('book');
+export function getArchitectures() {
+  return  axios.get('architecture');
 }
 
 /**

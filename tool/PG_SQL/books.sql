@@ -2,6 +2,7 @@
 *  创建书籍表
   book_id:                  < 主键 >, # 书号
   name:                     书名, #
+  website:                  网站, # 首发网站
   introduction:             简介,
   title_message:            扉页寄语,
   type:                     类型, # 驻站， 签约， 未签约， 公众作品
@@ -21,6 +22,7 @@
 CREATE TABLE if NOT EXISTS public.books (
   book_id               SERIAL              NOT NULL PRIMARY KEY,
   name                  varchar(16)         NOT NULL,
+  website               varchar(16)         NOT NULL,
   introduction          varchar(100)        DEFAULT NULL,
   title_message         varchar(100)        DEFAULT NULL,
   type                  varchar(100)        DEFAULT NULL,
@@ -31,6 +33,7 @@ CREATE TABLE if NOT EXISTS public.books (
   tags                  varchar(100)        DEFAULT NULL,
   collection            varchar(100)        DEFAULT NULL,
   contribution_fee      varchar(100)        DEFAULT NULL,
+  chapter_fee           varchar(100)        DEFAULT NULL,
   status                varchar(100)        DEFAULT NULL,
   editor                varchar(100)        DEFAULT NULL,
   create_time           timestamp           NOT NULL DEFAULT now(),

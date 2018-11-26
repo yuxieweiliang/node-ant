@@ -25,20 +25,20 @@ export function getBooks(url) {
 
 /**
  * 根据作者的 ID， 获取 作品列表
- * @param book_id
+ * @param author
  * @returns {Promise<T>}
  */
-export function getWorksByAuthorId(book_id = '121212') {
-  const data = { params: { book_id } };
+export function getWorksByAuthorId(author = 1) {
+  const data = { params: { author } };
   return axios.get('book', data).then(res => console.log(res));
 }
 
 /**
  * 根据书本的ID，获取书的详细信息
- * @param book_id
+ * @param author
  * @returns {Promise<T>}
  */
-export function getBookById(book_id = '121212') {
-  const data = { params: { book_id } };
-  return axios.get('book', data).then(res => console.log(res));
+export function getBookById(author = 1) {
+  const data = { params: { author } };
+  return axios.get('book', data).then(res => res.data);
 }

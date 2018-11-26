@@ -44,8 +44,9 @@ export default {
       takeLatest('app/LOGOUT', app.logout),
       takeLatest('app/REGISTER', app.register),
       takeLatest('book/POST_BOOKS', book.createNewBook),
-      takeLatest('book/RECEIVE_BOOK_LIST', book.getWorksByAuthorId),
+      takeLatest('book/RECEIVE_BOOK_LIST', book.getBooksByAuthorId),
       takeLatest('architecture/RECEIVE_ARCHITECTURES', architecture.getArchitectures),
+      takeLatest('architecture/POST_ARCHITECTURE', architecture.postArchitectures),
       // takeLatest('changeRoute', app.login, history),
       // fork(watchGetBook),
     ]);

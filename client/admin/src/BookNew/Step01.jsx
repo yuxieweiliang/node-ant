@@ -32,7 +32,7 @@ class PostList extends Component {
   );
 
   render() {
-    const { website, classify, classifySub, type, bookRootType, bookSubType } = this.props;
+    const { website, classify, classifySub, type, bookType, bookSubType } = this.props;
     console.log(this.props);
     const children = [];
     for (let i = 10; i < 36; i++) {
@@ -56,7 +56,7 @@ class PostList extends Component {
           <Row gutter={10}>
             <Col span="6">
               <Select value={classify} onSelect={this.onClassifySelect}>
-                { this.createOption(bookRootType) }
+                { this.createOption(bookType) }
               </Select>
             </Col>
             <Col span="18">

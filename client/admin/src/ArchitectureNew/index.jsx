@@ -10,29 +10,6 @@ import Container from '../../components/Container'
 const FormItem = Form.Item;
 
 
-const residences = [{
-  value: 'zhejiang',
-  label: 'Zhejiang',
-  children: [{
-    value: 'hangzhou',
-    label: 'Hangzhou',
-    children: [{
-      value: 'xihu',
-      label: 'West Lake',
-    }],
-  }],
-}, {
-  value: 'jiangsu',
-  label: 'Jiangsu',
-  children: [{
-    value: 'nanjing',
-    label: 'Nanjing',
-    children: [{
-      value: 'zhonghuamen',
-      label: 'Zhong Hua Men',
-    }],
-  }],
-}];
 
 class PostList extends Component {
   constructor(props) {
@@ -73,23 +50,19 @@ class PostList extends Component {
     callback();
   }
 
-  handleWebsiteChange = (value) => {
-    let autoCompleteResult;
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-    }
-    this.setState({ autoCompleteResult });
-  }
+
 
   componentWillMount() {
     // this.props.dispatch(Begin_GET_POSTS());
   }
 
+  submit() {
+    this.props.dispatch({type: 'architecture/POST_ARCHITECTURE', payload: {fdsafdas: 'fdsafdsa'}});
+
+    // this.props.history.push('/architecture/edit');
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { autoCompleteResult } = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -113,21 +86,20 @@ class PostList extends Component {
         },
       },
     };
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '86',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    );
 
-    const websiteOptions = autoCompleteResult.map(website => (
-      <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-    ));
+
+
     return (
       <Container {...this.props}>
-        <Card title={<Button size="small" style={{fontSize: 12}}>上一步</Button>}
+        <Card title={
+          <Button
+            size="small"
+            style={{fontSize: 12}}
+            onClick={() => this.props.history.go(-1)}
+          >
+            上一步
+          </Button>
+        }
               style={{width: 1020, flex: 1}}
               extra={[/*<Button type="primary" size="small" style={{fontSize: 12}}>保存</Button>,*/
                 <Button
@@ -135,7 +107,7 @@ class PostList extends Component {
                   size="small"
                   style={{fontSize: 12}}
                   key="new-architecture"
-                  onClick={() => this.props.history.push('/architecture/edit')}
+                  onClick={() => this.submit()}
                 >创建架构</Button>
               ]}>
 
@@ -195,7 +167,7 @@ class PostList extends Component {
 }
 
 const mapStateToProps  = (state) => ({
-  posts: state.posts
+  ...state.posts,
 });
 
 const WrappedPostListnForm = Form.create()(PostList);

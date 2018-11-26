@@ -21,6 +21,9 @@ class PostList extends Component {
   }
 
   render() {
+    const { bookList } = this.props;
+    console.log('fffffffffffffffffff', this.props);
+
     return (
       <Container {...this.props}>
           <Card title="作品管理"
@@ -35,8 +38,8 @@ class PostList extends Component {
                   >新建</Button>
                 ]}>
             <Table
-              rowKey="key"
-              dataSource={data}
+              rowKey="book_id"
+              dataSource={bookList}
               columns={columns}
             />
           </Card>
@@ -45,8 +48,10 @@ class PostList extends Component {
   }
 }
 
-const mapStateToProps  = (state) => ({
-  posts: state.posts
-});
+const mapStateToProps  = (state) => {
+  return ({
+    ...state.book
+  })
+};
 
 export default connect(mapStateToProps)(PostList);

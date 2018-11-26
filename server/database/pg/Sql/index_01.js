@@ -4,7 +4,7 @@
 const { Client } = require('pg');
 const pgConfig = require('../config/pgConfig.json');
 const client = new Client(pgConfig.Postgre);
-import sql from './SQL';
+
 
 function validate(data) {
   if(data) {
@@ -26,9 +26,10 @@ const pg = {
 
   query: async function(query) {
     try{
-      console.log('query before', query);
       const res = await client.query(query);
       const data = res.rows.length > 0 ? res.rows : null;
+
+      console.log('findOne', data);
       return validate(data)
     }catch(error) {
       client.end();
@@ -37,10 +38,18 @@ const pg = {
     }
   },
   find: async function(query) {
-    return await this.query(query);
+    try{
+      return await this.query(query);
+    }catch(error) {
+      return error;
+    }
   },
   save: async function(query) {
-    return await this.query(query);
+    try{
+      return await this.query(query);
+    }catch(error) {
+      return error;
+    }
   },
   findOne: async function(query) {
     try{
@@ -58,7 +67,6 @@ export default function(app) {
   console.log("数据库连接成功....................");
   app.use(async function(ctx, next) {
     app.context.pg = pg;
-    app.context.sql = sql;
     await next()
   });
 

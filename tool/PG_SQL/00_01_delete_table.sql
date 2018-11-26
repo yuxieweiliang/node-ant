@@ -1,7 +1,7 @@
 /*
 *  删除表
 */
-DROP TABLE IF EXISTS public.architectures;
+/*DROP TABLE IF EXISTS public.architectures;
 
 DROP TABLE IF EXISTS public.book_chapters;
 DROP TABLE IF EXISTS public.books;
@@ -27,4 +27,4 @@ DROP TABLE IF EXISTS public.users;
 
 DROP TABLE IF EXISTS public.word_similar;
 DROP TABLE IF EXISTS public.word_thinks;
-DROP TABLE IF EXISTS public.words;
+DROP TABLE IF EXISTS public.words;*/

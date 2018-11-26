@@ -20,7 +20,7 @@ function addMapping(router, mapping) {
     let [method, path] = string.replace(/\s+/g, ' ').trim().toLowerCase().split(' ');
     if(type[method] && router[type[method]]) {
 
-      console.log(type[method], path);
+      // console.log(type[method], path);
       createRouter(type[method], path, mapping[string]);
     }
   }

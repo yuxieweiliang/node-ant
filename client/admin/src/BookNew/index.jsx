@@ -24,10 +24,32 @@ class PostList extends Component {
   }
 
   renderStep() {
+    const { bookType, bookSubType } = this.props;
     switch(this.state.step) {
-      case 1: return <Step01 {...this.props.newBook} {...this.props}/>;
-      case 2: return <Step02 {...this.props.newBook} {...this.props}/>;
-      default: return <Step01 {...this.props.newBook} {...this.props}/>;
+      case 1: return (
+        <Step01
+          {...this.props.newBook}
+          {...this.props}
+          bookType={bookType}
+          bookSubType={bookSubType}
+        />
+      );
+      case 2: return (
+        <Step02
+          {...this.props.newBook}
+          {...this.props}
+          bookType={bookType}
+          bookSubType={bookSubType}
+        />
+      );
+      default: return (
+        <Step01
+          {...this.props.newBook}
+          {...this.props}
+          bookType={bookType}
+          bookSubType={bookSubType}
+        />
+      );
     }
   }
   createNewBook = () => {

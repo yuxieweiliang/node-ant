@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import queryString from 'query-string'
 import oAuth2 from '../../middleware/OAuth2.0';// 认证
 
-let sql = {
+/*let sql = {
   login(username) {
     return {
       text: `SELECT * FROM users WHERE username = $1`,
@@ -25,7 +25,7 @@ let sql = {
       values: [username, password]
     }
   }
-};
+};*/
 
 module.exports = {
   'GET /api/system/login': async (ctx, next) => {
@@ -42,7 +42,8 @@ module.exports = {
       return;
     }
 
-    const data = await ctx.pg.findOne(sql.login(params.username));
+    const sql = ctx.sql.select('users', {username: params.username});
+    const data = await ctx.pg.findOne(sql);
     console.log('create_token: ', data);
     // const userInfo = await ctx.pg.findOne(sql.findOneUser(data.data.user_id));
     // const user = data.data;
@@ -96,11 +97,13 @@ module.exports = {
    *  user_auth 权限 'Readers', 'Author', 'Administrators', 'Group_Admin', 'Root'
    */
   'POST /api/system/register': async (ctx, next) => {
-    let { username, password } = ctx.request.body.data;
+    let { username, password } = ctx.request.body;
 
 
     console.log('register: ', ctx.request.body);
-    const res = await ctx.pg.find(sql.isRegister(username));
+
+    const user = ctx.sql.select('users', {username: username});
+    const res = await ctx.pg.find(user);
 
     if(res.data) {
       ctx.body = {
@@ -111,7 +114,8 @@ module.exports = {
       return;
     }
 
-    const created = await ctx.pg.findOne(sql.createUser(username, password));
+    const sql = ctx.sql.save('users', { username, password });
+    const created = await ctx.pg.query(sql);
 
     console.log('data2: ', created);
     ctx.body = created;

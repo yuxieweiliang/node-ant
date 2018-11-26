@@ -2,13 +2,15 @@
  * Created by xueyufei on 2018/11/8.
  */
 import React, { Component } from 'react';
+
+import { Icon, } from 'antd';
 export const columns = [{
   title: '书名',  // 最新章节  编辑分组   收藏  状态    操作
-  dataIndex: 'bookName',
-  key: 'bookName',
+  dataIndex: 'name',
+  key: 'name',
   render(text, row) {
     return <div>
-      <img src="http://localhost:4000/images/zwfm.png" alt=""/>
+      <img src="http://localhost:4000/images/zwfm.png" alt="" style={{width:40}}/>
       {text}
       </div>;
   }
@@ -17,7 +19,7 @@ export const columns = [{
   dataIndex: 'chapter',
 }, {
   title: '编辑分组',
-  dataIndex: 'editorGroup',
+  dataIndex: 'edited_group',
 }, {
   title: '收藏',
   dataIndex: 'collection',
@@ -29,7 +31,7 @@ export const columns = [{
   dataIndex: 'edit',
   render(text, row) {
     return <div>
-      新建章节 编辑作品 编辑架构
+      编辑<Icon type="sliders" theme="twoTone" />
     </div>;
   }
 }];
