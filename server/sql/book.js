@@ -26,20 +26,18 @@ export default {
   createBook(option) {
     let values = Object.assign(defaultBook, option);
     const text = `INSERT INTO books(
-      book_name,
-      book_author,
-      book_introduction,
-      book_title_message,
-      book_type,
-      book_authorization,
-      book_classify,
-      book_editor,
-      book_status,
-      book_tags,
-      book_role,
-      book_architecture,
-      book_settings
-    ) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13 ) RETURNING *`;
+      name,
+      author,
+      introduction,
+      title_message,
+      type,
+      authorization,
+      classify,
+      editor,
+      status,
+      tags,
+      role
+    ) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *`;
     return { text, values: [...Object.values(values)] };
   }
 }

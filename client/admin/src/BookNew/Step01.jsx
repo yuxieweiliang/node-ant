@@ -13,26 +13,16 @@ const formItemLayout = {
 
 class PostList extends Component {
   componentWillMount() { }
-  onWebsiteChange = (e) => {
-    this.props.dispatch({ type: 'book/websiteChange',payload: e.target.value });
-  };
-  onNameChange = (e) => {
-    this.props.dispatch({ type: 'book/nameChange',payload: e.target.value });
+  onNewBookChange = (text, key) => {
+    this.props.dispatch({
+      type: 'book/newBookChange',
+      payload: { key, data: text } });
   };
   onClassifySelect = (classify) => {
     this.props.dispatch({ type: 'book/bookSubTypeChange',payload: classify });
   };
   onClassifySubSelect = (classifySub) => {
     this.props.dispatch({ type: 'book/classifySubChange',payload: classifySub });
-  };
-  onTypeChange = (e) => {
-    this.props.dispatch({ type: 'book/typeChange',payload: e.target.value });
-  };
-  onIntroductionChange = (e) => {
-    this.props.dispatch({ type: 'book/introductionChange',payload: e.target.value });
-  };
-  onTitleMessageChange = (e) => {
-    this.props.dispatch({ type: 'book/titleMessageChange',payload: e.target.value });
   };
 
   createOption = (option) => (
@@ -52,14 +42,14 @@ class PostList extends Component {
       <Form>
 
         <FormItem {...formItemLayout} label="首发站点">
-          <Radio.Group onChange={this.onWebsiteChange} value={website}>
+          <Radio.Group onChange={(e) => this.onNewBookChange(e.target.value, 'website')} value={website}>
             <Radio value="中文网">中文网</Radio>
             <Radio value="其他">其他</Radio>
           </Radio.Group>
         </FormItem>
 
         <FormItem {...formItemLayout} label="作品名称"  placeholder="请输入作品名称">
-          <Input onChange={this.onNameChange} />
+          <Input onChange={(e) => this.onNewBookChange(e.target.value, 'name')} />
         </FormItem>
 
         <FormItem {...formItemLayout} label="作品类型">
@@ -96,7 +86,7 @@ class PostList extends Component {
         </FormItem>
 
         <FormItem {...formItemLayout} label="授权类型">
-          <Radio.Group  onChange={this.onTypeChange}  value={type}>
+          <Radio.Group  onChange={(e) => this.onNewBookChange(e.target.value, 'type')}  value={type}>
             <Radio value="独家首发">独家首发</Radio>
             <Radio value="驻站作品">驻站作品</Radio>
           </Radio.Group>
@@ -104,11 +94,11 @@ class PostList extends Component {
 
         <FormItem
           {...formItemLayout} label="作品简介">
-          <Input.TextArea rows="5" onChange={this.onIntroductionChange} />
+          <Input.TextArea rows="5" onChange={(e) => this.onNewBookChange(e.target.value, 'introduction')} />
         </FormItem>
 
         <FormItem {...formItemLayout} label="扉页寄语">
-          <Input.TextArea rows="5" onChange={this.onTitleMessageChange} />
+          <Input.TextArea rows="5" onChange={(e) => this.onNewBookChange(e.target.value, 'titleMessage')} />
         </FormItem>
       </Form>
     );

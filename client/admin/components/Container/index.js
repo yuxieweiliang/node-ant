@@ -72,7 +72,7 @@ class PostList extends Component {
   render() {
     const { match } = this.props;
     const width = window.innerWidth - 120; // 背景图片的大小
-    const background = 'url(/public/images/background_02.jpg)'; // 背景图片
+    const background = 'url(/public/images/zwfm.png)'; // 背景图片
 
     switch(match.url) {
       case '/login':

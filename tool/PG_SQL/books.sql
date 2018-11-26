@@ -15,7 +15,6 @@
   chapter_fee:              章节费, #
   status:                   状态, # 连载中，已完结，断更。
   editor:                   [编辑], # 只有这里有的人，才可以编辑
-  architecture:             架构, # ID 本书所属的架构 （书 属于 架构， 架构可以包含多本书）
   create_time:              创建时间, #
   update_time:              更新时间, #
 */
@@ -34,7 +33,6 @@ CREATE TABLE if NOT EXISTS public.books (
   contribution_fee      varchar(100)        DEFAULT NULL,
   status                varchar(100)        DEFAULT NULL,
   editor                varchar(100)        DEFAULT NULL,
-  architecture          varchar(100)        DEFAULT NULL,
   create_time           timestamp           NOT NULL DEFAULT now(),
   update_time           timestamp           NOT NULL DEFAULT now()
 ) WITH (OIDS = FALSE);
@@ -46,3 +44,7 @@ ALTER TABLE public.books
 COMMENT ON TABLE public.books
 IS '书籍 - 基础信息表';
 
+/*
+  architecture          varchar(100)        DEFAULT NULL,
+  # 架构 ID 本书所属的架构 （书 属于 架构， 架构可以包含多本书）
+*/

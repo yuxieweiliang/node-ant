@@ -33,6 +33,7 @@ class PostList extends Component {
   createNewBook = () => {
     const { newBook } = this.props;
     console.log(newBook);
+    this.props.dispatch({ type: 'book/POST_BOOKS', payLoad: newBook });
     return;
     this.props.history.push('/book/edit')
   };

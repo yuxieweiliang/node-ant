@@ -80,9 +80,9 @@ module.exports = function(app) {
    * 检查auth : 头部是否含有 authorization
    * 检查login ： 检查是否登陆
    */
-  app.use(oAuth2.oauth().unless(unless));
+  // app.use(oAuth2.oauth().unless(unless));
 
-  app.use(oAuth2.login().unless(unless));
+  // app.use(oAuth2.login().unless(unless));
 
   /**
    * 设置 graphql 服务

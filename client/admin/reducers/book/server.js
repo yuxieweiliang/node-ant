@@ -5,12 +5,13 @@ import axios from '@utils/axios';
 
 /**
  * 新建书本
- * @param url
  * @param data
  * @returns {Promise<T>}
  */
-export function postBook(url, data) {
-  return axios.post(url, data)
+export function postBook(data) {
+
+  console.log('////////', data);
+  return axios.post('book/new', data)
 }
 
 /**

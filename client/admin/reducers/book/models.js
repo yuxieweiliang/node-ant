@@ -36,11 +36,8 @@ export default {
     new_book(state, action) {
       return state.meage({newBookLoading: true});
     },
-    websiteChange(state, action) {
-      return state.setIn(['newBook', 'website'], action.payload);
-    },
-    nameChange(state, action) {
-      return state.setIn(['newBook', 'name'], action.payload);
+    newBookChange(state, action) {
+      return state.setIn(['newBook', action.payload.key], action.payload.data);
     },
     bookSubTypeChange(state, action) {
       const _bookSubType = bookSubType[action.payload];
@@ -50,21 +47,22 @@ export default {
     classifySubChange(state, action) {
       return state.setIn(['newBook', 'classifySub'], action.payload);
     },
-    typeChange(state, action) {
-      return state.setIn(['newBook', 'type'], action.payload);
-    },
-    introductionChange(state, action) {
-      return state.setIn(['newBook', 'introduction'], action.payload);
-    },
-    titleMessageChange(state, action) {
-      return state.setIn(['newBook', 'titleMessage'], action.payload);
-    },
+
   },
-  *createNewBook( option ) {
+  *createNewBook( { payLoad } ) {
     try {
       yield put({type: 'new_book', payload: false});
+      const option = {
+        website: payLoad.website,
+        name: payLoad.name,
+        type: payLoad.type,
+        classify: payLoad.classify,
+        classifySub: payLoad.classifySub,
+        introduction: payLoad.introduction,
+        title_message: payLoad.titleMessage,
+      };
+
       const response = yield call(postBook, option);
-      console.log('////////', option);
       // yield put({type: RECEIVE_USERS, data: response.data}); BEGIN_POST_BOOKS
     } catch(e) {
       // yield put({type: FETCH_USERS_ERROR, data: e});
