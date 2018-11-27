@@ -1,3 +1,15 @@
+- 在线演示 - [https://antd-admin.zuiidea.com](https://antd-admin.zuiidea.com)
+- 使用文档 - [https://doc.antd-admin.zuiidea.com/#/zh-cn/](https://doc.antd-admin.zuiidea.com/#/zh-cn/)
+- 常见问题 - [https://doc.antd-admin.zuiidea.com/#/zh-cn/faq](https://doc.antd-admin.zuiidea.com/#/zh-cn/faq)
+- 更新日志 - [https://doc.antd-admin.zuiidea.com/#/zh-cn/change-log](https://doc.antd-admin.zuiidea.com/#/zh-cn/change-log)
+
+## 特性
+
+- 国际化，源码中抽离翻译字段，按需加载语言包
+- 动态权限，不同权限对应不同菜单
+- 优雅美观，Ant Design 设计体系
+- Mock 数据，本地数据调试
+
 
 个人技术栈：
 web：
