@@ -1,13 +1,13 @@
 /*
 *  排行榜
-*  rank_id      < 主键 >
-*  title        书名
-*  list         列表
 */
 CREATE TABLE if NOT EXISTS public.rankings (
+  -- < 主键 >
   rank_id               SERIAL         NOT NULL PRIMARY KEY,
+  archite_id            SERIAL         NOT NULL,
+  -- 标题
   title                 varchar(20)    NOT NULL,
-  list                  varchar[]      DEFAULT NULL
+  FOREIGN KEY(archite_id) REFERENCES architectures(archite_id) ON UPDATE CASCADE ON DELETE CASCADE
 ) WITH (OIDS = FALSE);
 
 /*  ALTER TABLE <tablename> OWNER TO <username>  将这张表赋给当前用户  */

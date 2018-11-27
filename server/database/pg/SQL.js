@@ -83,6 +83,12 @@ PG.prototype.update = function(tableName, fields, conditions){
  * @param fields 条件字段和值，json格式
  * @param returnStr 返回字段
  * @param conditions 分页等条件
+ * Example:
+ *
+ * select('set_values', undefined, undefined, ` item_id = 1 OR item_id = 2`)
+ *
+ * select('set_values', undefined, undefined, ` item_id = 1 OR item_id = 2`)
+ *
  */
 PG.prototype.select = function(tableName, fields, returnStr = '*', conditions = ''){
   let field = [], values = [], count = 0;

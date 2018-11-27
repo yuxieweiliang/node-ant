@@ -4,7 +4,15 @@
 人物形象时会跟着章节的变化而变化的。
 作者可以通过人物，设置互动。
 
-
+字段 # 字段的名字
+set_templates:
+{
+  temp_id:                      < 主键 >,
+  set_id:                       < 外键 >, # settings
+  name:                         名字, # 武器
+  type:                         string, # ( array | string ) 数据的显示类型
+  explain:                      解释, # 解释，对于当前字段的注解，字段后面跟“？”
+}
 
 角色的设定 # { b_r_s_label: 兵器, b_r_s_type: string, b_r_s_values: 苍冷的心跳 }
 role_sets:

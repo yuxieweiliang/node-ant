@@ -32,6 +32,7 @@ const pg = {
       return validate(data)
     }catch(error) {
       client.end();
+      client.connect();
       console.log("数据库连接失败....................");
       return error
     }

@@ -7,84 +7,9 @@
 <body>
 <script>
 
-
-  const PG = function(){
-    console.log("准备向****数据库连接...");
-  };
-
-  PG.prototype.save = function(tableName, fields, ret = ''){
-    let field = [], value = [], count = 0, num = [];
-
-    if(!tableName) {console.log('tableName is request!'); return}
-    let str = `insert into ${ tableName }(`;
-
-    for(let i in fields){
-      count++;
-      field.push(i);
-      value.push(fields[i]);
-      num.push("$"+count);
-    }
-    str += field.join(",") +") values("+num.join(",")+") " + ret;
-    return {str, value};
-  };
-
-  PG.prototype.remove = function(tableName, fields){
-    let field = [], value = [], count = 0;
-
-    if(!tableName) {console.log('tableName is request!'); return}
-
-    let sql = `delete from ${ tableName } where `;
-
-    for(let i in fields){
-      count++;
-      field.push(i+"=$" +count);
-      value.push(fields[i]);
-    }
-    sql += field.join(" and ");
-    return {sql, value};
-  }
-
-  PG.prototype.update = function(tableName, fields, conditions){
-    let condition = [], value = [], count = 0, field = [];
-
-    if(!fields) {console.log('tableName is request!'); return}
-
-    let sql = `update ${ tableName } set `;
-    for(let i in fields){
-      count++;
-      field.push(i+"=$"+count);
-      value.push(fields[i]);
-    }
-    sql += field.join(",") +" where ";
-
-    for(let j in conditions) {
-      count++;
-      condition.push(j+"=$"+count);
-      value.push(conditions[j]);
-    }
-    sql += condition.join(" and ");
-    return {sql, value};
-  }
-
-  PG.prototype.select = function(tableName, fields, returnStr = '*'){
-    let field = [], value = [], count = 0;
-
-    if(!tableName) {console.log('tableName is request!'); return}
-
-    let sql = `select ${returnStr} from ${tableName} where `;
-
-    for(let key in fields){
-      count++;
-      field.push(key+"=$"+count);
-      field.push(`${key}=$${count}`);
-      value.push(fields[key]);
-    }
-    sql += field.join(" and ");
-    return {sql, value};
-  };
-
-  const pg = new PG();
-
+document.addEventListener('click', function(e) {
+  console.log(e)
+})
 
 
 </script>

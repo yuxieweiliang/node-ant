@@ -1,14 +1,16 @@
 /*
-*  创建书籍表
-*  book_id  < 主键 >
-*  book_name 书名
-*  book_author 作者
-*  book_introduction 简介
+*  排行榜详细
 */
 CREATE TABLE if NOT EXISTS public.rankings_details (
+  -- < 主键 >
   det_id              SERIAL              NOT NULL PRIMARY KEY,
-  name                varchar(20)         NOT NULL,
-  value               varchar(20)         NOT NULL,
+  -- 排行榜 _ID
+  rank_id             varchar(20)         NOT NULL,
+  -- 名字
+  name                varchar(20)         DEFAULT NULL,
+  -- 内容
+  value               varchar(20)         DEFAULT NULL,
+  -- 排行
   index               varchar(20)         DEFAULT NULL
 ) WITH (OIDS = FALSE);
 

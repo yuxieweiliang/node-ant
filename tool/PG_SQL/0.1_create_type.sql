@@ -13,3 +13,4 @@ DROP TYPE IF EXISTS enum_sex;
 */
 CREATE TYPE enum_type AS enum('Readers', 'Author', 'Administrators', 'Group_Admin', 'Root');
 CREATE TYPE enum_sex AS enum('male', 'female');
+

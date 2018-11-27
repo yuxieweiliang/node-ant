@@ -1,371 +1,153 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
-import { Menu, Icon, Layout, Breadcrumb, Form, Input, Tabs, List, Modal, Select, Row, Col, Collapse, Button, AutoComplete, Card, Tag, Divider  } from 'antd';
-import Header from '../../components/Header'
-import Sider from '../SiderMenu';
+import { Menu, Icon, Layout, Breadcrumb, Form, Input, Tabs, List, Modal, Select, Row, Col, Collapse, Button, AutoComplete, Card, Tag, Dropdown  } from 'antd';
 import Container from '../../components/Container'
+import Panel_Role from './Panel_Role'
+import Panel_Ranking from './Panel_Ranking'
+import Panel_Information from './Panel_Information'
 import styles from './style.less';
 
-const FormItem = Form.Item;
-const Panel = Collapse.Panel;
-const TabPane = Tabs.TabPane;
-const data = [
-  {
-    title: '性别：',
-    value: '男',
-    type: 'text',
-  },
-  {
-    title: '年龄：',
-    type: 'text',
-    value: '16',
-  },
-  {
-    title: '武器：',
-    type: 'select',
-    value: ['未知', '未知', '未知'],
-  },
-  {
-    title: '契灵：',
-    type: 'text',
-    value: '冰精灵契灵：冰精灵契灵：冰精灵契灵：冰精灵契灵：冰精灵契灵：冰精灵契灵：冰精灵契灵：冰精灵契灵：冰精灵',
-  },
-];
 
-const text = (
-  <p style={{ paddingLeft: 24 }}>
-    A dog is a type of domesticated animal.
-    Known for its loyalty and faithfulness,
-    it can be found as a welcome guest in many households across the world.
-  </p>
-);
+const FormItem = Form.Item;
+const TabPane = Tabs.TabPane;
+
 
 class PostList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      openKeys: ['sub1'],
-      confirmDirty: false,
-      collapsed: true,
-      autoCompleteResult: [],
+      // 添加排行榜
+      visible_ranking: false,
+      // 添加选项： 默认选择 ranking
+      ranking_type: 'template',
     };
   }
-  rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
-  };
-
-  handleConfirmBlur = (e) => {
-    const value = e.target.value;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  };
-
-  compareToFirstPassword = (rule, value, callback) => {
-    const form = this.props.form;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
-    }
-  };
-
-  validateToNextPassword = (rule, value, callback) => {
-    const form = this.props.form;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
-    }
-    callback();
-  };
 
   componentWillMount() {
-    // this.props.dispatch(Begin_GET_POSTS());
+    this.props.dispatch({type: 'bookSet/GET_SETTING_LIST', payload: {}});
+    this.props.dispatch({type: 'bookSet/GET_TEMPLATE', payload: {id: 1}});
+    // this.props.dispatch({type: 'template/GET_TEMPLATE', payload: {}});
   }
 
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
-  render() {
-    const { getFieldDecorator } = this.props.form;
-    const { autoCompleteResult } = this.state;
 
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
-      },
-    };
+  /**
+   * 打开创建面板
+   */
+  onMenuItemClick = () => {
+    this.setState({visible_ranking: true});
+  }
+
+  /**
+   * 修改创建类型
+   * @param option
+   */
+  onRankingSelect = (option) => {
+    this.setState({ranking_type: option});
+  }
+
+  /**
+   * 点击确认
+   */
+  onRankingOk = () => {
+    switch(this.state.ranking_type) {
+      case 'template': this.props.dispatch({type: 'template/POST_TEMPLATE', payload: {}}); break;
+      case 'ranking': this.props.dispatch({type: 'ranking/POST_RANKING', payload: {}}); break;
+      case 'timeAxis': this.props.dispatch({type: 'time-axis/POST_TIME_AXIS', payload: {}}); break;
+    }
+  }
+  createTabPane = () => {
+    const data = [
+      {title: '基本信息', key: 'info'},
+      {title: '主要人物', key: 'role'},
+      {title: '排行榜_武器', key: 'ranking'},
+      {title: '其他设定', key: 'other'},
+    ]
+
+    return data.map(function(item){
+      let Context = null;
+      switch (item.key) {
+        case 'info':    Context = (<Panel_Information/>); break;
+        case 'role':    Context = (<Panel_Role/>); break;
+        case 'ranking': Context = (<Panel_Ranking/>); break;
+        case 'other':   Context = (
+          <div>
+            <p>Content of Tab Pane 3</p>
+            <p>Content of Tab Pane 3</p>
+            <p>Content of Tab Pane 3</p>
+          </div>
+        ); break;
+      }
+      return (
+        <TabPane tab={item.title} key={item.key}>
+          { Context }
+        </TabPane>
+      )
+    })
+  }
+  render() {
+
     return (
     <Container {...this.props}>
       <Card title={
-        <Button
-          size="small"
-          style={{fontSize: 12}}
-          onClick={() => this.props.history.go(-1)}
-        >
-          上一步
-        </Button>
+        <Breadcrumb style={{background: '#fff', padding: 0, height: 'auto', lineHeight: 'auto'}}>
+          <Breadcrumb.Item><a href="">作品管理</a></Breadcrumb.Item>
+          <Breadcrumb.Item>《绝世》</Breadcrumb.Item>
+        </Breadcrumb>
       }
             style={{width: 1020, flex: 1}}
-            extra={[/*<Button type="primary" size="small" style={{fontSize: 12}}>保存</Button>,*/
+            extra={[
+              /*<Button type="primary" size="small" style={{fontSize: 12}}>保存</Button>,*/
+              /*<Dropdown  overlay={this.createMenu()} trigger={['click']}></Dropdown>*/
               <Button
                 type="primary"
                 size="small"
                 style={{fontSize: 12}}
+                onClick={this.onMenuItemClick}
                 key="new-architecture"
-                onClick={() => this.submit()}
-              >创建架构</Button>
-            ]}>
-        <Tabs defaultActiveKey="1" tabPosition="left">
-          <TabPane tab="基本信息" key="1">
-            {/*<Row style={{padding: '10px 15px'}}>
-              <Col span={18}>
-                fdsa
-              </Col>
-              <Col span={6} style={{textAlign: 'right'}}>
-                <Button type="primary" size="small" style={{fontSize: 12}}>保存</Button>
-                <Button type="primary" size="small" style={{fontSize: 12}}>发布</Button>
-              </Col>
-            </Row>*/}
-            <Row gytter={16}>
-              <Col span="18">
-                <Form onSubmit={this.handleSubmit}>
-                  <FormItem
-                    {...formItemLayout}
-                    label="架构名称"
-                  >
-                    {getFieldDecorator('email', {
-                      rules: [{
-                        type: 'email', message: 'The input is not valid E-mail!',
-                      }, {
-                        required: true, message: 'Please input your E-mail!',
-                      }],
-                    })(
-                      <Input />
-                    )}
-                  </FormItem>
-                  <FormItem
-                    {...formItemLayout}
-                    label="架构详情"
-                  >
-                    {getFieldDecorator('password', {
-                      rules: [{
-                        required: true, message: 'Please input your password!',
-                      }, {
-                        validator: this.validateToNextPassword,
-                      }],
-                    })(
-                      <Input type="password" />
-                    )}
-                  </FormItem>
-                  <FormItem
-                    {...formItemLayout}
-                    label="世界背景"
-                  >
-                    {getFieldDecorator('confirm', {
-                      rules: [{
-                        required: true, message: 'Please confirm your password!',
-                      }, {
-                        validator: this.compareToFirstPassword,
-                      }],
-                    })(
-                      <Input.TextArea  rows="10" type="password" onBlur={this.handleConfirmBlur} />
-                    )}
-                  </FormItem>
-                </Form>
-              </Col>
-            </Row>
-          </TabPane>
-          <TabPane tab="主要人物" key="2">
-            <Row style={{padding: '10px 15px'}}>
-              <Col span={18}>
-                <Button size="small" style={{fontSize: 12}}>模板</Button>
-                <Button size="small" style={{fontSize: 12}}>设置</Button>
-              </Col>
-              <Col span={6} style={{textAlign: 'right'}}>
-                <Button size="small" style={{fontSize: 12}}>预览</Button>
-                <Button type="primary" size="small" style={{fontSize: 12}}>新增</Button>
-              </Col>
-            </Row>
-            <Collapse accordion bordered={false} defaultActiveKey={['2-1']}>
-              <Panel
-                header={
-                  <div style={{paddingRight:15}}>
-                    林莫锋
-                    <span style={{float: 'right'}} onClick={(e) => {
-                      e.stopPropagation();
-                      this.setState({visible: true})}
-                    }>编辑</span>
-                  </div>
-                } key="2-1">
+              >添加</Button>
+            ]}
+      >
 
+        {/*   主体内容    */}
+        <Tabs defaultActiveKey="role" tabPosition="left">
 
-                <Row>
-                  <Col span="16">
-                    <List
-                      style={{ paddingLeft: 24 }}
-                      itemLayout="horizontal"
-                      dataSource={data}
-                      renderItem={item => (
-                        <List.Item
-                          /*actions={[<a>×</a>]}*/
-                          onClick={() => console.log('ffff')}>
-                          {
-                            item.type === 'text' ? (
-                              item.title + item.value
-                            ) : item.type === 'select' ? (
-                              <div>
-                                {item.title}
-                                { item.value.map((_item, key) => <Tag color="blue" key={key}>{_item}</Tag>) }
-                              </div>
-                            ) : ''
-                          }
+          { this.createTabPane() }
 
-                        </List.Item>
-                      )}
-                    />
-                  </Col>
-                  <Col span="8">
-                    <Card
-                      hoverable
-                      style={{ width: 140, float: 'right' }}
-                      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                    >
-                      <Card.Meta  style={{textAlign: 'center'}}
-                                  title="李清柔"
-                      />
-                    </Card>
-                  </Col>
-                </Row>
-              </Panel>
-              <Panel header="李清柔" key="2-2">
-                {text}
-              </Panel>
-            </Collapse>
-          </TabPane>
-          <TabPane tab="排行榜" key="3">
-
-            <Layout.Content style={{background: '#fff', overflowY: 'auto'}}>
-              <Breadcrumb style={{background: '#fff', borderBottom: '1px solid #eee', paddingLeft: 24}}>
-                <Breadcrumb.Item><a href="">作品管理</a></Breadcrumb.Item>
-                <Breadcrumb.Item>《绝世》</Breadcrumb.Item>
-              </Breadcrumb>
-              <Row style={{padding: '10px 15px'}}>
-                <Col span={18}>
-                  <Button size="small" style={{fontSize: 12}}>模板</Button>
-                  <Button size="small" style={{fontSize: 12}}>设置</Button>
-                </Col>
-                <Col span={6} style={{textAlign: 'right'}}>
-                  <Button size="small" style={{fontSize: 12}}>预览</Button>
-                  <Button
-                    type="primary"
-                    size="small"
-                    onClick={() => this.setState({visible: true})}
-                    style={{fontSize: 12}}>新增</Button>
-                  <Button
-                    type="primary"
-                    size="small"
-                    onClick={() => this.setState({visibleModal: true})}
-                    style={{fontSize: 12}}>新增</Button>
-                </Col>
-              </Row>
-
-
-              <Collapse accordion bordered={false} defaultActiveKey={['3-1']}>
-                <Panel
-                  header={
-                    <div style={{paddingRight:15}}>
-                      寒霜刃
-                      <span style={{float: 'right'}} onClick={(e) => {
-                        e.stopPropagation();
-                        this.setState({visible: true})}
-                      }>编辑</span>
-                    </div>
-                  } key="3-1">
-
-                  <div style={{paddingLeft: 24, display: 'flex'}}>
-                    <Tag>级别</Tag>
-                    <p>一阶</p>
-                  </div><div style={{paddingLeft: 24, display: 'flex'}}>
-                  <Tag>咒语</Tag>
-                  <p>Sed nonne merninisti licere mihi ista probare</p>
-                </div><div style={{paddingLeft: 24, display: 'flex'}}>
-                  <Tag>效果</Tag>
-                  <p>Refert tamen, quo modo.</p>
-                </div><div style={{paddingLeft: 24, display: 'flex'}}>
-                  <Tag>形态</Tag>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                </div>
-                </Panel>
-                <Panel header="李清柔" key="3-2">
-                  <div style={{paddingLeft: 24, display: 'flex'}}>
-                    <Tag>级别</Tag>
-                    <p>一阶</p>
-                  </div><div style={{paddingLeft: 24, display: 'flex'}}>
-                  <Tag>咒语</Tag>
-                  <p>Sed nonne merninisti licere mihi ista probare</p>
-                </div><div style={{paddingLeft: 24, display: 'flex'}}>
-                  <Tag>效果</Tag>
-                  <p>Refert tamen, quo modo.</p>
-                </div><div style={{paddingLeft: 24, display: 'flex'}}>
-                  <Tag>形态</Tag>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-                </div>
-                </Panel>
-              </Collapse>
-            </Layout.Content>
-          </TabPane>
-          <TabPane tab="其他设定" key="4">
-            <p>Content of Tab Pane 3</p>
-            <p>Content of Tab Pane 3</p>
-            <p>Content of Tab Pane 3</p>
-          </TabPane>
         </Tabs>
-      </Card>
-      {/*<Layout.Content className="card-container" style={{width: 1000}}>
 
-      </Layout.Content>*/}
+      </Card>
+
       <Modal
-        title="添加字段"
-        visible={this.state.visible}
-        onOk={() => this.setState({visible: false})}
-        onCancel={() => this.setState({visible: false})}
+        title="添加设定"
+        okText="确定"
+        cancelText="取消"
+        visible={this.state.visible_ranking}
+        onOk={this.onRankingOk}
+        onCancel={() => this.setState({visible_ranking: false})}
       >
         <Form onSubmit={this.handleSubmit}
               className="ant-advanced-search-form">
-          <Row gutter={24}>
-            <Col span={12}/>
-            <Col span={12} style={{textAlign: 'right', paddingBottom: 24}}>
-              <Button size="small">
-                新增
-              </Button>
-            </Col>
-          </Row>
           <Row gutter={24}> {/*   style={{borderBottom: '1px solid #ccc'}}  */}
             <Col span={12}>
-              <FormItem label={`字段名称`}>
+              <FormItem label={`设定名称`}>
                 <Input placeholder="例如：武器/宠物" />
               </FormItem>
             </Col>
             <Col span={12}>
-              <FormItem label={`字段类型`}>
-                <Select>
-                  <Select.Option value="text">文字</Select.Option>
-                  <Select.Option value="select">列表</Select.Option>
-                  <Select.Option value="time">时间</Select.Option>
+              <FormItem label={`设定类型`}>
+                <Select defaultValue={this.state.ranking_type} onSelect={this.onRankingSelect}>
+                  <Select.Option value="template">模板</Select.Option>
+                  <Select.Option value="ranking">排行榜</Select.Option>
+                  <Select.Option value="timeAxis">时间轴</Select.Option>
                 </Select>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row gutter={24}> {/*   style={{borderBottom: '1px solid #ccc'}}  */}
+            <Col span={24}>
+              <FormItem label={`设定简介`}>
+                <Input.TextArea rows="5" placeholder="例如：武器必须是角色常用的兵刃" />
               </FormItem>
             </Col>
           </Row>
@@ -377,7 +159,8 @@ class PostList extends Component {
 }
 
 const mapStateToProps  = (state) => ({
-  posts: state.posts
+  ranking: state.ranking,
+  setting: state.setting,
 });
 
 const WrappedPostListnForm = Form.create()(PostList);
