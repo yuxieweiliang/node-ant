@@ -3,9 +3,8 @@
 */
 
 
-DROP TABLE IF EXISTS public.book_set_values;
 DROP TABLE IF EXISTS public.book_set_items;
-DROP TABLE IF EXISTS public.book_sets;
+DROP TABLE IF EXISTS public.book_set_values;
 
 DROP TABLE IF EXISTS public.book_chapters;
 DROP TABLE IF EXISTS public.books;
@@ -23,8 +22,9 @@ DROP TABLE IF EXISTS public.roles;
 
 DROP TABLE IF EXISTS public.settings;
 
-DROP TABLE IF EXISTS public.temp_items;
 DROP TABLE IF EXISTS public.templates;
+DROP TABLE IF EXISTS public.temp_items;
+DROP TABLE IF EXISTS public.book_sets;
 
 DROP TABLE IF EXISTS public.time_point_events;
 

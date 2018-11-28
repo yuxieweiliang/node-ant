@@ -131,6 +131,7 @@ class PostList extends Component {
           </p>
         </Panel>
       </Collapse>
+
       <Modal
         okText="确定"
         cancelText="取消"
@@ -167,6 +168,7 @@ class PostList extends Component {
           </Row>
         </Form>
       </Modal>
+
       <Modal
         okText="确定"
         cancelText="取消"

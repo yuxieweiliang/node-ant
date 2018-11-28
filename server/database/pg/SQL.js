@@ -91,7 +91,7 @@ PG.prototype.update = function(tableName, fields, conditions){
  *
  */
 PG.prototype.select = function(tableName, fields, returnStr = '*', conditions = ''){
-  let field = [], values = [], count = 0;
+  let field = [], values = [], sql = [], count = 0;
 
   if(!tableName) {console.log('tableName is request!'); return}
 
@@ -100,10 +100,16 @@ PG.prototype.select = function(tableName, fields, returnStr = '*', conditions = 
   for(let key in fields){
     count++;
     field.push(`${key} = $${count}`);
+    sql.push(`${key} = ${fields[key]}`);
     values.push(fields[key]);
   }
-  text += field.join(" and ") + conditions;
-  return {text, values};
+
+  console.log('======== sql ===========: ', text + sql.join(" and ") + conditions)
+  return {
+    text: text + field.join(" and ") + conditions,
+    values,
+    sql: text + sql.join(" and ") + conditions
+  };
 };
 
 export default new PG();

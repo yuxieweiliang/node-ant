@@ -8,7 +8,6 @@ CREATE TABLE if NOT EXISTS public.book_sets (
   book_set_id             SERIAL            NOT NULL PRIMARY KEY,
   archite_id              SERIAL            NOT NULL,
   title                   varchar(20)       NOT NULL,
-  templates               int4              DEFAULT NULL,
   introduction            varchar           DEFAULT NULL
 ) WITH (OIDS = FALSE);
 
@@ -19,6 +18,6 @@ ALTER TABLE public.book_sets
 COMMENT ON TABLE public.book_sets
 IS '书籍 - 设定';
 
-insert into book_sets(title, archite_id, templates) values('角色', 1, 1);
-insert into book_sets(title, archite_id, templates) values('武器', 1, 2);
-insert into book_sets(title, archite_id, templates) values('契灵', 1, 3);
+insert into book_sets(title, archite_id) values('角色', 1);
+insert into book_sets(title, archite_id) values('武器', 1);
+insert into book_sets(title, archite_id) values('契灵', 1);

@@ -6,8 +6,11 @@
 */
 CREATE TABLE if NOT EXISTS public.templates (
   temp_id                 SERIAL                NOT NULL PRIMARY KEY,
-  items                   int4[]                DEFAULT NULL,
-  introduction            varchar               DEFAULT NULL
+  book_set_id             SERIAL                NOT NULL,
+  temp_item_id            SERIAL                NOT NULL,
+  introduction            varchar               DEFAULT NULL,
+  foreign key(book_set_id) references book_sets(book_set_id) on update cascade on delete cascade,
+  foreign key(temp_item_id) references temp_items(temp_item_id) on update cascade on delete cascade
 ) WITH (OIDS = FALSE);
 
 /*  ALTER TABLE <tablename> OWNER TO <username>  将这张表赋给当前用户  */
@@ -15,10 +18,10 @@ ALTER TABLE public.templates
   OWNER TO postgres;
 
 COMMENT ON TABLE public.templates
-IS '书籍 - 设定';
+IS '模板 - 关系';
 
-insert into templates(items) values('{1, 2, 3, 4}');
-insert into templates(items) values('{2, 4, 6, 8}');
-insert into templates(items) values('{3, 5 }');
-insert into templates(items) values('{12, 211, 322, 4567}');
+insert into templates(book_set_id, temp_item_id) values(1, 1);
+insert into templates(book_set_id, temp_item_id) values(1, 2);
+insert into templates(book_set_id, temp_item_id) values(1, 3);
+insert into templates(book_set_id, temp_item_id) values(1, 4);
 
