@@ -46,8 +46,12 @@ class PostList extends Component {
       visible_role: false,
     };
   }
+
+  /**
+   *
+   */
   componentWillMount() {
-    this.props.dispatch({type: 'template/editRole'});
+    this.props.dispatch({ type: 'template/editRole' });
   }
 
   /**
