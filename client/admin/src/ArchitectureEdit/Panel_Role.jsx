@@ -46,7 +46,9 @@ class PostList extends Component {
       visible_role: false,
     };
   }
-  componentWillMount() {  }
+  componentWillMount() {
+    this.props.dispatch({type: 'template/editRole'});
+  }
 
   /**
    * 显示 添加 【模板】 面板
@@ -61,7 +63,21 @@ class PostList extends Component {
   showRoleModal = () => {
     this.setState({visible_role: true});
   }
+
+  getDataByTitle(title) {
+    const { templateList } = this.props;
+    let data = null;
+    templateList.map(item => {
+      if(item.title === title) {
+        data = item;
+      }
+    });
+    return data;
+  }
   render() {
+    const roles = this.getDataByTitle('角色');
+    console.log(this.props, roles);
+
     return (
     <Layout.Content style={{background: '#fff', overflowY: 'auto'}}>
       <Row style={{paddingBottom: '15px'}}>
@@ -135,7 +151,7 @@ class PostList extends Component {
       <Modal
         okText="确定"
         cancelText="取消"
-        title="添加字段"
+        title={roles && roles.title + '模板'}
         visible={this.state.visible_template}
         onOk={() => this.setState({visible_template: false})}
         onCancel={() => this.setState({visible_template: false})}
@@ -149,23 +165,28 @@ class PostList extends Component {
               </Button>
             </Col>
           </Row>
-          <Row gutter={24}> {/*   style={{borderBottom: '1px solid #ccc'}}  */}
-            <Col span={12}>
-              <FormItem label={`字段名称`}>
-                <Input placeholder="例如：武器/宠物" />
-              </FormItem>
-            </Col>
-            <Col span={12}>
-              <FormItem label={`字段类型`}>
-                <Select defaultValue="text">
-                  <Select.Option value="text">文字</Select.Option>
-                  <Select.Option value="select">列表</Select.Option>
-                  <Select.Option value="tag">标签</Select.Option>
-                  <Select.Option value="time">时间</Select.Option>
-                </Select>
-              </FormItem>
-            </Col>
-          </Row>
+          {
+            roles && roles.template.map((item, key) => (
+              <Row gutter={24} key={key}> {/*   style={{borderBottom: '1px solid #ccc'}}  */}
+                <Col span={12}>
+                  <FormItem label={`字段名称`}>
+                    <Input placeholder="例如：武器/宠物" defaultValue={item.name}/>
+                  </FormItem>
+                </Col>
+                <Col span={12}>
+                  <FormItem label={`字段类型`}>
+                    <Select defaultValue={item.type}>
+                      <Select.Option value="text">文字</Select.Option>
+                      <Select.Option value="select">列表</Select.Option>
+                      <Select.Option value="tag">标签</Select.Option>
+                      <Select.Option value="time">时间</Select.Option>
+                    </Select>
+                  </FormItem>
+                </Col>
+              </Row>
+            ))
+          }
+
         </Form>
       </Modal>
 
@@ -186,22 +207,13 @@ class PostList extends Component {
               </Button>
             </Col>
           </Row>
-          <Row gutter={24}> {/*   style={{borderBottom: '1px solid #ccc'}}  */}
-            <Col span={12}>
-              <FormItem label={`字段名称`}>
-                <Input placeholder="例如：武器/宠物" />
+          {
+            roles && roles.template.map((item, key) => (
+              <FormItem label={item.name}  key={key}>
+                <Input placeholder="例如：武器/宠物"/>
               </FormItem>
-            </Col>
-            <Col span={12}>
-              <FormItem label={`字段类型`}>
-                <Select>
-                  <Select.Option value="text">文字</Select.Option>
-                  <Select.Option value="select">列表</Select.Option>
-                  <Select.Option value="time">时间</Select.Option>
-                </Select>
-              </FormItem>
-            </Col>
-          </Row>
+            ))
+          }
         </Form>
       </Modal>
     </Layout.Content>
@@ -210,7 +222,7 @@ class PostList extends Component {
 }
 
 const mapStateToProps  = (state) => ({
-  posts: state.posts
+  ...state.template
 });
 
 const WrappedPostListnForm = Form.create()(PostList);

@@ -2,9 +2,7 @@
  * Created by xueyufei on 2018/11/26.
  */
 
-const PG = function(){
-  console.log("准备向****数据库连接...");
-};
+const SQL = function(){ };
 
 /**
  * 保存
@@ -12,7 +10,7 @@ const PG = function(){
  * @param fields 更新的字段和值，json格式
  * @param ret
  */
-PG.prototype.save = function(tableName, fields, ret = ' RETURNING *'){
+SQL.prototype.save = function(tableName, fields, ret = ' RETURNING *'){
   let field = [], values = [], count = 0, num = [];
 
   if(!tableName) {console.log('tableName is request!'); return}
@@ -33,7 +31,7 @@ PG.prototype.save = function(tableName, fields, ret = ' RETURNING *'){
  * @param tableName 数据表名称
  * @param fields 条件字段和值，json格式
  */
-PG.prototype.remove = function(tableName, fields){
+SQL.prototype.remove = function(tableName, fields){
   let field = [], values = [], count = 0;
 
   if(!tableName) {console.log('tableName is request!'); return}
@@ -55,7 +53,7 @@ PG.prototype.remove = function(tableName, fields){
  * @param fields 条件字段和值，json格式
  * @param conditions 更新的字段和值，json格式
  */
-PG.prototype.update = function(tableName, fields, conditions){
+SQL.prototype.update = function(tableName, fields, conditions){
   let condition = [], values = [], count = 0, field = [];
 
   if(!fields) {console.log('tableName is request!'); return}
@@ -90,7 +88,7 @@ PG.prototype.update = function(tableName, fields, conditions){
  * select('set_values', undefined, undefined, ` item_id = 1 OR item_id = 2`)
  *
  */
-PG.prototype.select = function(tableName, fields, returnStr = '*', conditions = ''){
+SQL.prototype.select = function(tableName, fields, returnStr = '*', conditions = ''){
   let field = [], values = [], sql = [], count = 0;
 
   if(!tableName) {console.log('tableName is request!'); return}
@@ -112,6 +110,6 @@ PG.prototype.select = function(tableName, fields, returnStr = '*', conditions = 
   };
 };
 
-export default new PG();
+export default new SQL();
 
 

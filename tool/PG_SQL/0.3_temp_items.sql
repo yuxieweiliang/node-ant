@@ -23,3 +23,8 @@ insert into temp_items(name, type) values('性别', 'select');
 insert into temp_items(name, type) values('年龄', 'tag');
 insert into temp_items(name, type) values('爱好', 'text');
 
+insert into temp_items(name, type) values('名字', 'text');
+insert into temp_items(name, type) values('属性', 'select');
+insert into temp_items(name, type) values('等级', 'tag');
+insert into temp_items(name, type) values('强度', 'text');
+

@@ -30,6 +30,9 @@ export default {
       mutableArray.push(action.payload);
       return state.setIn(['bookList'], mutableArray);
     },
+    templateList(state, action) {
+      return state.setIn(['templateList'], action.payload);
+    },
   },
   *postTemplate( { payload } ) {
     let title = payload.title || "武器";
@@ -47,7 +50,9 @@ export default {
     try {
       // yield put({type: 'new_book', payload: false});
       const response = yield call(getTemplateList, {params: { id }});
-      yield put({type: 'ranking/push_ranking', payload: response.data});
+
+      console.log('getTemplateList: ', response);
+      yield put({type: 'template/templateList', payload: response.data.data});
     } catch(e) {
       console.log(e);
       // yield put({type: FETCH_USERS_ERROR, data: e});

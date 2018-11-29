@@ -25,3 +25,8 @@ insert into templates(book_set_id, temp_item_id) values(1, 2);
 insert into templates(book_set_id, temp_item_id) values(1, 3);
 insert into templates(book_set_id, temp_item_id) values(1, 4);
 
+insert into templates(book_set_id, temp_item_id) values(2, 5);
+insert into templates(book_set_id, temp_item_id) values(2, 6);
+insert into templates(book_set_id, temp_item_id) values(2, 7);
+insert into templates(book_set_id, temp_item_id) values(2, 8);
+

@@ -27,6 +27,7 @@ class PostList extends Component {
   componentWillMount() {
     this.props.dispatch({type: 'bookSet/GET_SETTING_LIST', payload: {}});
     this.props.dispatch({type: 'bookSet/GET_TEMPLATE', payload: {id: 1}});
+    this.props.dispatch({type: 'template/GET_TEMPLATE_LIST', payload: {}});
     // this.props.dispatch({type: 'template/GET_TEMPLATE', payload: {}});
   }
 
@@ -67,17 +68,30 @@ class PostList extends Component {
     return data.map(function(item){
       let Context = null;
       switch (item.key) {
-        case 'info':    Context = (<Panel_Information/>); break;
-        case 'role':    Context = (<Panel_Role/>); break;
-        case 'ranking': Context = (<Panel_Ranking/>); break;
-        case 'other':   Context = (
-          <div>
-            <p>Content of Tab Pane 3</p>
-            <p>Content of Tab Pane 3</p>
-            <p>Content of Tab Pane 3</p>
-          </div>
-        ); break;
+        case 'info':
+          // this.props.dispatch({type: 'template/POST_TEMPLATE', payload: {}});
+          Context = (<Panel_Information/>);
+          break;
+        case 'role':
+          // this.props.dispatch({type: 'template/GET_TEMPLATE_LIST', payload: {}});
+          Context = (<Panel_Role/>);
+          break;
+        case 'ranking':
+          // this.props.dispatch({type: 'template/POST_TEMPLATE', payload: {}});
+          Context = (<Panel_Ranking/>);
+          break;
+        case 'other':
+          // this.props.dispatch({type: 'template/POST_TEMPLATE', payload: {}});
+          Context = (
+            <div>
+              <p>Content of Tab Pane 3</p>
+              <p>Content of Tab Pane 3</p>
+              <p>Content of Tab Pane 3</p>
+            </div>
+          );
+          break;
       }
+
       return (
         <TabPane tab={item.title} key={item.key}>
           { Context }
@@ -86,7 +100,6 @@ class PostList extends Component {
     })
   }
   render() {
-
     return (
     <Container {...this.props}>
       <Card title={
@@ -159,8 +172,8 @@ class PostList extends Component {
 }
 
 const mapStateToProps  = (state) => ({
+  template: state.template,
   ranking: state.ranking,
-  setting: state.setting,
 });
 
 const WrappedPostListnForm = Form.create()(PostList);
