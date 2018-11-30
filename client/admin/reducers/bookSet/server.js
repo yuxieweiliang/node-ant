@@ -14,6 +14,16 @@ export function postBookSet(data) {
 }
 
 /**
+ * 书设定 - 具体值
+ * @param data
+ * @returns {Promise<T>}
+ */
+export function postBookSetValue(data) {
+  console.log('////////', data);
+  return axios.post('bookSet/value', data)
+}
+
+/**
  * 新建排行榜
  * @param id
  * @returns {Promise<T>}

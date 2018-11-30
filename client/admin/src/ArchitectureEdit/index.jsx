@@ -75,7 +75,7 @@ class PostList extends Component {
 
   addRole = () => {
     const { temp  } = this.props;
-    this.props.dispatch({type: 'bookSet/POST_SETTING', payload: temp.newTemplate});
+    this.props.dispatch({type: 'bookSet/POST_BOOK_SET_VALUE', payload: temp.newTemplate});
   }
 
   /**

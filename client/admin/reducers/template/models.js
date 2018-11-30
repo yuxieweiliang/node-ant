@@ -35,11 +35,11 @@ export default {
       let templateData = Immutable.asMutable(state.template.template);
       let { value, index} = action.payload;
       templateData[index] = {...templateData[index], value};
+      let newData = state.setIn(['newTemplate'], state.template)
 
       console.log('valueChange', templateData);
-      return state.merge({
-        newTemplate: templateData
-      });
+
+      return newData.setIn(['newTemplate', 'template'], templateData);
     },
 
     editRole(state, action) {

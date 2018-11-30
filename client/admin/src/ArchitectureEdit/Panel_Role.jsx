@@ -181,7 +181,7 @@ class PostList extends Component {
         cancelText="取消"
         title="添加字段"
         visible={this.state.visible_role}
-        onOk={() => this.setState({visible_role: false})}
+        onOk={() => {this.props.addRole();this.setState({visible_role: false})}}
         onCancel={() => this.setState({visible_role: false})}
       >
         <Form className="ant-advanced-search-form">

@@ -15,6 +15,20 @@ module.exports = {
     // const findBook = await book.find({title: data.title});
   },
 
+  /**
+   * 添加具体值
+   * @param ctx
+   * @returns {Promise.<void>}
+   * @constructor
+   */
+  'POST /api/bookSet/value': async function(ctx) {
+    let body = ctx.request.body;
+    console.log(body);
+    const sql = ctx.sql.save('book_sets', body)
+    ctx.body = await ctx.pg.query(sql);
+    // const findBook = await book.find({title: data.title});
+  },
+
 
   /**
    * 根据 设定ID 查询所有设定列表

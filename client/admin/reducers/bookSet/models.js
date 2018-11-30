@@ -3,7 +3,7 @@
  */
 import { call, put, all, fork, takeEvery, takeLatest } from 'redux-saga/effects';
 import Immutable from 'seamless-immutable';
-import { postBookSet, getBookSet, getBookSetList } from './server'
+import { postBookSet, postBookSetValue, getBookSet, getBookSetList } from './server'
 
 // reducer
 export default {
@@ -35,6 +35,25 @@ export default {
     try {
       // yield put({type: 'new_book', payload: false});
       const response = yield call(postBookSet, { title, archite_id: 1 });
+     //  yield put({type: 'ranking/push_ranking', payload: response.data});
+    } catch(e) {
+      console.log(e);
+      // yield put({type: FETCH_USERS_ERROR, data: e});
+    }
+  },
+  *postBookSetValue( { payload } ) {
+    const data = payload
+      .template
+      .map(({name, value}) => ({
+        label: name,
+        value: value,
+        book_set_id: payload.book_set_id
+      }));
+
+    console.log('payload: ', data);
+    try {
+      // yield put({type: 'new_book', payload: false});
+      const response = yield call(postBookSetValue, data);
      //  yield put({type: 'ranking/push_ranking', payload: response.data});
     } catch(e) {
       console.log(e);

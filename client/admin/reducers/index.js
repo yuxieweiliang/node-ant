@@ -46,6 +46,7 @@ export default {
       takeLatest('bookSet/GET_SETTING_LIST', bookSet.getBookSetList),
       takeLatest('bookSet/GET_TEMPLATE', bookSet.getBookSet),
       takeLatest('bookSet/POST_SETTING', bookSet.postBookSet),
+      takeLatest('bookSet/POST_BOOK_SET_VALUE', bookSet.postBookSetValue),
 
       takeLatest('template/GET_TEMPLATE_LIST', template.getTemplateList),
       takeLatest('template/GET_TEMPLATE', template.getTemplate),
