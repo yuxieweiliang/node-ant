@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Begin_GET_POSTS, GET_ERROR } from '../../reducers';
 import { Menu, Icon, Layout, Breadcrumb, Form, Input, Tabs, List, Modal, Select, Row, Col, Collapse, Button, AutoComplete, Card, Tag, Dropdown  } from 'antd';
-import Header from '../../components/Header'
-import Sider from '../SiderMenu';
-import Container from '../../components/Container'
 import styles from './style.less';
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
-const TabPane = Tabs.TabPane;
 const data = [
   {
     title: '性别：',
@@ -50,10 +46,7 @@ class PostList extends Component {
   /**
    *
    */
-  componentWillMount() {
-    this.props.dispatch({ type: 'template/editRole' });
-  }
-
+  componentWillMount() {}
   /**
    * 显示 添加 【模板】 面板
    */
@@ -67,21 +60,10 @@ class PostList extends Component {
   showRoleModal = () => {
     this.setState({visible_role: true});
   }
-
-  getDataByTitle(title) {
-    const { templateList } = this.props;
-    let data = null;
-    templateList.map(item => {
-      if(item.title === title) {
-        data = item;
-      }
-    });
-    return data;
-  }
   render() {
-    const roles = this.getDataByTitle('角色');
-    console.log(this.props, roles);
+    const { template } = this.props;
 
+    console.log('template', this.props)
     return (
     <Layout.Content style={{background: '#fff', overflowY: 'auto'}}>
       <Row style={{paddingBottom: '15px'}}>
@@ -155,7 +137,7 @@ class PostList extends Component {
       <Modal
         okText="确定"
         cancelText="取消"
-        title={roles && roles.title + '模板'}
+        title={template && template.title + '模板'}
         visible={this.state.visible_template}
         onOk={() => this.setState({visible_template: false})}
         onCancel={() => this.setState({visible_template: false})}
@@ -170,7 +152,7 @@ class PostList extends Component {
             </Col>
           </Row>
           {
-            roles && roles.template.map((item, key) => (
+            template && template.template.map((item, key) => (
               <Row gutter={24} key={key}> {/*   style={{borderBottom: '1px solid #ccc'}}  */}
                 <Col span={12}>
                   <FormItem label={`字段名称`}>
@@ -212,9 +194,9 @@ class PostList extends Component {
             </Col>
           </Row>
           {
-            roles && roles.template.map((item, key) => (
+            template && template.template.map((item, key) => (
               <FormItem label={item.name}  key={key}>
-                <Input placeholder="例如：武器/宠物"/>
+                <Input placeholder="例如：武器/宠物" onChange={(e) => this.props.valueChange(e, key)}/>
               </FormItem>
             ))
           }
@@ -225,9 +207,4 @@ class PostList extends Component {
   }
 }
 
-const mapStateToProps  = (state) => ({
-  ...state.template
-});
-
-const WrappedPostListnForm = Form.create()(PostList);
-export default connect(mapStateToProps)(WrappedPostListnForm);
+export default Form.create()(PostList);

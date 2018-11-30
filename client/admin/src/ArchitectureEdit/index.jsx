@@ -57,7 +57,32 @@ class PostList extends Component {
       case 'timeAxis': this.props.dispatch({type: 'time-axis/POST_TIME_AXIS', payload: {}}); break;
     }
   }
+
+  getDataByTitle(title) {
+    const { templateList } = this.props;
+    let data = null;
+    templateList.map(item => {
+      if(item.title === title) {
+        data = item;
+      }
+    });
+    return data;
+  }
+
+  valueChange = (e, index) => {
+    this.props.dispatch({type: 'template/valueChange', payload: {index, value: e.target.value}})
+  }
+
+  addRole = () => {
+    const { temp  } = this.props;
+    this.props.dispatch({type: 'bookSet/POST_SETTING', payload: temp.newTemplate});
+  }
+
+  /**
+   *
+   */
   createTabPane = () => {
+    const { temp  } = this.props;
     const data = [
       {title: '基本信息', key: 'info'},
       {title: '主要人物', key: 'role'},
@@ -65,23 +90,33 @@ class PostList extends Component {
       {title: '其他设定', key: 'other'},
     ]
 
-    return data.map(function(item){
+    return data.map((item) => {
       let Context = null;
       switch (item.key) {
         case 'info':
           // this.props.dispatch({type: 'template/POST_TEMPLATE', payload: {}});
-          Context = (<Panel_Information/>);
+          Context = (<Panel_Information { ...temp } />);
           break;
         case 'role':
           // this.props.dispatch({type: 'template/GET_TEMPLATE_LIST', payload: {}});
-          Context = (<Panel_Role/>);
+          // Context = (<Panel_Role templateList={ templateList } template={ template } />);
+          Context = (<Panel_Role { ...temp } valueChange={this.valueChange} addRole={this.addRole}/>);
           break;
         case 'ranking':
           // this.props.dispatch({type: 'template/POST_TEMPLATE', payload: {}});
-          Context = (<Panel_Ranking/>);
+          Context = (<Panel_Ranking { ...temp }/>);
           break;
         case 'other':
           // this.props.dispatch({type: 'template/POST_TEMPLATE', payload: {}});
+          Context = (
+            <div>
+              <p>Content of Tab Pane 3</p>
+              <p>Content of Tab Pane 3</p>
+              <p>Content of Tab Pane 3</p>
+            </div>
+          );
+          break;
+        default:
           Context = (
             <div>
               <p>Content of Tab Pane 3</p>
@@ -94,7 +129,7 @@ class PostList extends Component {
 
       return (
         <TabPane tab={item.title} key={item.key}>
-          { Context }
+          { temp.template && Context }
         </TabPane>
       )
     })
@@ -125,9 +160,10 @@ class PostList extends Component {
         {/*   主体内容    */}
         <Tabs defaultActiveKey="role" tabPosition="left">
 
-          { this.createTabPane() }
+          {  this.createTabPane() }
 
         </Tabs>
+
 
       </Card>
 
@@ -172,7 +208,7 @@ class PostList extends Component {
 }
 
 const mapStateToProps  = (state) => ({
-  template: state.template,
+  temp: state.template,
   ranking: state.ranking,
 });
 

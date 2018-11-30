@@ -11,27 +11,41 @@ export default {
   namespace: 'template',
   state: Immutable({
     // 【新建】单本书
-    newTemplate: {
-      title: '中文网',
-    },
+    newTemplate: null,
 
     // 【详情】单本书
-    template: {
-      title: null,
-    },
+    template: null,
 
     // 【列表】书
-    templateList: [],
+    templateList: null,
   }),
   reducers: {
     push_ranking(state, action) {
-      let array = Immutable(state.bookList);
-      let mutableArray = Immutable.asMutable(array);
+      // let array = Immutable(state.bookList);
+      let mutableArray = Immutable.asMutable(state.bookList);
       mutableArray.push(action.payload);
       return state.setIn(['bookList'], mutableArray);
     },
+
     templateList(state, action) {
       return state.setIn(['templateList'], action.payload);
+    },
+
+    valueChange(state, action) {
+      let templateData = Immutable.asMutable(state.template.template);
+      let { value, index} = action.payload;
+      templateData[index] = {...templateData[index], value};
+
+      console.log('valueChange', templateData);
+      return state.merge({
+        newTemplate: templateData
+      });
+    },
+
+    editRole(state, action) {
+      return state.merge({
+        template: action.payload
+      });
     },
   },
   *postTemplate( { payload } ) {
@@ -53,6 +67,7 @@ export default {
 
       console.log('getTemplateList: ', response);
       yield put({type: 'template/templateList', payload: response.data.data});
+      yield put({type: 'template/editRole', payload: response.data.data[0]});
     } catch(e) {
       console.log(e);
       // yield put({type: FETCH_USERS_ERROR, data: e});
