@@ -44,7 +44,7 @@
     "less-loader": "^4.0.5",
     "markdown": "^0.5.0",
     "markdown-loader": "^2.0.1",
-    "marked": "^0.3.6",
+    "marked": "^0.3.18",
     "open-browser-webpack-plugin": "0.0.5",
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.0.8",
