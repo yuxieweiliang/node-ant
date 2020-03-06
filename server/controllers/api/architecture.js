@@ -18,7 +18,7 @@ let sql = {
       archite_author
     )
     VALUES($1, $2)
-    RETURNING *`;
+    RETURNING * `;
     return { text, values };
   }
 };

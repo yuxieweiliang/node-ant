@@ -46,6 +46,7 @@ class PostList extends Component {
     this.props.dispatch({type: 'app/loading', payload: true})
   }
   componentDidMount() {
+
     this.props.dispatch({type: 'app/loading', payload: false})
   }
 

@@ -52,16 +52,17 @@ function parse_authorization(authorization) {
 
   var parts = authorization.split(' ');
 
-  if(parts.length != 2 || parts[0] != 'Basic')
+  if(parts.length !== 2 || parts[0] !== 'Basic')
     return null;
 
   var creds = new Buffer(parts[1], 'base64').toString(),
     i = creds.indexOf(':');
 
-  if(i == -1)
+  if(i === -1) {
     return null;
+  }
 
-  var username = creds.slice(0, i);
+  var username = creds.slice(0, i),
   password = creds.slice(i + 1);
 
   return [username, password];
@@ -74,7 +75,7 @@ function parse_authorization(authorization) {
  * @constructor
  */
 function OAuth2Provider(options) {
-  if(arguments.length != 1) {
+  if(arguments.length !== 1) {
     console.warn('OAuth2Provider(crypt_key, sign_key) constructor has been deprecated, yo.');
 
     options = {
@@ -123,7 +124,6 @@ OAuth2Provider.prototype.login = function() {
     const authorization = ctx.req.headers.authorization;
     let data, atok, user_id, client_id, grant_date, extra_data;
 
-    console.log('----------');
     /**
      * 获取 access_token || authorization
      * 1、 www.xxx.com ? access_token = xxxxxxxxx
@@ -239,10 +239,6 @@ OAuth2Provider.prototype.oauth = function() {
           return res.end('invalid response_type requested');
       }
 
-      console.log(request.body);
-
-
-
       if('allow' in request.body) {
         if('token' === response_type) {
           var user_id;
@@ -303,7 +299,7 @@ OAuth2Provider.prototype.oauth = function() {
       let code = request.body.code;
 
       client_id = request.body.client_id;
-      client_secret = request.body.client_secret;
+      let client_secret = request.body.client_secret; // 客户端密钥
       redirect_uri = request.body.redirect_uri;
 
       if(!client_id || !client_secret) {

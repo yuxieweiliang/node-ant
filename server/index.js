@@ -1,13 +1,13 @@
-import Koa from 'koa';
-import path from 'path';
-import http from 'http';
-import cors from 'koa2-cors';
+import Koa from 'koa'
+import path from 'path'
+import http from 'http'
+import cors from 'koa2-cors'
 // 中间件
 import koaWebpack from './middleware/koa-webpack'
 import engineJsx from './middleware/engineJsx'
-import koaBody from './middleware/koa-body';
-import staticServer from './middleware/static';
-import controllers from './middleware/router';// 路由
+import koaBody from './middleware/koa-body'
+import staticServer from './middleware/static'
+import controllers from './middleware/router' // 路由
 import logger from './middleware/logger'
 
 /**
@@ -18,7 +18,7 @@ import readMarked from './docs'
 /**
  * 长连接 服务
  */
-import socketConnect from './socket';
+import socketConnect from './socket'
 
 /**
  * 数据库
