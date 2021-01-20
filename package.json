@@ -90,6 +90,6 @@
     "redux-saga": "^0.16.2",
     "seamless-immutable": "^7.1.4",
     "serializer": "0.0.3",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.4.0"
   }
 }
